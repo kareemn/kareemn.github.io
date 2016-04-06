@@ -1,0 +1,74 @@
+==================================================================
+https://keybase.io/kareem
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of http://kareem.io
+    * I am kareem (https://keybase.io/kareem) on keybase.
+      * I have a public key with fingerprint 33A6 87B5 A8F2 1ACF F77B  3EA5 B14A 9C8D F7A1 9CA4
+
+      To do so, I am signing this object:
+
+{
+    "body": {
+        "key": {
+                    "eldest_kid": "01019e04e81b1f1149fc0bdeaa1e5aeeafceaf91bacfb92494405a7f736de3ef6d7f0a",
+                                "fingerprint": "33a687b5a8f21acff77b3ea5b14a9c8df7a19ca4",
+                                            "host": "keybase.io",
+                                                        "key_id": "b14a9c8df7a19ca4",
+                                                                    "kid": "01019e04e81b1f1149fc0bdeaa1e5aeeafceaf91bacfb92494405a7f736de3ef6d7f0a",
+                                                                                "uid": "44bc6a887f10eb03d053c5b00189f219",
+                                                                                            "username": "kareem"
+                                                                                                    
+        },
+        "service": {
+                    "hostname": "kareem.io",
+                                "protocol": "http:"
+                                        
+        },
+                "type": "web_service_binding",
+                        "version": 1
+                            
+    },
+        "ctime": 1459901859,
+            "expire_in": 157680000,
+                "prev": "d5248ec5f3f643595d50d4d0097a468d57ba445def4a3bda62cb8b2ba62c6906",
+                    "seqno": 12,
+                        "tag": "signature"
+
+}
+
+which yields the signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: Keybase OpenPGP v2.0.53
+Comment: https://keybase.io/crypto
+
+yMIaAnicrVJbSFRBGF41rbaisKSH2JLzUAQmM3tmzmXpRhu+CFIPFoG1zZyZ0UPt
+Odvu0TKJzOiORcZmGEVQIVog0h3U7jeEbtCVykgryt4sw4pojtVD0GMDw8z8833f
+fN/PXBuXFQhm7BWvPtQNlWgZ3ZcbKgNLR5QerVGoy6qVSI2yig8vfDXjKS+2ymZK
+RAEQQJMDxA1IoYAQmcIClHFCIMeEcyIsOU1IiSWoGUYmQgATXeiqxrjKhcZ0AYhS
+oAjbKefJRNJ2PCmrqkQzdIqJIcJQUoWuU5UTTCEipmUwoRNoWgRJYoWb8hnSHCUp
+Xmi7siYPsWF7/8D/Z9+Vw3IIUUsjhqELCDgFKgNYtTAFABqmTGD6wBRPOiTOfa8k
+yXlc2VCgyFqVbXG/rX6Ov+5/RUkkXc+13NWyXOF5iYjP8qoTPmwtp7HfAjFqO0x2
+UBKqeDJlu44SgRJpebavCBE2TekFmwUKX5ewkzxm+wisawaQw3+GV0lJhsPI4BYW
+qtCQik3MMGCIAWDqBGkGwzolCGHGBSIqZUQLW9SgYepvNBNoih9pjeNK7bD0Scql
+Zsoud4hXmeTKhiuXykYEMoKBnOxM/2sFgqMn/Plw+taRP8K7Io1lUXK6f0rrsh5n
+f9cecPDuUOdiDG8M5C3onDTzYtsX3NXZu/ZIn3c9J2v85H1zK34EdtTPdtruTKte
+ZPedrzn8+v7yZ5s7HxU/3P6lO92Q3/wkrqXnhdK7e05cW3rRPhfIKjzc8n2M+q38
+UPXU3GMnbsfzCtvT26Yva3/31Az1h/p7ewdzK1u6E+tHvq24cG/Wp1lno5mtGbmF
+m7Z8LN74teRm0eeFOweOF0XfTQnOjM94cSo6SbxuWtcjQs87DkT7lFvFg2/yN8+v
+ZTm9jVfnzBh6efnVoiWDec9qVwRHn6lrgj1b6muZ++1B9sDJ0v7meaGVHa33RzXq
+bt3Ese/7Hv8EZIRIfg==
+=yzR9
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/kareem
+
+==================================================================
+
+
