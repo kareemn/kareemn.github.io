@@ -29,37 +29,124 @@
 
       </header>
       <section>
-        <h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome</h3>
+<h3>My first neural network using TensorFlow</h3>
+I'm currently taking an online course called <a href="https://www.kadenze.com/courses/creative-applications-of-deep-learning-with-tensorflow-iv">Creative Applications of Deep Learning with TensorFlow.</a>
+For this class's second project, I am attempting to train a neural network using <a href="http://www.tensorflow.org">TensorFlow</a> to draw this:</p>
+<img src="images/first_nn/starry_night.png"/>
+<pre><code>
+tf.reset_default_graph()
+# Our input, will take row and column
+X = tf.placeholder(tf.float32, shape=(None, 2))
 
-<p>Code snippets, ideas, random thoughts.</p>
-
-<h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Internet of things</h3>
-
-<p>Talking furniture and trees.</p>
-<h6>IPv6</h6>
-<pre><code>$ ::1
+# Our output: RGB vector
+Y = tf.placeholder(tf.float32, shape=(None, 3))
 </code></pre>
-<h6>Arduino</h6>
-<img src="images/arduino.jpg"/>
-<h3>
-<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Gamification</h3>
 
-<p>Behavioral economics.</p>
+<p>Helper method for creating a single neural network layer:</p>
+<pre><code>
+def linear(x, n_output, name=None, activation=None, reuse=None):
+    if len(x.get_shape()) != 2:
+        x = flatten(x, reuse=reuse)
 
-<h3>
-<a name="rather-drive-stick" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>Android</h3>
+    n_input = x.get_shape().as_list()[1]
 
-<pre><code>$ adb logcat
+    with tf.variable_scope(name or "fc", reuse=reuse):
+        W = tf.get_variable(
+            name='W',
+            shape=[n_input, n_output],
+            dtype=tf.float32,
+            initializer=tf.contrib.layers.xavier_initializer())
+
+        b = tf.get_variable(
+            name='b',
+            shape=[n_output],
+            dtype=tf.float32,
+            initializer=tf.constant_initializer(0.0))
+
+        h = tf.nn.bias_add(
+            name='h',
+            value=tf.matmul(x, W),
+            bias=b)
+
+        if activation:
+            h = activation(h)
 </code></pre>
-<img src="images/android_logo.gif"/>
-<p>Android</p>
 
-<h3>
-<a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Quotes</h3>
+<p>We'll create 6 hidden layers w/100 neurons each. In this example, I use the <a href="https://www.tensorflow.org/versions/r0.12/api_docs/python/nn.html#relu">relu activation function.</a></p>
+<pre><code>
+n_neurons = 100
+n_layers = 6
+activation_func = tf.nn.relu
 
-<p>"Segmentation fault" - NaN</p>
+prev_input = X
+for i in range(0, n_layers):
+    H_i, W_i = utils.linear(
+        x=prev_input, n_output=n_neurons,
+        name='layer%d' % (i+1), activation=activation_func)
+    prev_input = H_i
+
+# last layer, and our predicted RGB values:
+Y_pred, W_last = utils.linear(
+    prev_input, 3, activation=None, name='pred')
+</code></pre>
+
+<p>Now, we set up our l2-norm cost function. This will penalize predictions that are off from our actual values more heavily.</p>
+<pre><code>
+error = tf.abs(tf.squared_difference(Y, Y_pred))
+sum_error = tf.reduce_sum(error, reduction_indices=1)
+cost = tf.reduce_mean(sum_error)
+</code></pre>
+
+We'll perform gradient descent to search the parameter space for minimizing this cost function.
+<pre><code>
+optimizer = tf.train.GradientDescentOptimizer(
+    learning_rate=0.1).minimize(cost)
+n_iterations = 1000
+batch_size = 500
+sess = tf.Session()
+sess.run(tf.initialize_all_variables())
+
+costs = []
+gif_step = n_iterations // 10
+step_i = 0
+
+for it_i in range(n_iterations):
+    
+    # Get a random sampling of the dataset
+    idxs = np.random.permutation(range(len(xs)))
+    
+    # The number of batches we have to iterate over
+    n_batches = len(idxs) // batch_size
+    
+    # Now iterate over our stochastic minibatches:
+    for batch_i in range(n_batches):
+         
+        # Get just minibatch amount of data
+        idxs_i =
+            idxs[batch_i * batch_size: (batch_i + 1) * batch_size]
+
+        # And optimize, also returning the cost so we can monitor
+        # how our optimization is doing.
+        training_cost = sess.run(
+            [cost, optimizer],
+            feed_dict={X: xs[idxs_i], Y: ys[idxs_i]})[0]
+</code></pre>
+After we've gone through our iterations we'll want to pull out our final values:
+<pre>
+<code>
+ys_pred = Y_pred.eval(feed_dict={X: xs}, session=sess)
+img = np.clip(ys_pred.reshape(img.shape), 0, 1)
+plt.imsave('final', img)
+</code>
+</pre>
+<p>Here is a side-by-side comparison of with the original image. Not bad for a 600-neuron brain.</p>
+<img src="images/first_nn/final.png"/>
+<img src="images/first_nn/starry_night.png"/>
+<br/><br/>
+Here is a visualization of the neural network's output during training. The graph shows the cost over time for each batch interation.
+<img src="images/first_nn/gradient_descent.gif"/>
+
+
       </section>
       <footer>
         <p><small>Hello &mdash; there</small></p>
