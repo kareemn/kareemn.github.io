@@ -70,6 +70,7 @@ def linear(x, n_output, name=None, activation=None, reuse=None):
 
         if activation:
             h = activation(h)
+        return h, W
 </code></pre>
 
 <p>We'll create 6 hidden layers w/100 neurons each. In this example, I use the <a href="https://www.tensorflow.org/versions/r0.12/api_docs/python/nn.html#relu">relu activation function.</a></p>
