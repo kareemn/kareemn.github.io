@@ -26,10 +26,44 @@
 			<br/>
 			<a href="http://www.linkedin.com/in/kareemnassar">Linkedin</a>
 			<br/>
-			<a href="http://android.mk/">Android.mk</a>
 		</p>
 
       </header>
+      <section>
+        <h3>Using Deep Reinforcement Learning to play Pong</h3>
+        <p>I trained a Deep Reinforcement Learning model based on soft Actor-Critic using architecture similar to the <a href="https://www.cs.toronto.edu/~vmnih/docs/dqn.pdf">AtariNet</a> arch, Monte Carlo roll-out, experience replay, and importance sampling (since its off-policy). The "soft" part of the actor-critic maintains some entropy in the probability distribution of the actions to continue to encourage exploration. See <a href="https://arxiv.org/abs/1801.01290">this paper</a> for more details.
+        </p>
+        <p>After a few iterations, looks like it learned something:</p>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/bMo1Gg-ymD8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        PyTorch training code can be found <a href="https://gist.github.com/kareemn/c760f652ffb62cb565f99f926d807025">here</a>
+      </section>
+      <section>
+        <h3>Noise Suppression Neural Network</h3>
+        <p>In 2020, I trained a neural network based on <a href="https://google.github.io/speaker-id/publications/VoiceFilter/">VoiceFilter</a> architecture. The idea was learn a mask to apply to spectrograms in order to mask out non-speech noise.  </p>
+        <p>Here's what it sounds like:</p>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/Mon3kjfvdx0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </section>
+      <section>
+        <h3>Rover Music Visualizer using Generative Adverserial Network</h3>
+        <p>
+          I was looking for an excuse to learn <a href="https://www.rust-lang.org/">Rust</a>. I decided to build a music visualizer using Rust and a <a href="https://en.wikipedia.org/wiki/Generative_adversarial_network">Generative Adverserial Network</a>.
+        </p>
+        <p>
+          The general idea is to use the frequency components of the streaming music to explore the <a href="https://en.wikipedia.org/wiki/Latent_space">latent space</a> of a <a href="https://github.com/robbiebarrat/art-DCGAN">pretrained art GAN</a>.
+        </p>
+        <p>
+          For each timestep in the music:
+          <ul>
+            <li>compute frequency components</li>
+            <li>generate a vector based on frequency components and previous timestep's vector (we don't want the art to change too quickly).</li>
+            <li>pass the vector to the GAN to produce the art</li>
+            <li>render art in frame buffer</li>
+          </ul>
+        </p>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/a9yJmaswq2o" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        Code found here: <a href="https://github.com/kareemn/rover">https://github.com/kareemn/rover</a>
+      </section>
+
       <section>
 <h3>My first neural network using TensorFlow</h3>
 I'm currently taking an online course called <a href="https://www.kadenze.com/courses/creative-applications-of-deep-learning-with-tensorflow-iv">Creative Applications of Deep Learning with TensorFlow.</a>
@@ -149,6 +183,18 @@ Here is a visualization of the neural network's output during training. The grap
 <img src="images/first_nn/gradient_descent.gif"/>
 
 
+      </section>
+
+      <section>
+        <h3>Poynt Nay-Nay</h3>
+        <p>
+          In 2015, I worked on the OS of a <a href="https://www.poynt.com/">payment terminal</a>. We built a <a href="https://support.poynt.com/hc/en-us/articles/360057832733-Introduction-to-Mission-Control">remote management feature</a> for pushing out OS and app updates.
+          In order to test it out, we pushed a music video to all of our test devices simultaneously.
+        </p>
+        <p>
+          The following is what ensued:
+        </p>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/7pg6mZ9HXU4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </section>
       <footer>
         <p><small>Hello &mdash; there</small></p>
