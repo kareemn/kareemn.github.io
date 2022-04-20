@@ -4,7 +4,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <title>Kareem Nassar by kimocode</title>
-
+    <style>
+       .video-container { position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden; }
+       .video-container iframe, .video-container object, .video-container embed { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+    </style>
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
@@ -34,14 +37,18 @@
         <p>I trained a Deep Reinforcement Learning model based on soft Actor-Critic using architecture similar to the <a href="https://www.cs.toronto.edu/~vmnih/docs/dqn.pdf">AtariNet</a> arch, Monte Carlo roll-out, experience replay, and importance sampling (since its off-policy). The "soft" part of the actor-critic maintains some entropy in the probability distribution of the actions to continue to encourage exploration. See <a href="https://arxiv.org/abs/1801.01290">this paper</a> for more details.
         </p>
         <p>After a few iterations, looks like it learned something:</p>
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/bMo1Gg-ymD8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <div class="video-container">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/bMo1Gg-ymD8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
         PyTorch training code can be found <a href="https://gist.github.com/kareemn/c760f652ffb62cb565f99f926d807025">here</a>
       </section>
       <section>
         <h3>Noise Suppression Neural Network</h3>
         <p>In 2020, I trained a neural network based on <a href="https://google.github.io/speaker-id/publications/VoiceFilter/">VoiceFilter</a> architecture. The idea was learn a mask to apply to spectrograms in order to mask out non-speech noise.  </p>
         <p>Here's what it sounds like:</p>
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/Mon3kjfvdx0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <div class="video-container">
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/Mon3kjfvdx0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
       </section>
       <section>
         <h3>Rover Music Visualizer using Generative Adverserial Network</h3>
@@ -60,7 +67,9 @@
             <li>render art in frame buffer</li>
           </ul>
         </p>
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/a9yJmaswq2o" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <div class="video-container">
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/a9yJmaswq2o" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
         Code found here: <a href="https://github.com/kareemn/rover">https://github.com/kareemn/rover</a>
       </section>
 
@@ -69,128 +78,24 @@
         <p>In 2018, I built a voice assistant that could join your Zoom meetings. I emulated the webcam and audio drivers in a docker container with a headless chrome browser. Our team at Workfit/Voicera/Voicea (we changed the name a few times...) eventually scaled it up on a kubernetes cluster.</p> 
         <p>We built our own wakeword detector and (eventually) our own speech recognition engines.</p>
         <p>Here's a video of what it looked like in a Zoom meeting:</p>
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/1FbBXDxFG7g" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <div class="video-container">
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/1FbBXDxFG7g" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
       </section>
-      <section>
-<h3>My first neural network using TensorFlow</h3>
-I'm currently taking an online course called <a href="https://www.kadenze.com/courses/creative-applications-of-deep-learning-with-tensorflow-iv">Creative Applications of Deep Learning with TensorFlow.</a>
-For this class's second project, I am attempting to train a neural network using <a href="http://www.tensorflow.org">TensorFlow</a> to draw this:</p>
-<img src="images/first_nn/starry_night.png"/>
-<pre><code>
-tf.reset_default_graph()
-# Our input, will take row and column
-X = tf.placeholder(tf.float32, shape=(None, 2))
+      <!-- <section>
+        <h3>My first neural network using TensorFlow</h3>
+        In 2016, I took an online course called <a href="https://www.kadenze.com/courses/creative-applications-of-deep-learning-with-tensorflow-iv">Creative Applications of Deep Learning with TensorFlow.</a>
+        For this class's second project, I am attempting to train a neural network using <a href="http://www.tensorflow.org">TensorFlow</a> to draw this:</p>
+        <img src="images/first_nn/starry_night.png"/>
 
-# Our output: RGB vector
-Y = tf.placeholder(tf.float32, shape=(None, 3))
-</code></pre>
-
-<p>Helper method for creating a single neural network layer:</p>
-<pre><code>
-def linear(x, n_output, name=None, activation=None, reuse=None):
-    if len(x.get_shape()) != 2:
-        x = flatten(x, reuse=reuse)
-
-    n_input = x.get_shape().as_list()[1]
-
-    with tf.variable_scope(name or "fc", reuse=reuse):
-        W = tf.get_variable(
-            name='W',
-            shape=[n_input, n_output],
-            dtype=tf.float32,
-            initializer=tf.contrib.layers.xavier_initializer())
-
-        b = tf.get_variable(
-            name='b',
-            shape=[n_output],
-            dtype=tf.float32,
-            initializer=tf.constant_initializer(0.0))
-
-        h = tf.nn.bias_add(
-            name='h',
-            value=tf.matmul(x, W),
-            bias=b)
-
-        if activation:
-            h = activation(h)
-        return h, W
-</code></pre>
-
-<p>We'll create 6 hidden layers w/100 neurons each. In this example, I use the <a href="https://www.tensorflow.org/versions/r0.12/api_docs/python/nn.html#relu">relu activation function.</a></p>
-<pre><code>
-n_neurons = 100
-n_layers = 6
-activation_func = tf.nn.relu
-
-prev_input = X
-for i in range(0, n_layers):
-    H_i, W_i = utils.linear(
-        x=prev_input, n_output=n_neurons,
-        name='layer%d' % (i+1), activation=activation_func)
-    prev_input = H_i
-
-# last layer, and our predicted RGB values:
-Y_pred, W_last = utils.linear(
-    prev_input, 3, activation=None, name='pred')
-</code></pre>
-
-<p>Now, we set up our l2-norm cost function. This will penalize predictions that are off from our actual values more heavily.</p>
-<pre><code>
-error = tf.abs(tf.squared_difference(Y, Y_pred))
-sum_error = tf.reduce_sum(error, reduction_indices=1)
-cost = tf.reduce_mean(sum_error)
-</code></pre>
-
-We'll perform gradient descent to search the parameter space for minimizing this cost function.
-<pre><code>
-optimizer = tf.train.GradientDescentOptimizer(
-    learning_rate=0.1).minimize(cost)
-n_iterations = 1000
-batch_size = 500
-sess = tf.Session()
-sess.run(tf.initialize_all_variables())
-
-costs = []
-gif_step = n_iterations // 10
-step_i = 0
-
-for it_i in range(n_iterations):
-    
-    # Get a random sampling of the dataset
-    idxs = np.random.permutation(range(len(xs)))
-    
-    # The number of batches we have to iterate over
-    n_batches = len(idxs) // batch_size
-    
-    # Now iterate over our stochastic minibatches:
-    for batch_i in range(n_batches):
-         
-        # Get just minibatch amount of data
-        idxs_i =
-            idxs[batch_i * batch_size: (batch_i + 1) * batch_size]
-
-        # And optimize, also returning the cost so we can monitor
-        # how our optimization is doing.
-        training_cost = sess.run(
-            [cost, optimizer],
-            feed_dict={X: xs[idxs_i], Y: ys[idxs_i]})[0]
-</code></pre>
-After we've gone through our iterations we'll want to pull out our final values:
-<pre>
-<code>
-ys_pred = Y_pred.eval(feed_dict={X: xs}, session=sess)
-img = np.clip(ys_pred.reshape(img.shape), 0, 1)
-plt.imsave('final', img)
-</code>
-</pre>
-<p>Here is final output of the neural network. Not bad for a 600-neuron brain.</p>
-<img src="images/first_nn/final.png"/>
-<br/><br/>
-Here is a visualization of the neural network's output during training. The graph shows the cost over time for each batch interation.
-<img src="images/first_nn/gradient_descent.gif"/>
+        <p>Here is final output of the neural network. Not bad for a 600-neuron brain.</p>
+        <img src="images/first_nn/final.png"/>
+        <br/><br/>
+        Here is a visualization of the neural network's output during training. The graph shows the cost over time for each batch interation.
+        <img src="images/first_nn/gradient_descent.gif"/>
 
 
-      </section>
+      </section> -->
 
       <section>
         <h3>Poynt Nay-Nay</h3>
@@ -201,7 +106,9 @@ Here is a visualization of the neural network's output during training. The grap
         <p>
           The following is what ensued:
         </p>
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/7pg6mZ9HXU4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <div class="video-container">
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/7pg6mZ9HXU4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
       </section>
       <footer>
         <p><small>Hello &mdash; there</small></p>
