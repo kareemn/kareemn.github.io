@@ -92,12 +92,14 @@
 
       <section>
         <h3>Voice Assistant for your Zoom/Google Meet/Webex meetings</h3>
-        <p>In 2018, I built a voice assistant that could join your Zoom meetings. I emulated the webcam and audio drivers in a docker container with a headless chrome browser. Our team at Workfit/Voicera/Voicea (we changed the name a few times...) eventually scaled it up on a kubernetes cluster.</p> 
-        <p>We built our own wakeword detector and (eventually) our own speech recognition engines.</p>
-        <p>Here's a video of what it looked like in a Zoom meeting:</p>
-        <div class="video-container">
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/1FbBXDxFG7g" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
+	   <p>In 2018, I developed a voice assistant for Zoom, Google Meet, and Webex meetings that allowed users to trigger actions using their voice. One of the main insights behind this project was that this was one of the only ways to get higher quality audio before these meeting providers offered APIs with a minimum of 16kHz audio. By using this approach, we were able to achieve a higher quality audio than if we had used a service like Twilio to dial-in, which only offers 8kHz audio.</p>
+           <p>I emulated the webcam and audio drivers in a docker container with a headless chrome browser. Our team at Workfit/Voicera/Voicea (we changed the name a few times...) eventually scaled it up on a kubernetes cluster. </p> 
+	   <p>One of the most effective growth hacks we implemented was generating a virtual webcam and showcasing our bot in meetings. This allowed us to reach a wider audience and increase our adoption rate, as on average, 3+ people were exposed to our bot for every meeting a user invited it to.</p>
+           <p>We built our own wakeword detector and (eventually) our own speech recognition engines.</p>
+           <p>Here's a video of what it looked like in a Zoom meeting:</p>
+           <div class="video-container">
+              <iframe width="560" height="315" src="https://www.youtube.com/embed/1FbBXDxFG7g" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+           </div>
       </section>
       <!-- <section>
         <h3>My first neural network using TensorFlow</h3>
