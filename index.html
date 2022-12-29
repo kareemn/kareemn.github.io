@@ -45,13 +45,19 @@
       </section>
       <section>
         <h3>Using Deep Reinforcement Learning to play Pong</h3>
-        <p>I trained a Deep Reinforcement Learning model based on soft Actor-Critic using architecture similar to the <a href="https://www.cs.toronto.edu/~vmnih/docs/dqn.pdf">AtariNet</a> arch, Monte Carlo roll-out, experience replay, and importance sampling (since its off-policy). The "soft" part of the actor-critic maintains some entropy in the probability distribution of the actions to continue to encourage exploration. See <a href="https://arxiv.org/abs/1801.01290">this paper</a> for more details.
-        </p>
-        <p>After a few iterations, looks like it learned something:</p>
+	
+	<p>I trained a deep reinforcement learning model to play the classic game of Pong using the soft actor-critic algorithm. The soft actor-critic algorithm is a variant of the actor-critic algorithm that uses a "soft" version of the action distribution, in order to encourage exploration during training.</p>
+<p>To process the game's image frames and predict the appropriate actions, I implemented a series of convolutional neural networks (CNNs) using PyTorch. Similar to the <a href="https://www.cs.toronto.edu/~vmnih/docs/dqn.pdf">AtariNet</a> arch, CNNs consisted of four convolutional layers. These layers were followed by a fully-connected layer with 128 units, and two output layers, one for the action value function (the critic) and one for the policy (the actor).</p>
+<p>To train the model, I used the Adam optimizer and a mean squared error loss function for the critic, and a negative log likelihood loss function for the actor. I also employed techniques such as Monte Carlo roll-out, experience replay, and importance sampling to improve the model's performance.</p>
+<p>Monte Carlo roll-out involves simulating a complete episode of the game, starting from the current state, and using the current policy to choose actions until the episode is completed. The rewards obtained during the episode are then used to update the policy. This technique helps to improve the model's ability to plan ahead and make more informed decisions.</p>
+<p>Experience replay involves storing a dataset of past experiences (i.e., state-action-reward-next state tuples) and sampling from this dataset when updating the policy. This helps to decorrelate the experiences and stabilize the learning process.</p>
+<p>Importance sampling is a technique used to correct for the fact that the data distribution changes over time due to the learning process. It involves weighting the importance of each experience based on how similar it is to the current policy. This helps to correct for the fact that the model may be learning from experiences that are no longer representative of the current policy.</p>
+	      <p>After several iterations, my model was able to learn how to play Pong and achieved reasonable performance. You can see a demonstration of the model in action in this YouTube video:</p>
         <div class="video-container">
             <iframe width="560" height="315" src="https://www.youtube.com/embed/bMo1Gg-ymD8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </div>
-        PyTorch training code can be found <a href="https://gist.github.com/kareemn/c760f652ffb62cb565f99f926d807025">here</a>
+        <p>The PyTorch training code for this project can be found <a href="https://gist.github.com/kareemn/c760f652ffb62cb565f99f926d807025">here</a> </p>
+	<p>Overall, training this deep reinforcement learning model was a challenging but rewarding experience that taught me about the capabilities and limitations of this type of algorithm.</p>
       </section>
       <section>
         <h3>Noise Suppression Neural Network</h3>
