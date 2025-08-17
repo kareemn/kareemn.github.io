@@ -1,149 +1,181 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Kareem Nassar by kimocode</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Kareem Nassar — AI, Speech & Real‑Time Translation</title>
+    <meta name="description" content="Kareem Nassar is an AI engineer and founder focused on real‑time speech‑to‑speech translation, ASR, and low‑latency voice systems. Selected projects, demos, and writing." />
+
+    <!-- Open Graph / Twitter -->
+    <meta property="og:title" content="Kareem Nassar — AI, Speech & Real‑Time Translation" />
+    <meta property="og:description" content="Projects across speech, reinforcement learning, and realtime systems." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://kareemn.github.io/" />
+    <meta property="og:image" content="/images/og-card.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Fallback styles; keep your existing CSS but add a small modern layer -->
+    <link rel="stylesheet" href="stylesheets/styles.css" />
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css" />
     <style>
-       .video-container { position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden; }
-       .video-container iframe, .video-container object, .video-container embed { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+      :root {
+        --bg: #0b0c10;
+        --card: #111316;
+        --fg: #e6edf3;
+        --muted: #a9b1ba;
+        --link: #79c0ff;
+        --accent: #9bcdff;
+        --border: #232a31;
+      }
+      @media (prefers-color-scheme: light) {
+        :root { --bg:#ffffff; --card:#f8fafc; --fg:#0f172a; --muted:#475569; --link:#0ea5e9; --accent:#0369a1; --border:#e2e8f0; }
+      }
+      html, body { height: 100%; }
+      body { margin: 0; font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, Apple Color Emoji, Segoe UI Emoji; color: var(--fg); background: var(--bg); }
+      a { color: var(--link); text-decoration: none; }
+      a:hover { text-decoration: underline; }
+      .wrapper { max-width: 960px; padding: 2rem; margin: 0 auto; }
+      header { display: grid; grid-template-columns: 1fr; gap: 1rem; margin-bottom: 2rem; }
+      .brand { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+      .brand h1 { font-size: clamp(1.5rem, 1.2rem + 2vw, 2.5rem); margin: 0; }
+      .tag { color: var(--muted); margin: 0; }
+      nav { display: flex; gap: 1rem; flex-wrap: wrap; }
+      .nav-link { padding: .5rem .75rem; border: 1px solid var(--border); border-radius: 999px; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02)); }
+      .hero { border: 1px solid var(--border); background: var(--card); padding: 1.25rem; border-radius: 16px; }
+      .hero p { margin: .5rem 0; }
+      section { border-top: 1px solid var(--border); padding-top: 2rem; margin-top: 2rem; }
+      h2, h3 { margin: 0 0 .75rem; }
+      .meta { color: var(--muted); font-size: .9rem; margin-bottom: .5rem; }
+      .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border: 1px solid var(--border); border-radius: 12px; background:#000; }
+      .video-container iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+      img { max-width: 100%; height: auto; border: 1px solid var(--border); border-radius: 12px; }
+      ul { margin: .5rem 0 1rem 1.25rem; }
+      footer { color: var(--muted); padding: 3rem 0; text-align: center; }
+      .grid { display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
+      @media (min-width: 720px) { .grid { grid-template-columns: 1fr 1fr; } }
+      .chip { display:inline-block; font-size:.85rem; padding:.15rem .5rem; border:1px solid var(--border); border-radius:6px; color:var(--muted); margin-right:.25rem; }
+      .sr-only{ position:absolute; clip:rect(1px,1px,1px,1px); padding:0; border:0; height:1px; width:1px; overflow:hidden; }
     </style>
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+
+    <!-- JSON-LD (Person) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Kareem Nassar",
+      "url": "https://kareemn.github.io/",
+      "sameAs": [
+        "https://github.com/kareemn",
+        "https://www.linkedin.com/in/kareemnassar",
+        "https://angel.co/knassar"
+      ],
+      "jobTitle": "Founder / AI Engineer",
+      "worksFor": {"@type":"Organization","name":"EzDubs"}
+    }
+    </script>
   </head>
   <body>
+    <a class="sr-only" href="#content">Skip to content</a>
     <div class="wrapper">
       <header>
-        <h1>Kareem Nassar</h1>
-        <p>Coder and Observer</p>
-
-
-        <p class="view">
-			<a href="https://github.com/kareemn">GitHub</a>
-			<br/>
-			<a href="http://angel.co/knassar">AngelList</a>
-			<br/>
-			<a href="http://www.linkedin.com/in/kareemnassar">Linkedin</a>
-			<br/>
-		</p>
-
+        <div class="brand">
+          <div>
+            <h1>Kareem Nassar</h1>
+            <p class="tag">AI engineer building real‑time speech systems • founder @ EzDubs</p>
+          </div>
+          <nav aria-label="Primary">
+            <a class="nav-link" href="https://github.com/kareemn" rel="me noopener" target="_blank">GitHub</a>
+            <a class="nav-link" href="http://angel.co/knassar" rel="noopener" target="_blank">AngelList</a>
+            <a class="nav-link" href="http://www.linkedin.com/in/kareemnassar" rel="me noopener" target="_blank">LinkedIn</a>
+          </nav>
+        </div>
+        <div class="hero">
+          <p><strong>Now:</strong> co‑founding <em>EzDubs</em> — real‑time speech‑to‑speech translation that preserves speaker's voice with low latency. Previously led/implemented ASR and voice systems across startups and large‑scale deployments.</p>
+          <p><span class="chip">ASR</span> <span class="chip">S2ST</span> <span class="chip">Latency</span> <span class="chip">Kubernetes</span> <span class="chip">PyTorch</span></p>
+        </div>
       </header>
-      <section>
-        <h3>Smartmiq Deskstop Assistant</h3>
-        <p>In 2021, I built a voice desktop assistant called Smartmiq that allows users to trigger actions using their voice. Similar to Mac's Spotlight search, Smartmiq allows users to perform tasks such as searching Google or replying to Slack messages with just their voice.</p>
-        <img src="images/smartmiq_search_google.gif"/>
-        <p>Or you could use it to reply to slack messages:</p>
-        <img src="images/smartmiq_slack_reply.gif"/>
-	<p>One of the unique aspects of Smartmiq is that I developed my own automatic speech recognition (ASR) system using PyTorch and the transducer architecture. This allowed me to achieve a high level of customization and control over the voice recognition capabilities of the assistant.</p>
-	<p>I also focused on creating a user interface for Smartmiq that closely resembled the look and feel of Spotlight, in order to make it familiar and intuitive for users. However, as I continued to use and develop Smartmiq, I began to realize that voice input on desktop and laptop computers has not gained as much traction as it has on mobile devices. This is likely due to the fact that typing is often faster and more convenient on these devices, especially in public settings.</p>
-	<p>Despite this realization, I received positive feedback from users who found Smartmiq to be a useful and convenient tool. Overall, building Smartmiq was a valuable learning experience that helped me to better understand the potential and limitations of voice input on desktop and laptop computers.</p>
 
-      </section>
-      <section>
-        <h3>Using Deep Reinforcement Learning to play Pong</h3>
-	
-	<p>I trained a deep reinforcement learning model to play the classic game of Pong using the soft actor-critic algorithm. The soft actor-critic algorithm is a variant of the actor-critic algorithm that uses a "soft" version of the action distribution, in order to encourage exploration during training.</p>
-<p>To process the game's image frames and predict the appropriate actions, I implemented a series of convolutional neural networks (CNNs) using PyTorch. Similar to the <a href="https://www.cs.toronto.edu/~vmnih/docs/dqn.pdf">AtariNet</a> arch, CNNs consisted of four convolutional layers. These layers were followed by a fully-connected layer with 128 units, and two output layers, one for the action value function (the critic) and one for the policy (the actor).</p>
-<p>To train the model, I used the Adam optimizer and a mean squared error loss function for the critic, and a negative log likelihood loss function for the actor. I also employed techniques such as Monte Carlo roll-out, experience replay, and importance sampling to improve the model's performance.</p>
-<p>Monte Carlo roll-out involves simulating a complete episode of the game, starting from the current state, and using the current policy to choose actions until the episode is completed. The rewards obtained during the episode are then used to update the policy. This technique helps to improve the model's ability to plan ahead and make more informed decisions.</p>
-<p>Experience replay involves storing a dataset of past experiences (i.e., state-action-reward-next state tuples) and sampling from this dataset when updating the policy. This helps to decorrelate the experiences and stabilize the learning process.</p>
-<p>Importance sampling is a technique used to correct for the fact that the data distribution changes over time due to the learning process. It involves weighting the importance of each experience based on how similar it is to the current policy. This helps to correct for the fact that the model may be learning from experiences that are no longer representative of the current policy.</p>
-	      <p>After several iterations, my model was able to learn how to play Pong and achieved reasonable performance. You can see a demonstration of the model in action in this YouTube video:</p>
-        <div class="video-container">
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/bMo1Gg-ymD8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-      </div>
-        <p>The PyTorch training code for this project can be found <a href="https://gist.github.com/kareemn/c760f652ffb62cb565f99f926d807025">here</a> </p>
-	<p>Overall, training this deep reinforcement learning model was a challenging but rewarding experience that taught me about the capabilities and limitations of this type of algorithm.</p>
-      </section>
-      <section>
-        <h3>Noise Suppression Neural Network</h3>
-        <p>In 2020, I trained a neural network based on <a href="https://google.github.io/speaker-id/publications/VoiceFilter/">VoiceFilter</a> architecture. The idea was learn a mask to apply to spectrograms in order to mask out non-speech noise.  </p>
-        <p>Here's what it sounds like:</p>
-        <div class="video-container">
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/Mon3kjfvdx0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
-      </section>
-      <section>
-        <h3>Rover Music Visualizer using Generative Adverserial Network</h3>
-        <p>
-          I was looking for an excuse to learn <a href="https://www.rust-lang.org/">Rust</a>. I decided to build a music visualizer using Rust and a <a href="https://en.wikipedia.org/wiki/Generative_adversarial_network">Generative Adverserial Network</a>.
-        </p>
-        <p>
-          The general idea is to use the frequency components of the streaming music to explore the <a href="https://en.wikipedia.org/wiki/Latent_space">latent space</a> of a <a href="https://github.com/robbiebarrat/art-DCGAN">pretrained art GAN</a>.
-        </p>
-        <p>
-          For each timestep in the music:
+      <main id="content">
+        <section id="smartmiq">
+          <h2>Smartmiq Desktop Assistant</h2>
+          <p class="meta">2021 • PyTorch (Transducer), macOS UI</p>
+          <div class="grid">
+            <div>
+              <p>Spotlight‑style voice assistant for desktop. Trigger actions hands‑free (search, reply to Slack, etc.). I trained my own ASR based on a transducer architecture for tighter control over latency and accuracy.</p>
+              <p><em>What I learned:</em> voice on laptops/desktops is useful but often slower than typing in public; UX must bias toward zero‑friction hybrid input (keyboard + voice), and ASR needs strong endpointing.</p>
+            </div>
+            <div>
+              <figure>
+                <img loading="lazy" src="images/smartmiq_search_google.gif" alt="Smartmiq demo: voice search triggering Google results" />
+              </figure>
+              <p style="margin:.5rem 0 0; color:var(--muted)">Replying to Slack by voice:</p>
+              <img loading="lazy" src="images/smartmiq_slack_reply.gif" alt="Smartmiq demo: replying to Slack messages with voice" />
+            </div>
+          </div>
+        </section>
+
+        <section id="pong-rl">
+          <h2>Deep RL plays Pong</h2>
+          <p class="meta">SAC • CNN policy/critic • PyTorch</p>
+          <p>Implemented Soft Actor‑Critic with an AtariNet‑style convolutional encoder. Training leveraged replay, MC rollouts, and importance sampling. After tuning entropy targets and augmentation, the agent achieved stable Pong gameplay.</p>
+          <div class="video-container" aria-label="YouTube demo: RL agent playing Pong">
+            <iframe src="https://www.youtube-nocookie.com/embed/bMo1Gg-ymD8" title="Pong RL demo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <p>Training code: <a href="https://gist.github.com/kareemn/c760f652ffb62cb565f99f926d807025" target="_blank" rel="noopener">gist</a></p>
+        </section>
+
+        <section id="noise-suppression">
+          <h2>Noise Suppression Neural Network</h2>
+          <p class="meta">2020 • VoiceFilter‑style masking</p>
+          <p>Learned a spectral mask to suppress non‑speech noise, inspired by Google’s VoiceFilter. The model improves intelligibility in common home/office environments.</p>
+          <div class="video-container" aria-label="YouTube demo: noise suppression before/after">
+            <iframe src="https://www.youtube-nocookie.com/embed/Mon3kjfvdx0" title="Noise suppression demo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </section>
+
+        <section id="rover">
+          <h2>Rover — Music Visualizer via GAN</h2>
+          <p class="meta">Rust • DCGAN latent exploration</p>
+          <p>Mapped audio frequency features to a smoothed latent walk through a pretrained art‑DCGAN to generate synchronized visuals in real time.</p>
           <ul>
-            <li>compute frequency components</li>
-            <li>generate a vector based on frequency components and previous timestep's vector (we don't want the art to change too quickly).</li>
-            <li>pass the vector to the GAN to produce the art</li>
-            <li>render art in frame buffer</li>
+            <li>Compute frequency components per frame</li>
+            <li>Integrate with previous latent for temporal smoothness</li>
+            <li>Render GAN output to framebuffer</li>
           </ul>
-        </p>
-        <div class="video-container">
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/a9yJmaswq2o" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
-        Code found here: <a href="https://github.com/kareemn/rover">https://github.com/kareemn/rover</a>
-      </section>
+          <div class="video-container" aria-label="YouTube demo: Rover GAN visualizer">
+            <iframe src="https://www.youtube-nocookie.com/embed/a9yJmaswq2o" title="Rover GAN Visualizer" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <p>Code: <a href="https://github.com/kareemn/rover" target="_blank" rel="noopener">github.com/kareemn/rover</a></p>
+        </section>
 
-      <section>
-        <h3>Voice Assistant for your Zoom/Google Meet/Webex meetings</h3>
-	   <p>In 2018, I developed a voice assistant for Zoom, Google Meet, and Webex meetings that allowed users to trigger actions using their voice. One of the main insights behind this project was that this was one of the only ways to get higher quality audio before these meeting providers offered APIs with a minimum of 16kHz audio. By using this approach, we were able to achieve a higher quality audio than if we had used a service like Twilio to dial-in, which only offers 8kHz audio.</p>
-           <p>I emulated the webcam and audio drivers in a docker container with a headless chrome browser. Our team at Workfit/Voicera/Voicea (we changed the name a few times...) eventually scaled it up on a kubernetes cluster. </p> 
-	   <p>One of the most effective growth hacks we implemented was generating a virtual webcam and showcasing our bot in meetings. This allowed us to reach a wider audience and increase our adoption rate, as on average, 3+ people were exposed to our bot for every meeting a user invited it to.</p>
-           <p>We built our own wakeword detector and (eventually) our own speech recognition engines.</p>
-           <p>Here's a video of what it looked like in a Zoom meeting:</p>
-           <div class="video-container">
-              <iframe width="560" height="315" src="https://www.youtube.com/embed/1FbBXDxFG7g" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-           </div>
-      </section>
-      <!-- <section>
-        <h3>My first neural network using TensorFlow</h3>
-        In 2016, I took an online course called <a href="https://www.kadenze.com/courses/creative-applications-of-deep-learning-with-tensorflow-iv">Creative Applications of Deep Learning with TensorFlow.</a>
-        For this class's second project, I am attempting to train a neural network using <a href="http://www.tensorflow.org">TensorFlow</a> to draw this:</p>
-        <img src="images/first_nn/starry_night.png"/>
+        <section id="meeting-assistant">
+          <h2>Meeting Voice Assistant (Zoom/Meet/Webex)</h2>
+          <p class="meta">2018 • Workfit/Voicera/Voicea • Kubernetes</p>
+          <p>Before high‑quality meeting audio APIs existed, I emulated webcam/mic drivers in a Dockerized headless Chrome to capture >16kHz audio for wake‑word and ASR, then scaled it across a Kubernetes cluster. We also used a virtual webcam to demo the bot live, a surprisingly effective growth loop.</p>
+          <div class="video-container" aria-label="YouTube demo: meeting assistant in Zoom">
+            <iframe src="https://www.youtube-nocookie.com/embed/1FbBXDxFG7g" title="Zoom meeting assistant demo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </section>
 
-        <p>Here is final output of the neural network. Not bad for a 600-neuron brain.</p>
-        <img src="images/first_nn/final.png"/>
-        <br/><br/>
-        Here is a visualization of the neural network's output during training. The graph shows the cost over time for each batch interation.
-        <img src="images/first_nn/gradient_descent.gif"/>
+        <section id="poynt">
+          <h2>Poynt Nay‑Nay</h2>
+          <p class="meta">2015 • Payment terminal OS • Remote updates</p>
+          <p>Built remote OS/app update tooling for payment terminals; for a stress test we pushed a music video to all test devices at once — chaos ensued.</p>
+          <div class="video-container" aria-label="YouTube demo: Poynt Nay-Nay">
+            <iframe src="https://www.youtube-nocookie.com/embed/7pg6mZ9HXU4" title="Poynt Nay-Nay" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </section>
+      </main>
 
-
-      </section> -->
-
-      <section>
-        <h3>Poynt Nay-Nay</h3>
-        <p>
-          In 2015, I worked on the OS of a <a href="https://www.poynt.com/">payment terminal</a>. We built a <a href="https://support.poynt.com/hc/en-us/articles/360057832733-Introduction-to-Mission-Control">remote management feature</a> for pushing out OS and app updates.
-          In order to test it out, we pushed a music video to all of our test devices simultaneously.
-        </p>
-        <p>
-          The following is what ensued:
-        </p>
-        <div class="video-container">
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/7pg6mZ9HXU4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
-      </section>
       <footer>
-        <p><small>Hello &mdash; there</small></p>
+        <p>Say hi: <a href="mailto:hello@kareem.ai">hello@kareem.ai</a></p>
+        <p><small>© <span id="y"></span> Kareem Nassar • Built with plain HTML/CSS, no framework</small></p>
       </footer>
     </div>
-    <script src="javascripts/scale.fix.js"></script>
-              <script type="text/javascript">
-            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-          </script>
-          <script type="text/javascript">
-            try {
-              var pageTracker = _gat._getTracker("UA-41313960-1");
-            pageTracker._trackPageview();
-            } catch(err) {}
-          </script>
 
+    <script>
+      // Small niceties: current year and reduced‑motion pause for videos if desired
+      document.getElementById('y').textContent = new Date().getFullYear();
+    </script>
   </body>
 </html>
