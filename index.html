@@ -3,23 +3,21 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Kareem Nassar — AI, Speech & Real‑Time Translation</title>
-    <meta name="description" content="Kareem Nassar is an AI engineer and founder focused on real‑time speech‑to‑speech translation, ASR, and low‑latency voice systems. Selected projects, demos, and writing." />
+    <title>Kareem Nassar — AI Systems, World Models & Real-Time Speech</title>
+    <meta name="description" content="Kareem Nassar is an AI systems engineer and founder working on real-time speech, human signal for agent evals, world models, RL workflows, and low-latency AI products." />
 
     <!-- Open Graph / Twitter -->
-    <meta property="og:title" content="Kareem Nassar — AI, Speech & Real‑Time Translation" />
-    <meta property="og:description" content="Projects across speech, reinforcement learning, and realtime systems." />
+    <meta property="og:title" content="Kareem Nassar — AI Systems, World Models & Real-Time Speech" />
+    <meta property="og:description" content="Projects and notes across real-time speech, world models, RL/evals, and human signal for agent workflows." />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://kareemn.github.io/" />
-    <meta property="og:image" content="/images/og-card.jpg" />
-    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="og:url" content="https://kareem.me/" />
+    <meta name="twitter:card" content="summary" />
 
-    <link rel="stylesheet" href="stylesheets/styles.css" />
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css" />
     <style>
       :root {
         --bg: #0b0c10;
         --card: #111316;
+        --card-soft: #0f1115;
         --fg: #e6edf3;
         --muted: #a9b1ba;
         --link: #79c0ff;
@@ -27,31 +25,41 @@
         --border: #232a31;
       }
       @media (prefers-color-scheme: light) {
-        :root { --bg:#ffffff; --card:#f8fafc; --fg:#0f172a; --muted:#475569; --link:#0ea5e9; --accent:#0369a1; --border:#e2e8f0; }
+        :root { --bg:#ffffff; --card:#f8fafc; --card-soft:#ffffff; --fg:#0f172a; --muted:#475569; --link:#0b84c6; --accent:#0369a1; --border:#d8e0ea; }
       }
       html, body { height: 100%; }
       body { margin: 0; font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, Apple Color Emoji, Segoe UI Emoji; color: var(--fg); background: var(--bg); }
       a { color: var(--link); text-decoration: none; }
       a:hover { text-decoration: underline; }
-      .wrapper { max-width: 960px; padding: 2rem; margin: 0 auto; }
-      header { display: grid; grid-template-columns: 1fr; gap: 1rem; margin-bottom: 2rem; }
-      .brand { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+      .wrapper { max-width: 1040px; padding: clamp(1.25rem, 3vw, 2.5rem); margin: 0 auto; }
+      header { display: grid; gap: 1.25rem; margin-bottom: 2.5rem; }
+      .brand { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
       .brand h1 { font-size: clamp(1.5rem, 1.2rem + 2vw, 2.5rem); margin: 0; }
-      .tag { color: var(--muted); margin: 0; }
-      nav { display: flex; gap: 1rem; flex-wrap: wrap; }
-      .nav-link { padding: .5rem .75rem; border: 1px solid var(--border); border-radius: 999px; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02)); }
-      .hero { border: 1px solid var(--border); background: var(--card); padding: 1.25rem; border-radius: 16px; }
-      .hero p { margin: .5rem 0; }
-      section { border-top: 1px solid var(--border); padding-top: 2rem; margin-top: 2rem; }
-      h2, h3 { margin: 0 0 .75rem; }
+      .tag { color: var(--muted); margin: .1rem 0 0; }
+      nav { display: flex; gap: .6rem; flex-wrap: wrap; justify-content: flex-end; }
+      .nav-link { display: inline-flex; align-items: center; min-height: 2.25rem; padding: 0 .75rem; border: 1px solid var(--border); border-radius: 999px; background: var(--card-soft); }
+      .hero { border: 1px solid var(--border); background: var(--card); padding: clamp(1rem, 2vw, 1.5rem); border-radius: 8px; }
+      .hero p { margin: .65rem 0; max-width: 78ch; }
+      .hero p:first-child { margin-top: 0; }
+      .hero p:last-child { margin-bottom: 0; }
+      main { display: grid; gap: 2.25rem; }
+      section { border-top: 1px solid var(--border); padding-top: 2rem; }
+      h2, h3 { margin: 0 0 .75rem; line-height: 1.2; }
+      p { max-width: 74ch; }
       .meta { color: var(--muted); font-size: .9rem; margin-bottom: .5rem; }
-      .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border: 1px solid var(--border); border-radius: 12px; background:#000; }
+      .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border: 1px solid var(--border); border-radius: 8px; background:#000; }
       .video-container iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-      img { max-width: 100%; height: auto; border: 1px solid var(--border); border-radius: 12px; }
+      video { width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 8px; background: #000; }
+      img { max-width: 100%; height: auto; border: 1px solid var(--border); border-radius: 8px; }
+      figure { margin: 0; }
       ul { margin: .5rem 0 1rem 1.25rem; }
       footer { color: var(--muted); padding: 3rem 0; text-align: center; }
       .grid { display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
       @media (min-width: 720px) { .grid { grid-template-columns: 1fr 1fr; } }
+      .note-list { list-style: none; margin: 1rem 0 0; padding: 0; display: grid; gap: .9rem; }
+      .note-list li { max-width: 78ch; padding-left: 1rem; border-left: 2px solid var(--border); }
+      .compact-section { max-width: 780px; }
+      .compact-section p { margin-bottom: 0; }
       .chip { display:inline-block; font-size:.85rem; padding:.15rem .5rem; border:1px solid var(--border); border-radius:6px; color:var(--muted); margin-right:.25rem; }
       .sr-only{ position:absolute; clip:rect(1px,1px,1px,1px); padding:0; border:0; height:1px; width:1px; overflow:hidden; }
     </style>
@@ -62,14 +70,15 @@
       "@context": "https://schema.org",
       "@type": "Person",
       "name": "Kareem Nassar",
-      "url": "https://kareemn.github.io/",
+      "url": "https://kareem.me/",
       "sameAs": [
+        "https://x.com/kimocode",
         "https://github.com/kareemn",
         "https://www.linkedin.com/in/kareemnassar",
         "https://angel.co/knassar"
       ],
-      "jobTitle": "Founder / AI Engineer",
-      "worksFor": {"@type":"Organization","name":"EzDubs"}
+      "jobTitle": "Founder / AI Systems Engineer",
+      "worksFor": {"@type":"Organization","name":"Candor"}
     }
     </script>
   </head>
@@ -80,21 +89,89 @@
         <div class="brand">
           <div>
             <h1>Kareem Nassar</h1>
-            <p class="tag">AI engineer building real‑time speech systems • founder @ EzDubs</p>
+            <p class="tag">AI systems engineer • real-time speech, world models, RL/evals</p>
           </div>
           <nav aria-label="Primary">
+            <a class="nav-link" href="https://x.com/kimocode" rel="me noopener" target="_blank">X</a>
+            <a class="nav-link" href="research/">Research</a>
+            <a class="nav-link" href="https://candor.sh/" rel="noopener" target="_blank">Candor</a>
             <a class="nav-link" href="https://github.com/kareemn" rel="me noopener" target="_blank">GitHub</a>
-            <a class="nav-link" href="http://angel.co/knassar" rel="noopener" target="_blank">AngelList</a>
             <a class="nav-link" href="http://www.linkedin.com/in/kareemnassar" rel="me noopener" target="_blank">LinkedIn</a>
           </nav>
         </div>
         <div class="hero">
-          <p><strong>Now:</strong> co‑founding <em>EzDubs</em> — real‑time speech‑to‑speech translation that preserves speaker's voice with low latency. Previously led/implemented ASR and voice systems across startups and large‑scale deployments.</p>
-          <p><span class="chip">ASR</span> <span class="chip">S2ST</span> <span class="chip">Latency</span> <span class="chip">Kubernetes</span> <span class="chip">PyTorch</span></p>
+          <p><strong>Now:</strong> building <a href="https://candor.sh/" target="_blank" rel="noopener">Candor</a>, a terminal-native way to collect human signal for agent evals, RL workflows, and product feedback loops.</p>
+          <p>Previously co-founded <em>EzDubs</em>, real-time speech-to-speech translation <a href="https://www.cisco.com/site/us/en/about/corporate-development/acquisitions/ezdubs/index.html" target="_blank" rel="noopener">acquired by Cisco/Webex</a>. Before that, I built ASR and voice systems across startups and large-scale deployments.</p>
+          <p>Lately I’m thinking about language world models, AR + diffusion architectures, generated-state feedback loops, and what makes agent rollouts useful.</p>
+          <p><span class="chip">World Models</span> <span class="chip">RL/Evals</span> <span class="chip">Human Signal</span> <span class="chip">ASR</span> <span class="chip">S2ST</span> <span class="chip">PyTorch</span></p>
         </div>
       </header>
 
       <main id="content">
+        <section id="notes">
+          <h2>Current notes</h2>
+          <ul class="note-list">
+            <li><strong>World models for agents:</strong> Qwen-AgentWorld, simulator fidelity, LLM-as-judge rewards, and sim-to-real transfer for agent rollouts.</li>
+            <li><strong>Multimodal architectures:</strong> two-tower AR + diffusion systems like Cosmos 3 / Nemotron TwoTower, especially feedback from generated states back into reasoning.</li>
+            <li><strong>Human signal:</strong> how to collect better eval, ranking, and preference data close to the agent workflow.</li>
+          </ul>
+        </section>
+
+        <section id="research">
+          <h2>Research Notes</h2>
+          <p>Small public experiments at the boundary of biological learning rules and artificial neural networks: sparse expansion, local plasticity, forward-only learning, and toy systems where the mechanism is inspectable.</p>
+          <ul class="note-list">
+            <li><strong><a href="research/flys-trick.html">The Fly's Trick: Sparse Expansion as a Learning Prior</a></strong> - a small MNIST experiment inspired by the fly olfactory system, with code, references, and measured visuals.</li>
+          </ul>
+        </section>
+
+        <section id="candor">
+          <h2>Candor — Human Signal for Agent Workflows</h2>
+          <p class="meta">2026 • RL/evals • human preference data • terminal workflows</p>
+          <p><a href="https://candor.sh/" target="_blank" rel="noopener">Candor</a> collects human feedback where AI builders already work: the terminal. It supports pairwise comparisons, ratings, labeling, product feedback, and AI-moderated interviews, then returns structured signal for evals, training data, and agent workflows.</p>
+          <p>I’m especially interested in where human signal fits into agent RL loops: judge calibration, high-disagreement cases, preference data, and evaluation rubrics that survive contact with real users.</p>
+        </section>
+
+        <section id="writing" class="compact-section">
+          <h2>Writing</h2>
+          <p>Most short-form writing is on <a href="https://x.com/kimocode" target="_blank" rel="me noopener">X</a>: world models, multimodal architectures, real-time speech systems, eval loops, and the human signal that makes those loops useful.</p>
+        </section>
+
+        <section id="ezdubs-rayban">
+          <h2>EzDubs on Ray-Ban Meta Glasses</h2>
+          <p class="meta">Real-time speech translation • wearable UX</p>
+          <p>A quick demo of Paddy and me talking through EzDubs using Ray-Ban Meta glasses. This is the kind of product surface I like: AI that disappears into a live interaction instead of becoming another dashboard.</p>
+          <p class="meta">Acquisition: <a href="https://www.cisco.com/site/us/en/about/corporate-development/acquisitions/ezdubs/index.html" target="_blank" rel="noopener">Cisco announcement</a> • <a href="https://techcrunch.com/2025/11/17/cisco-acquires-translation-startup-ezdubs/" target="_blank" rel="noopener">TechCrunch coverage</a></p>
+          <video controls preload="metadata" poster="videos/ezdubs-rayban-meta-poster.jpg">
+            <source src="videos/ezdubs-rayban-meta.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </section>
+
+        <section id="ezdubs-demos">
+          <h2>More EzDubs Demos</h2>
+          <p class="meta">Real-time translation • product demos</p>
+          <p>A couple more demos from the same product arc: real-time voice translation moving from model work into live user-facing surfaces.</p>
+          <div class="grid">
+            <div class="video-container" aria-label="YouTube demo: EzDubs real-time translation">
+              <iframe src="https://www.youtube-nocookie.com/embed/n4rgnOnep-g" title="EzDubs real-time translation demo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="video-container" aria-label="YouTube demo: EzDubs product demo">
+              <iframe src="https://www.youtube-nocookie.com/embed/XhVVeaWga6k" title="EzDubs product demo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+          </div>
+        </section>
+
+        <section id="rl-world-models">
+          <h2>RL, Rollouts, and World Models</h2>
+          <p class="meta">SAC • replay • rollouts • PyTorch</p>
+          <p>Implemented Soft Actor-Critic with an AtariNet-style convolutional encoder. Training leveraged replay, MC rollouts, and importance sampling. I’m still interested in the same core problem today: how agents learn from simulated experience, how those rollouts are scored, and when simulated feedback transfers to real environments.</p>
+          <div class="video-container" aria-label="YouTube demo: RL agent playing Pong">
+            <iframe src="https://www.youtube-nocookie.com/embed/bMo1Gg-ymD8" title="Pong RL demo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <p>Training code: <a href="https://gist.github.com/kareemn/c760f652ffb62cb565f99f926d807025" target="_blank" rel="noopener">gist</a></p>
+        </section>
+
         <section id="smartmiq">
           <h2>Smartmiq Desktop Assistant</h2>
           <p class="meta">2021 • PyTorch (Transducer), macOS UI</p>
@@ -111,16 +188,6 @@
               <img loading="lazy" src="images/smartmiq_slack_reply.gif" alt="Smartmiq demo: replying to Slack messages with voice" />
             </div>
           </div>
-        </section>
-
-        <section id="pong-rl">
-          <h2>Deep RL plays Pong</h2>
-          <p class="meta">SAC • CNN policy/critic • PyTorch</p>
-          <p>Implemented Soft Actor‑Critic with an AtariNet‑style convolutional encoder. Training leveraged replay, MC rollouts, and importance sampling. After tuning entropy targets and augmentation, the agent achieved stable Pong gameplay.</p>
-          <div class="video-container" aria-label="YouTube demo: RL agent playing Pong">
-            <iframe src="https://www.youtube-nocookie.com/embed/bMo1Gg-ymD8" title="Pong RL demo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-          </div>
-          <p>Training code: <a href="https://gist.github.com/kareemn/c760f652ffb62cb565f99f926d807025" target="_blank" rel="noopener">gist</a></p>
         </section>
 
         <section id="noise-suppression">

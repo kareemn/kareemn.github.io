@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Research Notes - Kareem Nassar</title>
+    <meta name="description" content="Small public research notes from Kareem Nassar on biologically inspired learning rules, sparse coding, forward-only models, and agent eval loops." />
+    <link rel="stylesheet" href="research.css?v=4" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="site-header">
+        <a class="brand-link" href="../">Kareem Nassar</a>
+        <nav aria-label="Primary">
+          <a class="nav-link" href="../">Home</a>
+          <a class="nav-link" href="https://x.com/kimocode" rel="me noopener" target="_blank">X</a>
+          <a class="nav-link" href="https://candor.sh/" rel="noopener" target="_blank">Candor</a>
+        </nav>
+      </header>
+
+      <main>
+        <section class="article-hero">
+          <div>
+            <p class="eyebrow">Research notes</p>
+            <h1>Small mechanisms, inspectable experiments.</h1>
+            <p class="dek">Public notes on biologically inspired learning rules and toy systems where the mechanism is simple enough to see.</p>
+          </div>
+          <div class="chips">
+            <span class="chip">Sparse coding</span>
+            <span class="chip">Forward-only learning</span>
+            <span class="chip">Local plasticity</span>
+            <span class="chip">MNIST toys</span>
+          </div>
+        </section>
+
+        <section>
+          <div class="post-list">
+            <article class="post-card">
+              <p class="meta">July 2026</p>
+              <h2><a href="flys-trick.html">The Fly's Trick: Sparse Expansion as a Learning Prior</a></h2>
+              <p>A small MNIST experiment inspired by the fly olfactory system: expand into many sparse random features, keep only a tiny active tag, and train a simple local readout.</p>
+            </article>
+          </div>
+        </section>
+      </main>
+
+      <footer>
+        <p><small>© <span id="y"></span> Kareem Nassar</small></p>
+      </footer>
+    </div>
+    <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+  </body>
+</html>

@@ -1,0 +1,878 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>The Fly's Trick: Sparse Expansion as a Learning Prior - Kareem Nassar</title>
+    <meta name="description" content="A small MNIST experiment inspired by the fly olfactory system: sparse random expansion, top-k tags, and a local readout." />
+    <meta property="og:title" content="The Fly's Trick: Sparse Expansion as a Learning Prior" />
+    <meta property="og:description" content="Pixels, sparse random expansion, top-k tags, and a local readout. A public MNIST toy inspired by the fly olfactory system." />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://kareem.me/research/flys-trick.html" />
+    <meta name="twitter:card" content="summary" />
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [['\\(', '\\)']],
+          displayMath: [['\\[', '\\]']]
+        },
+        svg: {
+          fontCache: 'global'
+        },
+        options: {
+          skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <link rel="stylesheet" href="research.css?v=12" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="site-header">
+        <a class="brand-link" href="../">Kareem Nassar</a>
+        <nav aria-label="Primary">
+          <a class="nav-link" href="../">Home</a>
+          <a class="nav-link" href="./">Research</a>
+          <a class="nav-link" href="https://x.com/kimocode" rel="me noopener" target="_blank">X</a>
+          <a class="nav-link" href="https://candor.sh/" rel="noopener" target="_blank">Candor</a>
+        </nav>
+      </header>
+
+      <main>
+        <article>
+          <header class="article-hero">
+            <div>
+              <p class="eyebrow">Biological learning toy</p>
+              <h1>The Fly's Trick</h1>
+              <p class="dek">A small MNIST experiment inspired by the fly olfactory system: expand into many sparse random features, keep a tiny active tag, and learn with a simple local readout.</p>
+            </div>
+            <p class="meta">July 2026 · sparse expansion · MNIST · local plasticity</p>
+            <div class="chips">
+              <span class="chip">No backprop through features</span>
+              <span class="chip">Sparse random projection</span>
+              <span class="chip">Top-k code</span>
+              <span class="chip">Local readout</span>
+            </div>
+          </header>
+
+          <section>
+            <p class="lede">The fly olfactory circuit has a surprisingly useful computational pattern: project a compact sensory input into a much larger population, keep only a small sparse set of active cells, and let downstream neurons read out that sparse tag.</p>
+            <p class="plain-note"><strong>Plainly:</strong> the fly turns a small smell signal into a big sparse code that is easier to learn from.</p>
+            <p>I wanted a tiny artificial version of that idea. Not a biologically faithful fly model, and not an MNIST benchmark. Just a clean mechanism test: if I turn each digit into a sparse "Kenyon-cell-like" tag, how much structure does that tag preserve before any deep training?</p>
+            <p class="plain-note"><strong>Plainly:</strong> this is a mechanism demo, not a claim that the toy is a real fly model or a strong MNIST system.</p>
+            <figure class="source-figure">
+              <a href="https://www.science.org/cms/10.1126/science.aam9868/asset/57ecbbf5-ce08-4e17-9702-973f4ddb177d/assets/graphic/358_793_f1.jpeg" target="_blank" rel="noopener">
+                <img src="https://www.science.org/cms/10.1126/science.aam9868/asset/57ecbbf5-ce08-4e17-9702-973f4ddb177d/assets/graphic/358_793_f1.jpeg" alt="Figure from Dasgupta, Stevens, and Navlakha showing the fly olfactory system as a sparse expansion circuit" loading="lazy" />
+              </a>
+              <figcaption class="caption">Biological inspiration: Figure 1 from Dasgupta, Stevens, and Navlakha, linked from the Science-hosted source image. My toy circuit below is an artificial MNIST translation of the same expansion-and-sparsification motif.</figcaption>
+            </figure>
+          </section>
+
+          <section class="biology-section">
+            <h2>What happens in the fly</h2>
+            <p>In the fly, smell is not represented as a single scalar like "banana" or "danger." Odor molecules activate receptor neurons, those signals are organized into glomeruli in the antennal lobe, and projection neurons carry a compact odor pattern into higher brain areas. The mushroom body then performs the part that matters for this post: it expands that compact pattern into many Kenyon cells, keeps the response sparse, and gives downstream neurons a clean tag to learn from.</p>
+            <p class="plain-note"><strong>Plainly:</strong> the fly first makes a compact odor vector, then expands it and keeps only a few active neurons.</p>
+
+            <div class="bio-layout">
+              <div class="visual-panel bio-circuit-panel">
+                <svg viewBox="0 0 820 430" role="img" aria-labelledby="bio-circuit-title bio-circuit-desc">
+                  <title id="bio-circuit-title">Fly olfactory pathway as sparse random expansion</title>
+                  <desc id="bio-circuit-desc">Odor inputs form a compact glomerular pattern. Projection neurons converge apparently randomly onto many Kenyon cells. APL feedback and thresholds keep only a sparse subset active, and output neurons read out the sparse Kenyon-cell tag.</desc>
+                  <rect x="0" y="0" width="820" height="430" fill="transparent" />
+
+                  <g font-size="14" fill="var(--muted)">
+                    <text x="36" y="36">odor input</text>
+                    <text x="165" y="36">antennal lobe</text>
+                    <text x="355" y="36">mushroom body</text>
+                    <text x="654" y="36">readout</text>
+                  </g>
+
+                  <g transform="translate(30 78)">
+                    <circle cx="16" cy="48" r="7" fill="var(--green)" />
+                    <circle cx="40" cy="22" r="5" fill="var(--amber)" />
+                    <circle cx="58" cy="72" r="6" fill="var(--green)" opacity=".72" />
+                    <circle cx="83" cy="43" r="4" fill="var(--rose)" />
+                    <path d="M106 48H144" stroke="var(--border)" stroke-width="2" />
+                    <path d="M136 40l9 8-9 8" fill="none" stroke="var(--border)" stroke-width="2" />
+                    <text x="0" y="124" fill="var(--fg)" font-size="15" font-weight="700">molecules</text>
+                    <text x="0" y="145" fill="var(--muted)" font-size="13">activate receptor neurons</text>
+                  </g>
+
+                  <g transform="translate(166 68)">
+                    <rect x="0" y="0" width="150" height="150" rx="12" fill="var(--card-soft)" stroke="var(--border)" />
+                    <text x="18" y="26" fill="var(--fg)" font-size="15" font-weight="700">glomeruli</text>
+                    <text x="18" y="47" fill="var(--muted)" font-size="13">compact odor vector</text>
+                    <g transform="translate(24 68)">
+                      <circle cx="0" cy="0" r="11" fill="var(--green)" />
+                      <circle cx="36" cy="0" r="11" fill="var(--border)" />
+                      <circle cx="72" cy="0" r="11" fill="var(--green)" opacity=".65" />
+                      <circle cx="18" cy="34" r="11" fill="var(--amber)" />
+                      <circle cx="54" cy="34" r="11" fill="var(--border)" />
+                      <circle cx="90" cy="34" r="11" fill="var(--green)" opacity=".86" />
+                    </g>
+                    <g transform="translate(24 130)">
+                      <rect x="0" y="0" width="10" height="26" fill="var(--green)" />
+                      <rect x="20" y="10" width="10" height="16" fill="var(--border)" />
+                      <rect x="40" y="3" width="10" height="23" fill="var(--green)" opacity=".68" />
+                      <rect x="60" y="7" width="10" height="19" fill="var(--amber)" />
+                      <rect x="80" y="13" width="10" height="13" fill="var(--border)" />
+                      <rect x="100" y="5" width="10" height="21" fill="var(--green)" />
+                    </g>
+                  </g>
+
+                  <g transform="translate(332 60)">
+                    <path d="M0 86H50" stroke="var(--border)" stroke-width="2" />
+                    <path d="M42 78l9 8-9 8" fill="none" stroke="var(--border)" stroke-width="2" />
+                    <text x="2" y="64" fill="var(--muted)" font-size="13">PNs</text>
+                  </g>
+
+                  <g transform="translate(382 60)">
+                    <rect x="0" y="0" width="236" height="194" rx="12" fill="var(--card-soft)" stroke="var(--border)" />
+                    <text x="18" y="28" fill="var(--fg)" font-size="15" font-weight="700">Kenyon cells</text>
+                    <text x="18" y="50" fill="var(--muted)" font-size="13">large expanded population</text>
+                    <g stroke="var(--border)" stroke-width="1.2" opacity=".62">
+                      <line x1="-42" y1="54" x2="40" y2="82" />
+                      <line x1="-42" y1="74" x2="92" y2="70" />
+                      <line x1="-42" y1="94" x2="154" y2="96" />
+                      <line x1="-42" y1="114" x2="68" y2="128" />
+                      <line x1="-42" y1="134" x2="178" y2="144" />
+                      <line x1="-42" y1="154" x2="120" y2="156" />
+                    </g>
+                    <g transform="translate(36 72)">
+                      <g fill="var(--border)">
+                        <circle cx="0" cy="0" r="6" /><circle cx="28" cy="0" r="6" /><circle cx="56" cy="0" r="6" /><circle cx="84" cy="0" r="6" /><circle cx="112" cy="0" r="6" /><circle cx="140" cy="0" r="6" /><circle cx="168" cy="0" r="6" />
+                        <circle cx="0" cy="28" r="6" /><circle cx="28" cy="28" r="6" /><circle cx="56" cy="28" r="6" /><circle cx="84" cy="28" r="6" /><circle cx="112" cy="28" r="6" /><circle cx="140" cy="28" r="6" /><circle cx="168" cy="28" r="6" />
+                        <circle cx="0" cy="56" r="6" /><circle cx="28" cy="56" r="6" /><circle cx="56" cy="56" r="6" /><circle cx="84" cy="56" r="6" /><circle cx="112" cy="56" r="6" /><circle cx="140" cy="56" r="6" /><circle cx="168" cy="56" r="6" />
+                        <circle cx="0" cy="84" r="6" /><circle cx="28" cy="84" r="6" /><circle cx="56" cy="84" r="6" /><circle cx="84" cy="84" r="6" /><circle cx="112" cy="84" r="6" /><circle cx="140" cy="84" r="6" /><circle cx="168" cy="84" r="6" />
+                      </g>
+                      <g fill="var(--green)">
+                        <circle cx="28" cy="0" r="7" />
+                        <circle cx="112" cy="28" r="7" />
+                        <circle cx="56" cy="56" r="7" />
+                        <circle cx="140" cy="56" r="7" />
+                        <circle cx="84" cy="84" r="7" />
+                      </g>
+                    </g>
+                    <text x="18" y="176" fill="var(--green)" font-size="13">only a small sparse tag remains active</text>
+                  </g>
+
+                  <g transform="translate(440 272)">
+                    <rect x="0" y="0" width="122" height="50" rx="10" fill="#07080b" stroke="var(--border)" />
+                    <text x="18" y="21" fill="var(--fg)" font-size="13" font-weight="700">APL feedback</text>
+                    <text x="18" y="38" fill="var(--muted)" font-size="12">global inhibition</text>
+                    <path d="M18 -8C-30 -52 -12 -90 34 -95" fill="none" stroke="var(--amber)" stroke-width="2" stroke-dasharray="5 5" />
+                    <path d="M42 -92l-10 -5 3 11" fill="var(--amber)" />
+                    <path d="M104 -10C155 -52 148 -96 110 -116" fill="none" stroke="var(--amber)" stroke-width="2" stroke-dasharray="5 5" />
+                    <path d="M102 -119l10 4-2 -11" fill="var(--amber)" />
+                  </g>
+
+                  <g transform="translate(638 88)">
+                    <path d="M0 68H38" stroke="var(--border)" stroke-width="2" />
+                    <path d="M30 60l9 8-9 8" fill="none" stroke="var(--border)" stroke-width="2" />
+                    <rect x="54" y="0" width="128" height="130" rx="12" fill="var(--card-soft)" stroke="var(--border)" />
+                    <text x="72" y="27" fill="var(--fg)" font-size="15" font-weight="700">MBONs</text>
+                    <text x="72" y="48" fill="var(--muted)" font-size="13">learned output</text>
+                    <g transform="translate(78 75)">
+                      <rect x="0" y="22" width="16" height="14" fill="var(--muted)" />
+                      <rect x="26" y="10" width="16" height="26" fill="var(--green)" />
+                      <rect x="52" y="17" width="16" height="19" fill="var(--muted)" />
+                      <rect x="78" y="3" width="16" height="33" fill="var(--amber)" />
+                    </g>
+                  </g>
+
+                  <g transform="translate(175 276)" font-size="13">
+                    <rect x="0" y="0" width="594" height="96" rx="10" fill="var(--card-soft)" stroke="var(--border)" />
+                    <text x="20" y="29" fill="var(--fg)" font-weight="700">The computational motif</text>
+                    <text x="20" y="55" fill="var(--muted)">compact odor code</text>
+                    <path d="M154 51H205" stroke="var(--border)" stroke-width="2" />
+                    <path d="M197 43l9 8-9 8" fill="none" stroke="var(--border)" stroke-width="2" />
+                    <text x="222" y="55" fill="var(--muted)">apparently random expansion</text>
+                    <path d="M406 51H456" stroke="var(--border)" stroke-width="2" />
+                    <path d="M448 43l9 8-9 8" fill="none" stroke="var(--border)" stroke-width="2" />
+                    <text x="472" y="55" fill="var(--muted)">sparse tag</text>
+                    <text x="20" y="78" fill="var(--green)">same shape as the toy circuit below</text>
+                  </g>
+                </svg>
+                <p class="caption">The important detail from Caron, Ruta, Abbott, and Axel is that individual Kenyon cells receive apparently random combinations of olfactory glomerular inputs. The important detail from Lin and colleagues is that feedback inhibition helps keep Kenyon-cell odor responses sparse and decorrelated.</p>
+              </div>
+
+              <div class="bio-callouts">
+                <div class="bio-callout">
+                  <span class="bio-step">1</span>
+                  <h3>Detect and compress</h3>
+                  <p>Odor receptors feed the antennal lobe. Glomeruli turn a chemical mixture into a compact population pattern.</p>
+                </div>
+                <div class="bio-callout">
+                  <span class="bio-step">2</span>
+                  <h3>Expand randomly</h3>
+                  <p>Projection-neuron activity fans into the mushroom body. Kenyon cells sample different, apparently random mixtures of glomerular input.</p>
+                </div>
+                <div class="bio-callout">
+                  <span class="bio-step">3</span>
+                  <h3>Sparsify hard</h3>
+                  <p>High thresholds and APL feedback suppress most Kenyon cells, so each odor leaves a small active tag rather than a dense response.</p>
+                </div>
+                <div class="bio-callout">
+                  <span class="bio-step">4</span>
+                  <h3>Read out associations</h3>
+                  <p>Downstream mushroom-body output neurons can attach learned value to the sparse tag. In the toy, this is the final readout matrix.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="bio-map" aria-label="Mapping from the fly circuit to the toy MNIST circuit">
+              <div class="bio-map-card">
+                <strong>Fly input</strong>
+                <span>glomerular odor pattern</span>
+                <b>Toy input</b>
+                <span>\(x \in \mathbb{R}^{784}\)</span>
+              </div>
+              <div class="bio-map-card">
+                <strong>PN-to-KC convergence</strong>
+                <span>fixed random-looking fan-in</span>
+                <b>Toy expansion</b>
+                <span>\(W \in \mathbb{R}^{F \times 784}\)</span>
+              </div>
+              <div class="bio-map-card">
+                <strong>KC sparsening</strong>
+                <span>thresholds plus inhibition</span>
+                <b>Toy sparsening</b>
+                <span>\(\operatorname{TopK}(a)\)</span>
+              </div>
+              <div class="bio-map-card">
+                <strong>MB output</strong>
+                <span>learned association from a sparse tag</span>
+                <b>Toy readout</b>
+                <span>\(z = tR\)</span>
+              </div>
+            </div>
+
+            <p class="caption">What I intentionally leave out: spikes, timing, receptor chemistry, lateral-horn pathways, dopamine details, and the real mushroom body's cell-type structure. This post only keeps the expansion-and-sparsification algorithmic skeleton.</p>
+            <p class="plain-note"><strong>Plainly:</strong> I am borrowing the circuit shape, not trying to model every biological detail.</p>
+          </section>
+
+          <section class="stage-section">
+            <h2>The toy circuit</h2>
+            <div class="visual-panel stage-panel">
+              <div class="stage-track" aria-label="Dimension walkthrough">
+                <div class="dimension-formula">
+                  <div class="formula-cell">
+                    <span class="math-pill">\(28 \times 28\)</span>
+                    <span class="formula-label">pixels</span>
+                  </div>
+                  <div class="formula-cell">
+                    <span class="math-pill">\(x \in \mathbb{R}^{784}\)</span>
+                  </div>
+                  <div class="formula-cell">
+                    <span class="math-pill">\(W \in \mathbb{R}^{F \times 784}\)</span>
+                  </div>
+                  <div class="formula-cell">
+                    <span class="math-pill">\(a = |W x| \in \mathbb{R}^{F}\)</span>
+                  </div>
+                  <div class="formula-cell">
+                    <span class="math-pill">\(t = \operatorname{TopK}_{5\%}(a) \in \{0,1\}^{F}\)</span>
+                  </div>
+                  <div class="formula-cell">
+                    <span class="math-pill">\(z = tR \in \mathbb{R}^{10}\)</span>
+                  </div>
+                </div>
+
+                <div class="flow-grid">
+                <div class="flow-card">
+                  <h3><span>Pixels</span><span class="stage-number">1</span></h3>
+                  <div class="mini-visual">
+                    <svg viewBox="0 0 220 160" role="img" aria-label="MNIST digit represented as a 28 by 28 pixel grid">
+                      <rect x="48" y="20" width="124" height="124" rx="8" fill="#050609" stroke="var(--border)" />
+                      <g fill="#edf4ff">
+                        <rect x="88" y="36" width="44" height="12" rx="3" opacity=".95" />
+                        <rect x="120" y="48" width="20" height="12" rx="3" opacity=".86" />
+                        <rect x="124" y="60" width="18" height="12" rx="3" opacity=".78" />
+                        <rect x="103" y="72" width="36" height="12" rx="3" opacity=".88" />
+                        <rect x="84" y="84" width="46" height="12" rx="3" opacity=".92" />
+                        <rect x="72" y="96" width="24" height="12" rx="3" opacity=".76" />
+                        <rect x="90" y="108" width="38" height="12" rx="3" opacity=".84" />
+                      </g>
+                      <g stroke="var(--border)" stroke-width=".8" opacity=".35">
+                        <path d="M48 51h124M48 82h124M48 113h124M79 20v124M110 20v124M141 20v124" />
+                      </g>
+                    </svg>
+                  </div>
+                  <p>\(28 \times 28\) grayscale image. There are \(784\) input numbers.</p>
+                </div>
+
+                <div class="flow-card">
+                  <h3><span>Flatten</span><span class="stage-number">2</span></h3>
+                  <div class="mini-visual">
+                    <svg viewBox="0 0 220 160" role="img" aria-label="The image is flattened into a 784 dimensional vector">
+                      <text x="20" y="32" fill="var(--muted)" font-size="15">784-vector</text>
+                      <g transform="translate(20 54)">
+                        <rect x="0" y="0" width="180" height="54" rx="8" fill="var(--card-soft)" stroke="var(--border)" />
+                        <g>
+                          <rect x="14" y="17" width="5" height="20" fill="var(--border)" />
+                          <rect x="24" y="10" width="5" height="27" fill="var(--green)" />
+                          <rect x="34" y="27" width="5" height="10" fill="var(--border)" />
+                          <rect x="44" y="14" width="5" height="23" fill="var(--green)" opacity=".75" />
+                          <rect x="54" y="31" width="5" height="6" fill="var(--border)" />
+                          <rect x="64" y="8" width="5" height="29" fill="var(--green)" />
+                          <rect x="74" y="22" width="5" height="15" fill="var(--border)" />
+                          <rect x="84" y="16" width="5" height="21" fill="var(--green)" opacity=".82" />
+                          <rect x="94" y="30" width="5" height="7" fill="var(--border)" />
+                          <rect x="104" y="20" width="5" height="17" fill="var(--border)" />
+                          <rect x="114" y="12" width="5" height="25" fill="var(--green)" />
+                          <rect x="124" y="27" width="5" height="10" fill="var(--border)" />
+                          <rect x="134" y="15" width="5" height="22" fill="var(--green)" opacity=".76" />
+                          <rect x="144" y="31" width="5" height="6" fill="var(--border)" />
+                          <rect x="154" y="23" width="5" height="14" fill="var(--border)" />
+                        </g>
+                      </g>
+                      <text x="20" y="134" fill="var(--muted)" font-size="13">same information, now a vector</text>
+                    </svg>
+                  </div>
+                  <p>The image becomes one vector \(x \in \mathbb{R}^{784}\). Nothing has been learned yet.</p>
+                </div>
+
+                <div class="flow-card">
+                  <h3><span>Sparse random projection</span><span class="stage-number">3</span></h3>
+                  <div class="mini-visual">
+                    <svg viewBox="0 0 220 160" role="img" aria-label="A sparse random matrix maps the 784 dimensional vector into F expanded features">
+                      <text x="18" y="28" fill="var(--muted)" font-size="14">sparse random W</text>
+                      <g transform="translate(20 42)">
+                        <rect x="0" y="0" width="82" height="76" rx="6" fill="var(--card-soft)" stroke="var(--border)" />
+                        <g fill="var(--border)">
+                          <rect x="12" y="12" width="6" height="6" /><rect x="26" y="12" width="6" height="6" /><rect x="54" y="12" width="6" height="6" />
+                          <rect x="18" y="28" width="6" height="6" /><rect x="46" y="28" width="6" height="6" /><rect x="66" y="28" width="6" height="6" />
+                          <rect x="10" y="44" width="6" height="6" /><rect x="34" y="44" width="6" height="6" /><rect x="60" y="44" width="6" height="6" />
+                          <rect x="24" y="60" width="6" height="6" /><rect x="50" y="60" width="6" height="6" /><rect x="70" y="60" width="6" height="6" />
+                        </g>
+                        <g fill="var(--green)">
+                          <rect x="12" y="28" width="6" height="6" />
+                          <rect x="40" y="28" width="6" height="6" />
+                          <rect x="58" y="28" width="6" height="6" />
+                        </g>
+                      </g>
+                      <text x="112" y="84" fill="var(--muted)" font-size="24">x</text>
+                      <g transform="translate(142 46)">
+                        <rect width="44" height="72" rx="6" fill="var(--card-soft)" stroke="var(--border)" />
+                        <rect x="17" y="8" width="10" height="8" fill="var(--green)" />
+                        <rect x="17" y="22" width="10" height="8" fill="var(--border)" />
+                        <rect x="17" y="36" width="10" height="8" fill="var(--green)" opacity=".8" />
+                        <rect x="17" y="50" width="10" height="8" fill="var(--border)" />
+                      </g>
+                    </svg>
+                  </div>
+                  <p>The projection matrix is \(W \in \mathbb{R}^{F \times 784}\). It creates many random measurements of the same image before the top-k step keeps only the strongest responses.</p>
+                </div>
+
+                <div class="flow-card">
+                  <h3><span>Expanded activations</span><span class="stage-number">4</span></h3>
+                  <div class="mini-visual">
+                    <svg viewBox="0 0 220 160" role="img" aria-label="The random projection creates F activations before top-k selection">
+                      <text x="20" y="30" fill="var(--muted)" font-size="14">expanded responses</text>
+                      <g transform="translate(18 52)">
+                        <rect width="184" height="62" rx="8" fill="var(--card-soft)" stroke="var(--border)" />
+                        <rect x="14" y="34" width="6" height="14" fill="var(--muted)" />
+                        <rect x="28" y="18" width="6" height="30" fill="var(--green)" />
+                        <rect x="42" y="40" width="6" height="8" fill="var(--muted)" />
+                        <rect x="56" y="11" width="6" height="37" fill="var(--green)" />
+                        <rect x="70" y="31" width="6" height="17" fill="var(--muted)" />
+                        <rect x="84" y="22" width="6" height="26" fill="var(--muted)" />
+                        <rect x="98" y="15" width="6" height="33" fill="var(--green)" />
+                        <rect x="112" y="37" width="6" height="11" fill="var(--muted)" />
+                        <rect x="126" y="28" width="6" height="20" fill="var(--muted)" />
+                        <rect x="140" y="9" width="6" height="39" fill="var(--green)" />
+                        <rect x="154" y="35" width="6" height="13" fill="var(--muted)" />
+                        <line x1="10" y1="20" x2="174" y2="20" stroke="var(--amber)" stroke-dasharray="5 5" />
+                      </g>
+                      <text x="20" y="138" fill="var(--muted)" font-size="13">F swept from 400 to 64,000</text>
+                    </svg>
+                  </div>
+                  <p>The projection gives \(a = |Wx| \in \mathbb{R}^{F}\). For \(F=64{,}000\), one digit has 64,000 responses.</p>
+                </div>
+
+                <div class="flow-card">
+                  <h3><span>Keep top 5%</span><span class="stage-number">5</span></h3>
+                  <div class="mini-visual">
+                    <svg viewBox="0 0 220 160" role="img" aria-label="Winner-take-all selection keeps only the top five percent of activations">
+                      <text x="20" y="29" fill="var(--muted)" font-size="14">top-k WTA</text>
+                      <g transform="translate(22 49)">
+                        <rect width="176" height="58" rx="8" fill="var(--card-soft)" stroke="var(--border)" />
+                        <g>
+                          <rect x="14" y="14" width="8" height="30" fill="var(--border)" />
+                          <rect x="28" y="14" width="8" height="30" fill="var(--border)" />
+                          <rect x="42" y="14" width="8" height="30" fill="var(--green)" />
+                          <rect x="56" y="14" width="8" height="30" fill="var(--border)" />
+                          <rect x="70" y="14" width="8" height="30" fill="var(--border)" />
+                          <rect x="84" y="14" width="8" height="30" fill="var(--border)" />
+                          <rect x="98" y="14" width="8" height="30" fill="var(--border)" />
+                          <rect x="112" y="14" width="8" height="30" fill="var(--border)" />
+                          <rect x="126" y="14" width="8" height="30" fill="var(--green)" />
+                          <rect x="140" y="14" width="8" height="30" fill="var(--border)" />
+                          <rect x="154" y="14" width="8" height="30" fill="var(--border)" />
+                        </g>
+                      </g>
+                      <text x="22" y="132" fill="var(--green)" font-size="13">if F=64,000: 3,200 active</text>
+                      <text x="22" y="148" fill="var(--muted)" font-size="13">60,800 silent dimensions</text>
+                    </svg>
+                  </div>
+                  <p>The dense response becomes \(t \in \{0,1\}^{F}\), with \(\|t\|_0 = 0.05F\).</p>
+                </div>
+
+                <div class="flow-card">
+                  <h3><span>Readout</span><span class="stage-number">6</span></h3>
+                  <div class="mini-visual">
+                    <svg viewBox="0 0 220 160" role="img" aria-label="The sparse tag is mapped through an F by 10 readout to class scores">
+                      <text x="20" y="28" fill="var(--muted)" font-size="14">readout scores</text>
+                      <g transform="translate(18 44)">
+                        <rect x="0" y="0" width="62" height="70" rx="7" fill="var(--card-soft)" stroke="var(--border)" />
+                        <rect x="20" y="10" width="8" height="12" fill="var(--green)" />
+                        <rect x="20" y="30" width="8" height="12" fill="var(--border)" />
+                        <rect x="20" y="50" width="8" height="12" fill="var(--green)" />
+                        <text x="88" y="40" fill="var(--muted)" font-size="22">x</text>
+                        <rect x="112" y="0" width="40" height="70" rx="7" fill="var(--card-soft)" stroke="var(--border)" />
+                        <g fill="var(--muted)">
+                          <rect x="123" y="8" width="5" height="8" /><rect x="136" y="8" width="5" height="8" />
+                          <rect x="123" y="24" width="5" height="8" /><rect x="136" y="24" width="5" height="8" />
+                          <rect x="123" y="40" width="5" height="8" /><rect x="136" y="40" width="5" height="8" />
+                          <rect x="123" y="56" width="5" height="8" /><rect x="136" y="56" width="5" height="8" />
+                        </g>
+                      </g>
+                      <g transform="translate(32 124)">
+                        <rect x="0" y="16" width="10" height="7" fill="var(--muted)" />
+                        <rect x="16" y="11" width="10" height="12" fill="var(--muted)" />
+                        <rect x="32" y="1" width="10" height="22" fill="var(--green)" />
+                        <rect x="48" y="13" width="10" height="10" fill="var(--muted)" />
+                        <rect x="64" y="18" width="10" height="5" fill="var(--muted)" />
+                      </g>
+                    </svg>
+                  </div>
+                  <p>The readout is \(R \in \mathbb{R}^{F \times 10}\), producing \(z = tR \in \mathbb{R}^{10}\).</p>
+                </div>
+                </div>
+              </div>
+              <p class="caption">The toy replaces odors with pixels. The important shape is the bottleneck: a compact image vector becomes a much larger random response, then a tiny sparse tag. The readout only sees that tag.</p>
+            </div>
+          </section>
+
+          <section>
+            <h2>Why this can work</h2>
+            <p>Random expansion is useful when the sparse tag preserves overlap: two versions of the same digit should share more active cells than unrelated digits. The readout does not need to understand pixels directly; it only needs to attach class evidence to the cells that keep winning together.</p>
+            <p class="plain-note"><strong>Plainly:</strong> similar inputs should activate overlapping sparse features, and the readout can learn from that overlap.</p>
+            <div class="visual-panel">
+              <svg viewBox="0 0 780 360" role="img" aria-labelledby="intuition-title intuition-desc">
+                <title id="intuition-title">Sparse tags preserve useful overlap</title>
+                <desc id="intuition-desc">Two examples of the digit three produce sparse tags with several shared active cells. A different digit activates mostly different cells. A class prototype or readout can score a new tag by looking up weights on its active cells.</desc>
+                <rect x="0" y="0" width="780" height="360" fill="transparent" />
+
+                <g fill="var(--muted)" font-size="13">
+                  <text x="38" y="28">input</text>
+                  <text x="228" y="28">top-k sparse tag</text>
+                  <text x="530" y="28">readout evidence</text>
+                </g>
+
+                <g transform="translate(28 58)">
+                  <text x="0" y="44" fill="var(--green)" font-size="18" font-weight="700">3</text>
+                  <rect x="34" y="0" width="70" height="70" rx="8" fill="#07080b" stroke="var(--border)" />
+                  <g fill="#edf4ff">
+                    <rect x="54" y="12" width="32" height="7" rx="2" />
+                    <rect x="78" y="20" width="10" height="8" rx="2" />
+                    <rect x="60" y="31" width="27" height="7" rx="2" />
+                    <rect x="78" y="39" width="10" height="8" rx="2" />
+                    <rect x="54" y="51" width="33" height="7" rx="2" />
+                  </g>
+                  <path d="M118 35H178" stroke="var(--border)" stroke-width="2" />
+                  <path d="M169 27l9 8-9 8" fill="none" stroke="var(--border)" stroke-width="2" />
+                </g>
+
+                <g transform="translate(28 145)">
+                  <text x="0" y="44" fill="var(--green)" font-size="18" font-weight="700">3</text>
+                  <rect x="34" y="0" width="70" height="70" rx="8" fill="#07080b" stroke="var(--border)" />
+                  <g fill="#edf4ff">
+                    <rect x="52" y="13" width="34" height="7" rx="2" />
+                    <rect x="76" y="22" width="11" height="8" rx="2" />
+                    <rect x="58" y="32" width="29" height="7" rx="2" />
+                    <rect x="77" y="41" width="10" height="8" rx="2" />
+                    <rect x="51" y="52" width="34" height="7" rx="2" />
+                  </g>
+                  <path d="M118 35H178" stroke="var(--border)" stroke-width="2" />
+                  <path d="M169 27l9 8-9 8" fill="none" stroke="var(--border)" stroke-width="2" />
+                </g>
+
+                <g transform="translate(28 232)">
+                  <text x="0" y="44" fill="var(--amber)" font-size="18" font-weight="700">7</text>
+                  <rect x="34" y="0" width="70" height="70" rx="8" fill="#07080b" stroke="var(--border)" />
+                  <g fill="#edf4ff">
+                    <rect x="50" y="13" width="38" height="7" rx="2" />
+                    <rect x="75" y="22" width="9" height="8" rx="2" />
+                    <rect x="68" y="31" width="9" height="8" rx="2" />
+                    <rect x="61" y="40" width="9" height="8" rx="2" />
+                    <rect x="54" y="49" width="9" height="8" rx="2" />
+                  </g>
+                  <path d="M118 35H178" stroke="var(--border)" stroke-width="2" />
+                  <path d="M169 27l9 8-9 8" fill="none" stroke="var(--border)" stroke-width="2" />
+                </g>
+
+                <g transform="translate(220 69)">
+                  <rect x="0" y="0" width="230" height="48" rx="8" fill="var(--card-soft)" stroke="var(--border)" />
+                  <g>
+                    <rect x="15" y="15" width="7" height="18" fill="var(--border)" />
+                    <rect x="28" y="15" width="7" height="18" fill="var(--green)" />
+                    <rect x="41" y="15" width="7" height="18" fill="var(--border)" />
+                    <rect x="54" y="15" width="7" height="18" fill="var(--border)" />
+                    <rect x="67" y="15" width="7" height="18" fill="var(--green)" />
+                    <rect x="80" y="15" width="7" height="18" fill="var(--border)" />
+                    <rect x="93" y="15" width="7" height="18" fill="var(--green)" />
+                    <rect x="106" y="15" width="7" height="18" fill="var(--border)" />
+                    <rect x="119" y="15" width="7" height="18" fill="var(--border)" />
+                    <rect x="132" y="15" width="7" height="18" fill="var(--green)" />
+                    <rect x="145" y="15" width="7" height="18" fill="var(--border)" />
+                    <rect x="158" y="15" width="7" height="18" fill="var(--border)" />
+                    <rect x="171" y="15" width="7" height="18" fill="var(--green)" />
+                    <rect x="184" y="15" width="7" height="18" fill="var(--border)" />
+                    <rect x="197" y="15" width="7" height="18" fill="var(--border)" />
+                  </g>
+                </g>
+
+                <g transform="translate(220 156)">
+                  <rect x="0" y="0" width="230" height="48" rx="8" fill="var(--card-soft)" stroke="var(--border)" />
+                  <g>
+                    <rect x="15" y="15" width="7" height="18" fill="var(--border)" />
+                    <rect x="28" y="15" width="7" height="18" fill="var(--green)" />
+                    <rect x="41" y="15" width="7" height="18" fill="var(--border)" />
+                    <rect x="54" y="15" width="7" height="18" fill="var(--border)" />
+                    <rect x="67" y="15" width="7" height="18" fill="var(--green)" />
+                    <rect x="80" y="15" width="7" height="18" fill="var(--border)" />
+                    <rect x="93" y="15" width="7" height="18" fill="var(--border)" />
+                    <rect x="106" y="15" width="7" height="18" fill="var(--green)" />
+                    <rect x="119" y="15" width="7" height="18" fill="var(--border)" />
+                    <rect x="132" y="15" width="7" height="18" fill="var(--green)" />
+                    <rect x="145" y="15" width="7" height="18" fill="var(--border)" />
+                    <rect x="158" y="15" width="7" height="18" fill="var(--border)" />
+                    <rect x="171" y="15" width="7" height="18" fill="var(--green)" />
+                    <rect x="184" y="15" width="7" height="18" fill="var(--border)" />
+                    <rect x="197" y="15" width="7" height="18" fill="var(--border)" />
+                  </g>
+                </g>
+
+                <g transform="translate(220 243)">
+                  <rect x="0" y="0" width="230" height="48" rx="8" fill="var(--card-soft)" stroke="var(--border)" />
+                  <g>
+                    <rect x="15" y="15" width="7" height="18" fill="var(--amber)" />
+                    <rect x="28" y="15" width="7" height="18" fill="var(--border)" />
+                    <rect x="41" y="15" width="7" height="18" fill="var(--border)" />
+                    <rect x="54" y="15" width="7" height="18" fill="var(--border)" />
+                    <rect x="67" y="15" width="7" height="18" fill="var(--amber)" />
+                    <rect x="80" y="15" width="7" height="18" fill="var(--border)" />
+                    <rect x="93" y="15" width="7" height="18" fill="var(--border)" />
+                    <rect x="106" y="15" width="7" height="18" fill="var(--border)" />
+                    <rect x="119" y="15" width="7" height="18" fill="var(--amber)" />
+                    <rect x="132" y="15" width="7" height="18" fill="var(--border)" />
+                    <rect x="145" y="15" width="7" height="18" fill="var(--border)" />
+                    <rect x="158" y="15" width="7" height="18" fill="var(--amber)" />
+                    <rect x="171" y="15" width="7" height="18" fill="var(--border)" />
+                    <rect x="184" y="15" width="7" height="18" fill="var(--border)" />
+                    <rect x="197" y="15" width="7" height="18" fill="var(--amber)" />
+                  </g>
+                </g>
+
+                <g transform="translate(500 58)">
+                  <rect x="0" y="0" width="240" height="248" rx="10" fill="var(--card-soft)" stroke="var(--border)" />
+                  <text x="20" y="34" fill="var(--fg)" font-size="16" font-weight="700">class 3 evidence</text>
+                  <text x="20" y="58" fill="var(--muted)" font-size="13">cells that fire often for 3s get weight</text>
+                  <g transform="translate(24 82)">
+                    <rect x="0" y="0" width="180" height="48" rx="8" fill="#07080b" stroke="var(--border)" />
+                    <rect x="22" y="15" width="7" height="18" fill="var(--green)" />
+                    <rect x="61" y="15" width="7" height="18" fill="var(--green)" />
+                    <rect x="87" y="15" width="7" height="18" fill="var(--green)" opacity=".55" />
+                    <rect x="100" y="15" width="7" height="18" fill="var(--green)" opacity=".55" />
+                    <rect x="126" y="15" width="7" height="18" fill="var(--green)" />
+                    <rect x="165" y="15" width="7" height="18" fill="var(--green)" />
+                  </g>
+                  <g transform="translate(24 156)" font-size="13">
+                    <text x="0" y="0" fill="var(--muted)">score a new tag:</text>
+                    <rect x="0" y="18" width="170" height="10" rx="5" fill="#07080b" />
+                    <rect x="0" y="18" width="136" height="10" rx="5" fill="var(--green)" />
+                    <text x="182" y="28" fill="var(--fg)">3</text>
+                    <rect x="0" y="48" width="170" height="10" rx="5" fill="#07080b" />
+                    <rect x="0" y="48" width="48" height="10" rx="5" fill="var(--amber)" />
+                    <text x="182" y="58" fill="var(--fg)">7</text>
+                  </g>
+                </g>
+              </svg>
+              <p class="caption">The trick is not that random features know the label. It is that expansion creates many possible coincidences, sparsity keeps the strongest ones, and downstream learning can reuse repeated winners as class evidence.</p>
+            </div>
+
+            <div class="theory-grid">
+              <div class="theory-card">
+                <h3>1. Random measurements preserve more than they destroy</h3>
+                <p>The Johnson-Lindenstrauss story says that a random linear map can preserve pairwise distances for a finite cloud of points with surprisingly few dimensions:</p>
+                <p class="plain-note"><strong>Plainly:</strong> random projections can keep useful geometry even when the measurements look arbitrary.</p>
+                <p class="math-block">\[(1-\epsilon)\|x-y\|_2^2 \leq \|P(x-y)\|_2^2 \leq (1+\epsilon)\|x-y\|_2^2.\]</p>
+                <p>That theorem is usually stated for dimensionality reduction. Here the direction is flipped: I am using many random measurements as an overcomplete feature map. The same concentration intuition still matters: one random row is noisy, but many random rows give a stable statistical sketch of the input geometry.</p>
+                <p class="plain-note"><strong>Plainly:</strong> one random feature is weak, but thousands of them can form a useful sketch.</p>
+              </div>
+              <div class="theory-card">
+                <h3>2. Similar inputs induce correlated responses</h3>
+                <p>If \(x\) and \(y\) are close or aligned, then a random row \(w_i\) tends to give related responses \(w_i^\top x\) and \(w_i^\top y\). For an isotropic random row, the raw dot products are unbiased probes of input similarity:</p>
+                <p class="plain-note"><strong>Plainly:</strong> close inputs tend to make the same random tests respond in related ways.</p>
+                <p class="math-block">\[\mathbb{E}\left[(w_i^\top x)(w_i^\top y)\right] \propto x^\top y.\]</p>
+                <p>The absolute value in this toy ignores sign and keeps response magnitude:</p>
+                <p class="math-block">\[a_i(x) = |w_i^\top x|.\]</p>
+                <p>So the random projection is not inventing labels. It is producing many weak, geometry-sensitive tests.</p>
+                <p class="plain-note"><strong>Plainly:</strong> the random layer does not know the answer; it only exposes many small clues.</p>
+              </div>
+              <div class="theory-card">
+                <h3>3. Top-k turns weak tests into a sparse locality code</h3>
+                <p>The top-k step keeps only the cells with unusually large responses:</p>
+                <p class="plain-note"><strong>Plainly:</strong> keep the strongest responses and turn everything else off.</p>
+                <p class="math-block">\[t_j(x)=1[j \in \operatorname{TopK}(a(x))].\]</p>
+                <p>Now similarity becomes overlap. Two nearby inputs should share more winners, while unrelated inputs should share fewer. This is close in spirit to locality-sensitive hashing: preserve neighborhood structure, not every pixel-level detail.</p>
+                <p class="plain-note"><strong>Plainly:</strong> similar examples should share winners; different examples should share fewer.</p>
+              </div>
+              <div class="theory-card">
+                <h3>4. The readout only has to add evidence</h3>
+                <p>Once the tag is sparse, classification can be a sum over active cells:</p>
+                <p class="plain-note"><strong>Plainly:</strong> prediction becomes adding up evidence from the few cells that fired.</p>
+                <p class="math-block">\[\operatorname{score}_c(x)=\sum_{j:t_j(x)=1} R_{jc}.\]</p>
+                <p>The class-mean baseline estimates which cells tend to fire for each digit. The delta readout does the same kind of evidence accumulation, but adjusts weights using output error, so it can amplify useful winners and suppress misleading ones.</p>
+                <p class="plain-note"><strong>Plainly:</strong> the readout learns which active cells usually help or hurt each digit.</p>
+              </div>
+            </div>
+
+            <p>The important caveat is that this only helps if task structure is already visible in the geometry of the input. MNIST has enough geometry that random sparse expansion can expose useful coincidences. A task requiring invariance, sequence memory, or compositional reasoning would need more than this frozen random map.</p>
+            <p class="plain-note"><strong>Plainly:</strong> this works best when the raw input already has structure that random features can uncover.</p>
+          </section>
+
+          <section>
+            <h2>The minimal code</h2>
+            <p>The core of the experiment is just sparse random projection plus a top-k tag. The feature extractor is fixed; only the final readout learns.</p>
+            <p class="plain-note"><strong>Plainly:</strong> the random feature layer stays frozen, and only the last layer changes.</p>
+            <pre><code>acts = abs(X @ W.T)                      # random expanded responses
+winners = argpartition(-acts, k - 1)     # top-k Kenyon-cell-like tag
+
+logits = tag @ W_readout
+probs = softmax(logits)
+err = one_hot(label) - probs
+W_readout += lr * tag.T @ err / batch    # local readout update</code></pre>
+            <p><a class="pill-link" href="code/fly_sparse_mnist.py">View the full public script</a></p>
+            <p class="caption">Dependencies: NumPy and SciPy for the MNIST run; scikit-learn only if you use the optional <code>--digits</code> smoke test.</p>
+          </section>
+
+          <section>
+            <h2>What I measured</h2>
+            <div class="two-col">
+              <div>
+                <p>I swept the number of expanded features <code>F</code>. Each expanded feature samples 12 random pixels, and the code keeps the top 5% active cells. I compared two deliberately simple readouts:</p>
+                <p class="plain-note"><strong>Plainly:</strong> I changed the size of the random feature bank and compared two simple ways to read the sparse tag.</p>
+                <ul>
+                  <li><strong>Class-mean baseline:</strong> build one prototype tag per digit by counting which cells usually fire for that digit. At test time, score a new tag by summing the prototype values under its active cells and pick the largest score.</li>
+                  <li><strong>Delta readout:</strong> a single local error-Hebbian layer trained from tag activity and output error.</li>
+                </ul>
+                <p>The local readout is much stronger, but the important part is the shape: expansion helps even though the feature map is random and frozen. The class-mean readout saturates early; the learned local readout keeps benefiting at larger capacity.</p>
+                <p class="plain-note"><strong>Plainly:</strong> the learnable readout uses the sparse tag better, especially as the random feature bank grows.</p>
+              </div>
+              <aside class="note-box">
+                <p><strong>Run details.</strong> Local MNIST pickle, 50k train examples, 10k test examples, seed 0. The public script supports the same run if you provide <code>mnist.pkl.gz</code>, and a smaller <code>--digits</code> smoke test if you just want to check the code path.</p>
+              </aside>
+            </div>
+
+            <div class="visual-panel">
+              <svg viewBox="0 0 780 360" role="img" aria-labelledby="chart-title chart-desc">
+                <title id="chart-title">Sparse expansion improves MNIST tag accuracy</title>
+                <desc id="chart-desc">A line chart showing class-mean baseline accuracy staying near 60 to 64 percent, and local delta readout accuracy rising to 87.50 percent as expanded features increase to 64,000.</desc>
+                <rect x="0" y="0" width="780" height="360" fill="transparent" />
+                <g transform="translate(60 35)">
+                  <line x1="0" y1="245" x2="675" y2="245" stroke="var(--border)" />
+                  <line x1="0" y1="5" x2="0" y2="245" stroke="var(--border)" />
+                  <g fill="var(--muted)" font-size="13">
+                    <text x="-44" y="249">55%</text>
+                    <text x="-44" y="181">65%</text>
+                    <text x="-44" y="112">75%</text>
+                    <text x="-44" y="44">85%</text>
+                  </g>
+                  <g fill="var(--muted)" font-size="13" text-anchor="middle">
+                    <text x="35" y="275">400</text>
+                    <text x="124" y="275">800</text>
+                    <text x="212" y="275">2k</text>
+                    <text x="301" y="275">4k</text>
+                    <text x="389" y="275">8k</text>
+                    <text x="478" y="275">16k</text>
+                    <text x="566" y="275">32k</text>
+                    <text x="655" y="275">64k</text>
+                  </g>
+                  <g stroke="var(--border)" stroke-width="1">
+                    <line x1="0" y1="176.4" x2="675" y2="176.4" />
+                    <line x1="0" y1="107.9" x2="675" y2="107.9" />
+                    <line x1="0" y1="39.3" x2="675" y2="39.3" />
+                  </g>
+                  <polyline points="35,213 124,205 212,192 301,189 389,182 478,183 566,183 655,185" fill="none" stroke="var(--amber)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                  <polyline points="35,95 124,74 212,56 301,55 389,39 478,50 566,25 655,22" fill="none" stroke="var(--green)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                  <g fill="var(--amber)">
+                    <circle cx="35" cy="213" r="5" /><circle cx="124" cy="205" r="5" /><circle cx="212" cy="192" r="5" /><circle cx="301" cy="189" r="5" /><circle cx="389" cy="182" r="5" /><circle cx="478" cy="183" r="5" /><circle cx="566" cy="183" r="5" /><circle cx="655" cy="185" r="5" />
+                  </g>
+                  <g fill="var(--green)">
+                    <circle cx="35" cy="95" r="5" /><circle cx="124" cy="74" r="5" /><circle cx="212" cy="56" r="5" /><circle cx="301" cy="55" r="5" /><circle cx="389" cy="39" r="5" /><circle cx="478" cy="50" r="5" /><circle cx="566" cy="25" r="5" /><circle cx="655" cy="22" r="5" />
+                  </g>
+                  <g font-size="14">
+                    <rect x="430" y="105" width="210" height="62" rx="8" fill="var(--card-soft)" stroke="var(--border)" />
+                    <line x1="447" y1="127" x2="487" y2="127" stroke="var(--green)" stroke-width="4" />
+                    <text x="498" y="132" fill="var(--fg)">local delta readout</text>
+                    <line x1="447" y1="151" x2="487" y2="151" stroke="var(--amber)" stroke-width="4" />
+                    <text x="498" y="156" fill="var(--fg)">class-mean baseline</text>
+                  </g>
+                </g>
+              </svg>
+              <p class="caption">Expansion helps the learned local readout more than the class-mean prototype readout. The absolute numbers are not the claim; the useful observation is that a very simple, forward-only feature map creates a tag that a local readout can exploit.</p>
+            </div>
+
+            <div class="table-scroll">
+              <table class="result-table">
+                <thead>
+                  <tr>
+                    <th>Expanded features</th>
+                    <th>Active tag size</th>
+                    <th>Expansion</th>
+                    <th>Class-mean baseline</th>
+                    <th>Delta readout</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>400</td><td>20</td><td>0.5x</td><td>59.64%</td><td>76.88%</td></tr>
+                  <tr><td>800</td><td>40</td><td>1.0x</td><td>60.87%</td><td>80.00%</td></tr>
+                  <tr><td>2,000</td><td>100</td><td>2.6x</td><td>62.76%</td><td>82.52%</td></tr>
+                  <tr><td>4,000</td><td>200</td><td>5.1x</td><td>63.24%</td><td>82.75%</td></tr>
+                  <tr><td>8,000</td><td>400</td><td>10.2x</td><td>64.21%</td><td>85.11%</td></tr>
+                  <tr><td>16,000</td><td>800</td><td>20.4x</td><td>63.99%</td><td>83.48%</td></tr>
+                  <tr><td>32,000</td><td>1,600</td><td>40.8x</td><td>64.04%</td><td>87.16%</td></tr>
+                  <tr><td>64,000</td><td>3,200</td><td>81.6x</td><td>63.83%</td><td>87.50%</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3>Fixed \(F=64{,}000\): shrinking the active tag</h3>
+            <p>I also held the random expansion fixed at \(F=64{,}000\) and made the winner-take-all tag smaller. This asks a different question: once the random feature bank is very large, how many active cells does the readout actually need?</p>
+            <p class="plain-note"><strong>Plainly:</strong> after making a huge random feature bank, I tested how sparse the active tag can get before accuracy breaks.</p>
+
+            <div class="visual-panel">
+              <svg viewBox="0 0 780 360" role="img" aria-labelledby="k-chart-title k-chart-desc">
+                <title id="k-chart-title">Accuracy at 64,000 random features as active tag size shrinks</title>
+                <desc id="k-chart-desc">A line chart showing fixed 64,000 feature accuracy as active tag size shrinks from 25,600 to 25. The class-mean baseline stays near 64 percent, while the local delta readout peaks near 3,200 to 12,800 active cells and falls at both extremes.</desc>
+                <rect x="0" y="0" width="780" height="360" fill="transparent" />
+                <g transform="translate(60 35)">
+                  <line x1="0" y1="245" x2="675" y2="245" stroke="var(--border)" />
+                  <line x1="0" y1="5" x2="0" y2="245" stroke="var(--border)" />
+                  <g fill="var(--muted)" font-size="13">
+                    <text x="-44" y="249">60%</text>
+                    <text x="-44" y="169">70%</text>
+                    <text x="-44" y="89">80%</text>
+                    <text x="-44" y="9">90%</text>
+                  </g>
+                  <g fill="var(--muted)" font-size="13" text-anchor="middle">
+                    <text x="35" y="275">25.6k</text>
+                    <text x="97" y="275">12.8k</text>
+                    <text x="159" y="275">6.4k</text>
+                    <text x="221" y="275">3.2k</text>
+                    <text x="283" y="275">1.6k</text>
+                    <text x="345" y="275">800</text>
+                    <text x="407" y="275">400</text>
+                    <text x="469" y="275">200</text>
+                    <text x="531" y="275">100</text>
+                    <text x="593" y="275">50</text>
+                    <text x="655" y="275">25</text>
+                    <text x="345" y="310" fill="var(--fg)">active cells kept, k</text>
+                  </g>
+                  <g stroke="var(--border)" stroke-width="1">
+                    <line x1="0" y1="165" x2="675" y2="165" />
+                    <line x1="0" y1="85" x2="675" y2="85" />
+                    <line x1="0" y1="5" x2="675" y2="5" />
+                  </g>
+                  <polyline points="35,213 97,213 159,214 221,214 283,212 345,210 407,210 469,210 531,210 593,214 655,219" fill="none" stroke="var(--amber)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                  <polyline points="35,55 97,25 159,40 221,25 283,36 345,42 407,44 469,47 531,53 593,64 655,82" fill="none" stroke="var(--green)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                  <g fill="var(--amber)">
+                    <circle cx="35" cy="213" r="5" /><circle cx="97" cy="213" r="5" /><circle cx="159" cy="214" r="5" /><circle cx="221" cy="214" r="5" /><circle cx="283" cy="212" r="5" /><circle cx="345" cy="210" r="5" /><circle cx="407" cy="210" r="5" /><circle cx="469" cy="210" r="5" /><circle cx="531" cy="210" r="5" /><circle cx="593" cy="214" r="5" /><circle cx="655" cy="219" r="5" />
+                  </g>
+                  <g fill="var(--green)">
+                    <circle cx="35" cy="55" r="5" /><circle cx="97" cy="25" r="5" /><circle cx="159" cy="40" r="5" /><circle cx="221" cy="25" r="5" /><circle cx="283" cy="36" r="5" /><circle cx="345" cy="42" r="5" /><circle cx="407" cy="44" r="5" /><circle cx="469" cy="47" r="5" /><circle cx="531" cy="53" r="5" /><circle cx="593" cy="64" r="5" /><circle cx="655" cy="82" r="5" />
+                  </g>
+                  <g font-size="14">
+                    <rect x="430" y="112" width="210" height="62" rx="8" fill="var(--card-soft)" stroke="var(--border)" />
+                    <line x1="447" y1="134" x2="487" y2="134" stroke="var(--green)" stroke-width="4" />
+                    <text x="498" y="139" fill="var(--fg)">local delta readout</text>
+                    <line x1="447" y1="158" x2="487" y2="158" stroke="var(--amber)" stroke-width="4" />
+                    <text x="498" y="163" fill="var(--fg)">class-mean baseline</text>
+                  </g>
+                </g>
+              </svg>
+              <p class="caption">With \(F=64{,}000\), the class-mean prototype readout is almost insensitive to \(k\) until the tag gets extremely small. The learned local readout has a broad sweet spot: dense tags are not automatically better, while even \(k=25\), only 0.039% of the feature bank, still reaches 80.40%.</p>
+            </div>
+
+            <div class="table-scroll">
+              <table class="result-table">
+                <thead>
+                  <tr>
+                    <th>Active tag size</th>
+                    <th>Sparsity</th>
+                    <th>Class-mean baseline</th>
+                    <th>Delta readout</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>25,600</td><td>40.000%</td><td>64.00%</td><td>83.81%</td></tr>
+                  <tr><td>12,800</td><td>20.000%</td><td>64.01%</td><td>87.46%</td></tr>
+                  <tr><td>6,400</td><td>10.000%</td><td>63.85%</td><td>85.64%</td></tr>
+                  <tr><td>3,200</td><td>5.000%</td><td>63.83%</td><td>87.47%</td></tr>
+                  <tr><td>1,600</td><td>2.500%</td><td>64.08%</td><td>86.14%</td></tr>
+                  <tr><td>800</td><td>1.250%</td><td>64.32%</td><td>85.36%</td></tr>
+                  <tr><td>400</td><td>0.625%</td><td>64.32%</td><td>85.16%</td></tr>
+                  <tr><td>200</td><td>0.313%</td><td>64.39%</td><td>84.80%</td></tr>
+                  <tr><td>100</td><td>0.156%</td><td>64.32%</td><td>84.04%</td></tr>
+                  <tr><td>50</td><td>0.078%</td><td>63.92%</td><td>82.60%</td></tr>
+                  <tr><td>25</td><td>0.039%</td><td>63.22%</td><td>80.40%</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section>
+            <h2>Why this is interesting</h2>
+            <p>The usual deep learning move is to learn the feature extractor end-to-end. This toy goes the other direction: spend a lot of cheap random features, sparsify hard, and ask whether the resulting tag is already useful.</p>
+            <p class="plain-note"><strong>Plainly:</strong> instead of learning features, this asks how far fixed random features can get.</p>
+            <p>That is why I like the fly analogy. Expansion and sparsity are not just implementation details; they are a bet about representation. A random dense projection smears everything. A sparse expanded tag gives downstream learning a high-dimensional set of coincidences to attach meaning to.</p>
+            <p class="plain-note"><strong>Plainly:</strong> sparse expansion gives the readout many reusable hooks instead of one blurred representation.</p>
+            <p>The next question is not "can this beat a CNN on MNIST?" It should not. The next question is which parts of the trick survive when the task needs invariance, temporal order, or continual learning.</p>
+            <p class="plain-note"><strong>Plainly:</strong> MNIST is just the sandbox; the real question is whether this trick helps on harder learning problems.</p>
+          </section>
+
+          <section>
+            <h2>What I am not saying</h2>
+            <ul>
+              <li>This is not a faithful fly model. It is a small artificial circuit inspired by one computational motif.</li>
+              <li>This is not state-of-the-art MNIST. A normal CNN will crush it.</li>
+              <li>This is not the latest private research direction. It is the safe public scaffold: mechanism, toy code, and measured behavior.</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>References</h2>
+            <ol class="refs">
+              <li>Dasgupta, Stevens, and Navlakha. <a href="https://doi.org/10.1126/science.aam9868" target="_blank" rel="noopener">A neural algorithm for a fundamental computing problem</a>. <em>Science</em>, 2017.</li>
+              <li>Caron, Ruta, Abbott, and Axel. <a href="https://doi.org/10.1038/nature12063" target="_blank" rel="noopener">Random convergence of olfactory inputs in the Drosophila mushroom body</a>. <em>Nature</em>, 2013.</li>
+              <li>Lin, Bygrave, de Calignon, Lee, and Miesenbock. <a href="https://doi.org/10.1038/nn.3660" target="_blank" rel="noopener">Sparse, decorrelated odor coding in the mushroom body enhances learned odor discrimination</a>. <em>Nature Neuroscience</em>, 2014.</li>
+              <li>Johnson and Lindenstrauss. <a href="https://doi.org/10.1090/conm/026/737400" target="_blank" rel="noopener">Extensions of Lipschitz mappings into a Hilbert space</a>. <em>Contemporary Mathematics</em>, 1984.</li>
+              <li>Dasgupta and Gupta. <a href="https://doi.org/10.1002/rsa.10073" target="_blank" rel="noopener">An elementary proof of a theorem of Johnson and Lindenstrauss</a>. <em>Random Structures & Algorithms</em>, 2003.</li>
+              <li>Achlioptas. <a href="https://doi.org/10.1016/S0022-0000(03)00025-4" target="_blank" rel="noopener">Database-friendly random projections: Johnson-Lindenstrauss with binary coins</a>. <em>Journal of Computer and System Sciences</em>, 2003.</li>
+              <li>LeCun, Cortes, and Burges. <a href="https://yann.lecun.com/exdb/mnist/" target="_blank" rel="noopener">The MNIST database of handwritten digits</a>.</li>
+              <li>Indyk and Motwani. <a href="https://doi.org/10.1145/276698.276876" target="_blank" rel="noopener">Approximate nearest neighbors: towards removing the curse of dimensionality</a>. STOC, 1998.</li>
+              <li>Rahimi and Recht. <a href="https://proceedings.neurips.cc/paper/2007/hash/013a006f03dbc5392effeb8f18fda755-Abstract.html" target="_blank" rel="noopener">Random Features for Large-Scale Kernel Machines</a>. NeurIPS, 2007.</li>
+            </ol>
+          </section>
+        </article>
+      </main>
+
+      <footer>
+        <p><small>© <span id="y"></span> Kareem Nassar</small></p>
+      </footer>
+    </div>
+    <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+  </body>
+</html>
