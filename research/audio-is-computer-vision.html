@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Audio Is Computer Vision - Kareem Nassar</title>
+    <meta name="description" content="A short note on why spectrograms make audio models feel familiar if you understand computer vision." />
+    <meta property="og:title" content="Audio Is Computer Vision" />
+    <meta property="og:description" content="A spectrogram is a picture of sound. That one move makes audio classification, speech recognition, and video analysis easier to compare." />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://kareem.me/research/audio-is-computer-vision.html" />
+    <meta name="twitter:card" content="summary" />
+    <link rel="stylesheet" href="research.css?v=13" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="site-header">
+        <a class="brand-link" href="../">Kareem Nassar</a>
+        <nav aria-label="Primary">
+          <a class="nav-link" href="../">Home</a>
+          <a class="nav-link" href="./">Research</a>
+          <a class="nav-link" href="https://x.com/kimocode" rel="me noopener" target="_blank">X</a>
+          <a class="nav-link" href="https://candor.sh/" rel="noopener" target="_blank">Candor</a>
+        </nav>
+      </header>
+
+      <main>
+        <article>
+          <header class="article-hero">
+            <div>
+              <p class="eyebrow">Speech systems note</p>
+              <h1>Audio Is Computer Vision</h1>
+              <p class="dek">A spectrogram is a picture of sound: time on one axis, frequency on the other, color as energy.</p>
+            </div>
+            <p class="meta">July 2026 · spectrograms · speech recognition · video analysis</p>
+            <div class="chips">
+              <span class="chip">Spectrograms</span>
+              <span class="chip">Convolutions</span>
+              <span class="chip">Speech Recognition</span>
+              <span class="chip">Video Analysis</span>
+            </div>
+          </header>
+
+          <section>
+            <p class="lede">Once audio is drawn as a spectrogram, the analogy to computer vision becomes very direct.</p>
+
+            <ul>
+              <li><strong>Image classification:</strong> pixels -> convolution or encoder -> label.</li>
+              <li><strong>Audio classification:</strong> spectrogram -> convolution or encoder -> label.</li>
+              <li><strong>Speech recognition:</strong> spectrogram over time -> encoder/decoder -> word sequence.</li>
+              <li><strong>Video analysis:</strong> frames over time -> image encoder plus temporal model -> action or event.</li>
+            </ul>
+
+            <p>The common move is learning local patterns on a grid. In images those patterns are edges, textures, and parts. In spectrograms they are bursts, harmonics, formants, silence, and other time-frequency shapes.</p>
+
+            <p>Speech recognition and video analysis then add the same extra problem: order over time. You are not just classifying one grid; you are reading a sequence.</p>
+
+            <p class="plain-note"><strong>Plainly:</strong> the analogy is not perfect, but it is the first mental model I use when explaining speech recognition to someone who already understands vision.</p>
+          </section>
+        </article>
+      </main>
+
+      <footer>
+        <p><small>© <span id="y"></span> Kareem Nassar</small></p>
+      </footer>
+    </div>
+    <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+  </body>
+</html>
