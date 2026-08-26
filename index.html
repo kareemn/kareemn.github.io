@@ -1,248 +1,171 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Kareem Nassar — AI Systems, World Models & Real-Time Speech</title>
-    <meta name="description" content="Kareem Nassar is an AI systems engineer and founder working on real-time speech, human signal for agent evals, world models, RL workflows, and low-latency AI products." />
-
-    <!-- Open Graph / Twitter -->
-    <meta property="og:title" content="Kareem Nassar — AI Systems, World Models & Real-Time Speech" />
-    <meta property="og:description" content="Projects and notes across real-time speech, world models, RL/evals, and human signal for agent workflows." />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://kareem.me/" />
-    <meta name="twitter:card" content="summary" />
-
-    <style>
-      :root {
-        --bg: #0b0c10;
-        --card: #111316;
-        --card-soft: #0f1115;
-        --fg: #e6edf3;
-        --muted: #a9b1ba;
-        --link: #79c0ff;
-        --accent: #9bcdff;
-        --border: #232a31;
-      }
-      @media (prefers-color-scheme: light) {
-        :root { --bg:#ffffff; --card:#f8fafc; --card-soft:#ffffff; --fg:#0f172a; --muted:#475569; --link:#0b84c6; --accent:#0369a1; --border:#d8e0ea; }
-      }
-      html, body { height: 100%; }
-      body { margin: 0; font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, Apple Color Emoji, Segoe UI Emoji; color: var(--fg); background: var(--bg); }
-      a { color: var(--link); text-decoration: none; }
-      a:hover { text-decoration: underline; }
-      .wrapper { max-width: 1040px; padding: clamp(1.25rem, 3vw, 2.5rem); margin: 0 auto; }
-      header { display: grid; gap: 1.25rem; margin-bottom: 2.5rem; }
-      .brand { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
-      .brand h1 { font-size: clamp(1.5rem, 1.2rem + 2vw, 2.5rem); margin: 0; }
-      .tag { color: var(--muted); margin: .1rem 0 0; }
-      nav { display: flex; gap: .6rem; flex-wrap: wrap; justify-content: flex-end; }
-      .nav-link { display: inline-flex; align-items: center; min-height: 2.25rem; padding: 0 .75rem; border: 1px solid var(--border); border-radius: 999px; background: var(--card-soft); }
-      .hero { border: 1px solid var(--border); background: var(--card); padding: clamp(1rem, 2vw, 1.5rem); border-radius: 8px; }
-      .hero p { margin: .65rem 0; max-width: 78ch; }
-      .hero p:first-child { margin-top: 0; }
-      .hero p:last-child { margin-bottom: 0; }
-      main { display: grid; gap: 2.25rem; }
-      section { border-top: 1px solid var(--border); padding-top: 2rem; }
-      h2, h3 { margin: 0 0 .75rem; line-height: 1.2; }
-      p { max-width: 74ch; }
-      .meta { color: var(--muted); font-size: .9rem; margin-bottom: .5rem; }
-      .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border: 1px solid var(--border); border-radius: 8px; background:#000; }
-      .video-container iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-      video { width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 8px; background: #000; }
-      img { max-width: 100%; height: auto; border: 1px solid var(--border); border-radius: 8px; }
-      figure { margin: 0; }
-      ul { margin: .5rem 0 1rem 1.25rem; }
-      footer { color: var(--muted); padding: 3rem 0; text-align: center; }
-      .grid { display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
-      @media (min-width: 720px) { .grid { grid-template-columns: 1fr 1fr; } }
-      .note-list { list-style: none; margin: 1rem 0 0; padding: 0; display: grid; gap: .9rem; }
-      .note-list li { max-width: 78ch; padding-left: 1rem; border-left: 2px solid var(--border); }
-      .compact-section { max-width: 780px; }
-      .compact-section p { margin-bottom: 0; }
-      .chip { display:inline-block; font-size:.85rem; padding:.15rem .5rem; border:1px solid var(--border); border-radius:6px; color:var(--muted); margin-right:.25rem; }
-      .sr-only{ position:absolute; clip:rect(1px,1px,1px,1px); padding:0; border:0; height:1px; width:1px; overflow:hidden; }
-    </style>
-
-    <!-- JSON-LD (Person) -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Kareem Nassar",
-      "url": "https://kareem.me/",
-      "sameAs": [
-        "https://x.com/kimocode",
-        "https://github.com/kareemn",
-        "https://www.linkedin.com/in/kareemnassar",
-        "https://angel.co/knassar"
-      ],
-      "jobTitle": "Founder / AI Systems Engineer",
-      "worksFor": {"@type":"Organization","name":"Candor"}
-    }
-    </script>
-  </head>
-  <body>
-    <a class="sr-only" href="#content">Skip to content</a>
-    <div class="wrapper">
-      <header>
-        <div class="brand">
-          <div>
-            <h1>Kareem Nassar</h1>
-            <p class="tag">AI systems engineer • real-time speech, world models, RL/evals</p>
-          </div>
-          <nav aria-label="Primary">
-            <a class="nav-link" href="https://x.com/kimocode" rel="me noopener" target="_blank">X</a>
-            <a class="nav-link" href="research/">Research</a>
-            <a class="nav-link" href="https://candor.sh/" rel="noopener" target="_blank">Candor</a>
-            <a class="nav-link" href="https://github.com/kareemn" rel="me noopener" target="_blank">GitHub</a>
-            <a class="nav-link" href="http://www.linkedin.com/in/kareemnassar" rel="me noopener" target="_blank">LinkedIn</a>
-          </nav>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kareem Nassar — Signal Field</title>
+  <style>
+    :root{--bg:#07090d;--fg:#f2efe8;--muted:#8f96a3;--blue:#4c78ff;--lime:#b7ff52;--coral:#ff725e;--line:#202632}
+    *{box-sizing:border-box}html{background:var(--bg);scroll-behavior:smooth}body{margin:0;color:var(--fg);background:var(--bg);font-family:Inter,ui-sans-serif,system-ui,-apple-system,sans-serif}
+    a{color:inherit;text-decoration:none}.shell{min-height:100svh;display:grid;grid-template-rows:auto 1fr auto;padding:24px clamp(20px,4vw,64px)}
+    header{display:flex;align-items:center;justify-content:space-between;gap:24px;position:relative;z-index:2}.mark{font:600 12px/1 ui-monospace,SFMono-Regular,monospace;letter-spacing:.13em;text-transform:uppercase}
+    nav{display:flex;align-items:center;gap:clamp(12px,2.2vw,34px);font-size:13px}nav a{color:#b9bec8}nav a:hover{color:white}.motion{border:1px solid #303746;background:#0d1118;color:#bfc6d2;border-radius:999px;min-height:44px;padding:0 16px;font:11px ui-monospace,monospace;cursor:pointer}
+    main{display:grid;align-content:center;position:relative;min-height:680px;padding:8vh 0 3vh}.eyebrow{display:flex;align-items:center;gap:10px;color:var(--lime);font:11px ui-monospace,monospace;letter-spacing:.16em;text-transform:uppercase}.dot{width:7px;height:7px;border-radius:50%;background:var(--lime);box-shadow:0 0 16px var(--lime);animation:pulse 1.4s ease-in-out infinite}
+    h1{font-family:Georgia,'Times New Roman',serif;font-weight:400;font-size:clamp(58px,9.5vw,150px);line-height:.84;letter-spacing:-.065em;margin:22px 0 22px;max-width:1100px}.dek{max-width:590px;margin:0;color:#b6bdc9;font-size:clamp(16px,1.5vw,22px);line-height:1.45}
+    .signal{position:relative;height:clamp(250px,34vh,390px);margin-top:clamp(36px,6vh,78px);border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;background:linear-gradient(180deg,rgba(25,31,42,.18),transparent)}canvas{position:absolute;inset:0;width:100%;height:100%}
+    .axis{position:absolute;inset:0;pointer-events:none;color:#626b79;font:9px ui-monospace,monospace;letter-spacing:.08em}.axis span{position:absolute}.axis .time{top:10px;left:0}.axis .rate{top:10px;right:0}.axis .freq-high{top:57%;left:0}.axis .freq-low{bottom:10px;left:0}.axis .past{bottom:10px;left:64px}.axis .middle{bottom:10px;left:50%}.axis .present{bottom:10px;right:0;color:#9da5b2}.centerline{position:absolute;left:12%;right:12%;top:35%;height:1px;background:linear-gradient(90deg,transparent,rgba(76,120,255,.16),transparent);pointer-events:none}
+    .now{display:grid;grid-template-columns:100px 1fr;gap:22px;border-top:1px solid var(--line);padding:22px 0 0;margin-top:clamp(30px,5vh,60px);max-width:880px}.label{color:#6e7786;font:10px ui-monospace,monospace;letter-spacing:.15em;text-transform:uppercase}.now p{margin:0;color:#d9dce2;line-height:1.55}.now strong{color:white}
+    footer{display:flex;justify-content:space-between;color:#687181;font:10px ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase;padding-top:24px}
+    .work-section{padding:clamp(72px,10vw,150px) clamp(20px,4vw,64px);border-top:1px solid var(--line);background:#090c11}.work-inner{max-width:1400px;margin:0 auto}.work-head{display:grid;grid-template-columns:minmax(160px,.55fr) 1.45fr;gap:40px;margin-bottom:clamp(56px,8vw,110px)}.work-kicker{color:var(--lime);font:10px ui-monospace,monospace;letter-spacing:.16em;text-transform:uppercase}.work-head h2{font:400 clamp(42px,6.5vw,100px)/.93 Georgia,'Times New Roman',serif;letter-spacing:-.055em;margin:0;max-width:12ch}.project-list{border-top:1px solid #2a303a}.project{display:grid;grid-template-columns:80px 1.1fr 1fr auto;gap:clamp(18px,3vw,54px);align-items:start;padding:clamp(26px,3vw,44px) 0;border-bottom:1px solid #242a34;transition:background .2s ease}.project:hover{background:#0c1118}.project .index,.project .meta{color:#6e7786;font:10px ui-monospace,monospace;letter-spacing:.11em;text-transform:uppercase}.project h3{font:400 clamp(25px,3vw,44px)/1 Georgia,'Times New Roman',serif;letter-spacing:-.03em;margin:0}.project p{color:#9ea6b2;line-height:1.55;margin:0;max-width:58ch}.project .arrow{color:var(--lime);font-size:21px}.research-pair{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:#252b35;margin-top:clamp(70px,9vw,130px);border:1px solid #252b35}.note{background:#090c11;padding:clamp(28px,4vw,58px)}.note .meta{color:#6e7786;font:10px ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase}.note h3{font:400 clamp(27px,3.5vw,50px)/1.02 Georgia,'Times New Roman',serif;letter-spacing:-.035em;margin:40px 0 18px;max-width:12ch}.note p{color:#9ea6b2;line-height:1.6;max-width:50ch}.video-archive{margin-top:clamp(90px,12vw,180px);padding-top:clamp(60px,8vw,110px);border-top:1px solid #29303b}.video-heading{display:grid;grid-template-columns:minmax(160px,.55fr) 1.45fr;gap:40px;margin-bottom:clamp(42px,6vw,80px)}.video-heading h2{font:400 clamp(40px,5.5vw,82px)/.96 Georgia,'Times New Roman',serif;letter-spacing:-.05em;margin:0;max-width:11ch}.feature-video{display:grid;grid-template-columns:1.35fr .65fr;gap:clamp(24px,4vw,64px);align-items:start;margin-bottom:clamp(55px,8vw,100px)}.video-frame{position:relative;aspect-ratio:16/9;background:#030405;overflow:hidden;border:1px solid #262d38}.video-frame iframe,.video-frame video{position:absolute;inset:0;width:100%;height:100%;border:0;object-fit:cover}.video-copy .meta,.video-card .meta{color:#6e7786;font:10px ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase}.video-copy h3{font:400 clamp(30px,4vw,58px)/1 Georgia,'Times New Roman',serif;letter-spacing:-.04em;margin:22px 0}.video-copy p,.video-card p{color:#9ea6b2;line-height:1.55}.video-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(35px,5vw,72px) clamp(18px,3vw,38px)}.video-card h3{font:400 clamp(22px,2.7vw,36px)/1.05 Georgia,'Times New Roman',serif;letter-spacing:-.025em;margin:18px 0 8px}.video-card p{margin:0}.site-end{display:flex;justify-content:space-between;gap:20px;padding-top:100px;color:#687181;font:10px ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase}
+    .project-list{position:relative}.project-list::before{content:"";position:absolute;top:0;bottom:0;left:39px;width:1px;background:linear-gradient(#334052,rgba(51,64,82,.28) 92%,transparent);pointer-events:none}.project .index{position:relative;z-index:1;display:grid;place-items:center;width:38px;height:38px;margin-left:40px;transform:translateX(-50%);border:1px solid #354052;border-radius:50%;background:#090c11;color:#aeb7c5}.project-media{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(14px,2vw,24px);padding:8px 0 clamp(66px,8vw,108px) clamp(98px,10vw,150px);content-visibility:auto;contain-intrinsic-size:auto 620px}.project-media.single{grid-template-columns:minmax(0,920px)}.project-media:not(.single) .media-item:first-child{grid-column:1/-1;max-width:1120px}.media-item{min-width:0;padding:10px 10px 14px;background:linear-gradient(145deg,#101620,#0b0f16);border:1px solid #252e3a;border-radius:16px;box-shadow:0 18px 55px rgba(0,0,0,.24);transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease}.media-item:hover{transform:translateY(-3px);border-color:#3c4a5f;box-shadow:0 24px 70px rgba(0,0,0,.34)}.media-item .video-frame{margin:0 0 13px;border:0;border-radius:10px;background:#020305;box-shadow:inset 0 0 0 1px rgba(255,255,255,.045);isolation:isolate}.media-item .video-frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:2;border-radius:inherit;box-shadow:inset 0 0 0 1px rgba(255,255,255,.055)}.media-item .media-label{display:flex;align-items:center;gap:9px;padding:0 5px;color:#8e98a8;font:10px ui-monospace,monospace;letter-spacing:.11em;text-transform:uppercase}.media-item .media-label::before{content:"";width:6px;height:6px;border-radius:50%;background:#4c78ff;box-shadow:0 0 12px rgba(76,120,255,.75)}.research-pair{content-visibility:auto;contain-intrinsic-size:auto 480px}.video-frame iframe{background:#030405}
+    main{grid-template-columns:minmax(260px,.72fr) minmax(420px,1.28fr);column-gap:clamp(32px,6vw,100px);align-items:end;padding-bottom:5vh}.eyebrow,h1{grid-column:1/-1}.dek{grid-column:1;align-self:start}.capabilities{grid-column:1;display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}.capabilities span{padding:7px 10px;border:1px solid #2b3442;border-radius:999px;color:#9fa9b8;background:#0b0f15;font:9px ui-monospace,monospace;letter-spacing:.09em;text-transform:uppercase;white-space:nowrap}.capabilities span:first-child{color:var(--lime);border-color:rgba(183,255,82,.32)}.now{grid-column:1;max-width:620px}.signal-home{--reader-progress:0;grid-column:2;grid-row:3/6;position:relative;align-self:stretch;min-height:clamp(220px,27vh,310px)}.field-index{position:absolute;inset:0;display:grid;grid-template-columns:1fr auto;grid-template-rows:auto 1fr auto auto;gap:14px;padding:24px 26px;border:1px solid #293240;border-radius:24px;background:linear-gradient(145deg,rgba(14,20,29,.86),rgba(6,9,14,.72));overflow:hidden;opacity:0;transform:scale(.985);transition:opacity .35s ease .12s,transform .55s cubic-bezier(.22,1,.36,1);pointer-events:none}.field-index::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0,transparent calc(12.5% - 1px),rgba(90,106,132,.13) 12.5%);mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}.field-index .field-kicker,.field-index .field-count{position:relative;color:var(--lime);font:9px ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase}.field-index .field-count{color:#717c8d}.field-index strong{position:relative;grid-column:1/-1;align-self:center;font:400 clamp(32px,4vw,66px)/.95 Georgia,'Times New Roman',serif;letter-spacing:-.045em;color:#dfe4ec}.field-flow{position:relative;grid-column:1/-1;display:flex;align-items:center;gap:9px;color:#8994a5;font:8px ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}.field-flow b{color:var(--coral);font-weight:400}.field-flow span:first-child{color:#bdc9db}.field-rail{position:relative;grid-column:1/-1;height:1px;background:#293240}.field-rail::before{content:"";position:absolute;left:0;top:-1px;width:calc(var(--reader-progress)*100%);height:3px;background:linear-gradient(90deg,var(--blue),var(--coral));box-shadow:0 0 18px rgba(76,120,255,.45);transition:width .45s cubic-bezier(.22,1,.36,1)}.reader-docked .field-index{opacity:1;transform:none}.signal{position:absolute;z-index:3;inset:0;width:100%;height:100%;margin:0;border:1px solid rgba(104,122,151,.38);border-radius:24px;overflow:hidden;background:rgba(6,9,14,.9);box-shadow:0 28px 90px rgba(0,0,0,.32);backdrop-filter:blur(16px);contain:strict;pointer-events:none;will-change:transform;border-radius .55s cubic-bezier(.22,1,.36,1),box-shadow .55s ease}.signal canvas{position:absolute;inset:0;width:100%;height:100%}.signal .centerline{left:8%;right:8%;top:64%;background:linear-gradient(90deg,transparent,rgba(76,120,255,.2),transparent)}.signal .axis{display:none}.voice-hud{position:absolute;z-index:2;top:17px;left:20px;right:20px;display:flex;align-items:center;justify-content:space-between;gap:12px;pointer-events:none;transition:top .55s cubic-bezier(.22,1,.36,1),left .55s cubic-bezier(.22,1,.36,1),right .55s cubic-bezier(.22,1,.36,1)}.voice-hud span{color:var(--lime);font:9px ui-monospace,monospace;letter-spacing:.13em;text-transform:uppercase}.voice-hud strong{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#c5ccd7;font:10px ui-monospace,monospace;font-weight:500;letter-spacing:.04em}.reader-docked .signal{position:fixed;z-index:9999;inset:auto;left:24px;top:calc(100svh - 118px - env(safe-area-inset-bottom));width:min(330px,calc(100vw - 48px));height:94px;border-radius:17px;box-shadow:0 18px 60px rgba(0,0,0,.42)}.reader-docked .voice-hud{top:12px;left:14px;right:14px}.work-section{padding-bottom:170px}
+    @keyframes pulse{50%{opacity:.35;transform:scale(.75)}}
+    @media(max-width:720px){.shell{padding:18px 18px 22px}nav a{display:none}main{grid-template-columns:1fr;min-height:760px;padding-top:9vh;padding-bottom:4vh;align-items:start}.eyebrow,h1,.dek,.capabilities,.signal-home,.now{grid-column:1;grid-row:auto}h1{font-size:clamp(62px,22vw,98px);max-width:8ch}.dek{font-size:16px;max-width:34ch}.capabilities{margin-top:18px;gap:6px}.capabilities span{padding:6px 8px;font-size:8px}.signal-home{width:100%;height:150px;min-height:150px;margin-top:28px}.signal{border-radius:18px}.signal .centerline{top:66%}.voice-hud{top:12px;left:13px;right:13px}.field-index{padding:18px;border-radius:18px}.field-index strong{font-size:clamp(28px,10vw,44px)}.field-flow{gap:5px;font-size:7px}.reader-docked .signal{left:14px;top:calc(100svh - 96px - env(safe-area-inset-bottom));width:min(290px,calc(100vw - 28px));height:82px;border-radius:14px}.reader-docked .voice-hud{top:9px;left:11px;right:11px}.axis{left:18px;right:18px}.now{grid-template-columns:1fr;gap:8px}.motion{padding:0 13px}footer{gap:20px}.work-section{padding-left:18px;padding-right:18px;padding-bottom:140px}.work-head,.video-heading{grid-template-columns:1fr;gap:22px}.project-list::before{left:20px}.project{grid-template-columns:42px 1fr auto}.project .index{margin-left:20px}.project p{grid-column:2/4}.project .meta{grid-column:2}.research-pair,.feature-video,.video-grid,.project-media{grid-template-columns:1fr}.project-media{padding-left:42px}.project-media:not(.single) .media-item:first-child{grid-column:auto}.media-item{border-radius:12px;padding:7px 7px 12px}.site-end{flex-direction:column}}
+    @media(prefers-reduced-motion:reduce){.dot{animation:none}.signal,.voice-hud{transition:none}}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header><a class="mark" href="#">Kareem Nassar</a><nav aria-label="Primary"><a href="#work">Work</a><a href="research/">Research</a><a href="#about">About</a><a href="https://x.com/kimocode">X</a><a href="https://github.com/kareemn">GitHub</a><button class="motion" id="motion" aria-pressed="true">Motion: On</button></nav></header>
+    <main>
+      <div class="eyebrow"><span class="dot"></span> AI systems / agents / multimodal</div>
+      <h1>Kareem<br>Nassar</h1>
+      <p class="dek">I build AI products that turn foundation models into reliable systems—LLM agents, real-time voice, evaluation, and human feedback.</p>
+      <div class="capabilities" aria-label="Capabilities"><span>LLM agents</span><span>Evals &amp; RLHF</span><span>Human feedback</span><span>Multimodal AI</span><span>Real-time systems</span></div>
+      <div class="signal-home">
+        <div class="field-index" aria-hidden="true"><span class="field-kicker">Agent loop / field index</span><span class="field-count" id="field-count">00 / 09</span><strong id="field-caption">Selected work</strong><div class="field-flow"><span>LLM agent</span><b>→</b><span>Evaluation</span><b>→</b><span>Human signal</span><b>→</b><span>Improve</span></div><div class="field-rail"></div></div>
+        <section class="signal" aria-label="Generative waveform artwork">
+          <canvas id="viz"></canvas><div class="centerline"></div><div class="voice-hud"><span>Signal field</span><strong id="voice-caption">Kareem Nassar</strong></div>
+        </section>
+      </div>
+      <div class="now"><span class="label">Now / 2026</span><p><strong>Building Candor</strong> — human feedback infrastructure for evaluating and improving LLM agents.</p></div>
+    </main>
+    <footer><span>San Francisco · California</span><span>Scroll for selected work ↓</span></footer>
+  </div>
+  <section class="work-section" id="work">
+    <div class="work-inner">
+      <div class="work-head"><span class="work-kicker">Selected work / research</span><h2>Systems that reason, interact, and improve.</h2></div>
+      <div class="project-list">
+        <a class="project" href="https://candor.sh/" target="_blank" rel="noopener"><span class="index">01</span><h3>Candor</h3><p>Human signal collected where AI builders already work—ratings, comparisons, interviews, and structured feedback for agent evals and RL workflows.</p><span class="arrow">↗</span><span class="meta">2026 · Human signal</span></a>
+        <div class="project"><span class="index">02</span><h3>LLM Agents, Simulation &amp; RL</h3><p>Agent rollouts, simulator fidelity, judge calibration, generated-state feedback loops, and the conditions under which simulated experience transfers.</p><span class="arrow">—</span><span class="meta">Agents · Evals · PyTorch</span></div>
+        <div class="project-media single"><div class="media-item"><div class="video-frame"><iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/bMo1Gg-ymD8" title="RL agent playing Pong" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div><span class="media-label">SAC · Replay · Rollouts</span></div></div>
+        <a class="project" href="https://www.cisco.com/site/us/en/about/corporate-development/acquisitions/ezdubs/index.html" target="_blank" rel="noopener"><span class="index">03</span><h3>EzDubs</h3><p>Real-time speech-to-speech translation designed to disappear into live conversation. Co-founded and acquired by Cisco/Webex.</p><span class="arrow">↗</span><span class="meta">Speech · Translation</span></a>
+        <div class="project-media">
+          <div class="media-item"><div class="video-frame"><video controls preload="none" poster="videos/ezdubs-rayban-meta-poster.jpg"><source src="videos/ezdubs-rayban-meta.mp4" type="video/mp4">Your browser does not support video.</video></div><span class="media-label">Ray-Ban Meta · Wearable UX</span></div>
+          <div class="media-item"><div class="video-frame"><iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/n4rgnOnep-g" title="EzDubs real-time translation demo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div><span class="media-label">Real-time translation demo</span></div>
+          <div class="media-item"><div class="video-frame"><iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/XhVVeaWga6k" title="EzDubs product demo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div><span class="media-label">Live voice product demo</span></div>
         </div>
-        <div class="hero">
-          <p><strong>Now:</strong> building <a href="https://candor.sh/" target="_blank" rel="noopener">Candor</a>, a terminal-native way to collect human signal for agent evals, RL workflows, and product feedback loops.</p>
-          <p>Previously co-founded <em>EzDubs</em>, real-time speech-to-speech translation <a href="https://www.cisco.com/site/us/en/about/corporate-development/acquisitions/ezdubs/index.html" target="_blank" rel="noopener">acquired by Cisco/Webex</a>. Before that, I built ASR and voice systems across startups and large-scale deployments.</p>
-          <p>Lately I’m thinking about language world models, AR + diffusion architectures, generated-state feedback loops, and what makes agent rollouts useful.</p>
-          <p><span class="chip">World Models</span> <span class="chip">RL/Evals</span> <span class="chip">Human Signal</span> <span class="chip">ASR</span> <span class="chip">S2ST</span> <span class="chip">PyTorch</span></p>
-        </div>
-      </header>
-
-      <main id="content">
-        <section id="notes">
-          <h2>Current notes</h2>
-          <ul class="note-list">
-            <li><strong>World models for agents:</strong> Qwen-AgentWorld, simulator fidelity, LLM-as-judge rewards, and sim-to-real transfer for agent rollouts.</li>
-            <li><strong>Multimodal architectures:</strong> two-tower AR + diffusion systems like Cosmos 3 / Nemotron TwoTower, especially feedback from generated states back into reasoning.</li>
-            <li><strong>Human signal:</strong> how to collect better eval, ranking, and preference data close to the agent workflow.</li>
-          </ul>
-        </section>
-
-        <section id="research">
-          <h2>Research Notes</h2>
-          <p>Small public experiments and explanations where the mechanism is inspectable: speech systems, multimodal models, biological learning rules, sparse expansion, and agent eval loops.</p>
-          <ul class="note-list">
-            <li><strong><a href="research/audio-is-computer-vision.html">Audio Is Computer Vision</a></strong> - a short note on why spectrograms make audio models feel familiar if you understand computer vision.</li>
-            <li><strong><a href="research/flys-trick.html">The Fly's Trick: Sparse Expansion as a Learning Prior</a></strong> - a small MNIST experiment inspired by the fly olfactory system, with code, references, and measured visuals.</li>
-          </ul>
-        </section>
-
-        <section id="candor">
-          <h2>Candor — Human Signal for Agent Workflows</h2>
-          <p class="meta">2026 • RL/evals • human preference data • terminal workflows</p>
-          <p><a href="https://candor.sh/" target="_blank" rel="noopener">Candor</a> collects human feedback where AI builders already work: the terminal. It supports pairwise comparisons, ratings, labeling, product feedback, and AI-moderated interviews, then returns structured signal for evals, training data, and agent workflows.</p>
-          <p>I’m especially interested in where human signal fits into agent RL loops: judge calibration, high-disagreement cases, preference data, and evaluation rubrics that survive contact with real users.</p>
-        </section>
-
-        <section id="writing" class="compact-section">
-          <h2>Writing</h2>
-          <p>Most short-form writing is on <a href="https://x.com/kimocode" target="_blank" rel="me noopener">X</a>: world models, multimodal architectures, real-time speech systems, eval loops, and the human signal that makes those loops useful.</p>
-        </section>
-
-        <section id="ezdubs-rayban">
-          <h2>EzDubs on Ray-Ban Meta Glasses</h2>
-          <p class="meta">Real-time speech translation • wearable UX</p>
-          <p>A quick demo of Paddy and me talking through EzDubs using Ray-Ban Meta glasses. This is the kind of product surface I like: AI that disappears into a live interaction instead of becoming another dashboard.</p>
-          <p class="meta">Acquisition: <a href="https://www.cisco.com/site/us/en/about/corporate-development/acquisitions/ezdubs/index.html" target="_blank" rel="noopener">Cisco announcement</a> • <a href="https://techcrunch.com/2025/11/17/cisco-acquires-translation-startup-ezdubs/" target="_blank" rel="noopener">TechCrunch coverage</a></p>
-          <video controls preload="metadata" poster="videos/ezdubs-rayban-meta-poster.jpg">
-            <source src="videos/ezdubs-rayban-meta.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-        </section>
-
-        <section id="ezdubs-demos">
-          <h2>More EzDubs Demos</h2>
-          <p class="meta">Real-time translation • product demos</p>
-          <p>A couple more demos from the same product arc: real-time voice translation moving from model work into live user-facing surfaces.</p>
-          <div class="grid">
-            <div class="video-container" aria-label="YouTube demo: EzDubs real-time translation">
-              <iframe src="https://www.youtube-nocookie.com/embed/n4rgnOnep-g" title="EzDubs real-time translation demo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            </div>
-            <div class="video-container" aria-label="YouTube demo: EzDubs product demo">
-              <iframe src="https://www.youtube-nocookie.com/embed/XhVVeaWga6k" title="EzDubs product demo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            </div>
-          </div>
-        </section>
-
-        <section id="rl-world-models">
-          <h2>RL, Rollouts, and World Models</h2>
-          <p class="meta">SAC • replay • rollouts • PyTorch</p>
-          <p>Implemented Soft Actor-Critic with an AtariNet-style convolutional encoder. Training leveraged replay, MC rollouts, and importance sampling. I’m still interested in the same core problem today: how agents learn from simulated experience, how those rollouts are scored, and when simulated feedback transfers to real environments.</p>
-          <div class="video-container" aria-label="YouTube demo: RL agent playing Pong">
-            <iframe src="https://www.youtube-nocookie.com/embed/bMo1Gg-ymD8" title="Pong RL demo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-          </div>
-          <p>Training code: <a href="https://gist.github.com/kareemn/c760f652ffb62cb565f99f926d807025" target="_blank" rel="noopener">gist</a></p>
-        </section>
-
-        <section id="smartmiq">
-          <h2>Smartmiq Desktop Assistant</h2>
-          <p class="meta">2021 • PyTorch (Transducer), macOS UI</p>
-          <div class="grid">
-            <div>
-              <p>Spotlight‑style voice assistant for desktop. Trigger actions hands‑free (search, reply to Slack, etc.). I trained my own ASR based on a transducer architecture for tighter control over latency and accuracy.</p>
-              <p><em>What I learned:</em> voice on laptops/desktops is useful but often slower than typing in public; UX must bias toward zero‑friction hybrid input (keyboard + voice), and ASR needs strong endpointing.</p>
-            </div>
-            <div>
-              <figure>
-                <img loading="lazy" src="images/smartmiq_search_google.gif" alt="Smartmiq demo: voice search triggering Google results" />
-              </figure>
-              <p style="margin:.5rem 0 0; color:var(--muted)">Replying to Slack by voice:</p>
-              <img loading="lazy" src="images/smartmiq_slack_reply.gif" alt="Smartmiq demo: replying to Slack messages with voice" />
-            </div>
-          </div>
-        </section>
-
-        <section id="noise-suppression">
-          <h2>Noise Suppression Neural Network</h2>
-          <p class="meta">2020 • VoiceFilter‑style masking</p>
-          <p>Learned a spectral mask to suppress non‑speech noise, inspired by Google’s VoiceFilter. The model improves intelligibility in common home/office environments.</p>
-          <div class="video-container" aria-label="YouTube demo: noise suppression before/after">
-            <iframe src="https://www.youtube-nocookie.com/embed/Mon3kjfvdx0" title="Noise suppression demo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-          </div>
-        </section>
-
-        <section id="rover">
-          <h2>Rover — Music Visualizer via GAN</h2>
-          <p class="meta">Rust • DCGAN latent exploration</p>
-          <p>Mapped audio frequency features to a smoothed latent walk through a pretrained art‑DCGAN to generate synchronized visuals in real time.</p>
-          <ul>
-            <li>Compute frequency components per frame</li>
-            <li>Integrate with previous latent for temporal smoothness</li>
-            <li>Render GAN output to framebuffer</li>
-          </ul>
-          <div class="video-container" aria-label="YouTube demo: Rover GAN visualizer">
-            <iframe src="https://www.youtube-nocookie.com/embed/a9yJmaswq2o" title="Rover GAN Visualizer" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-          </div>
-          <p>Code: <a href="https://github.com/kareemn/rover" target="_blank" rel="noopener">github.com/kareemn/rover</a></p>
-        </section>
-
-        <section id="meeting-assistant">
-          <h2>Meeting Voice Assistant (Zoom/Meet/Webex)</h2>
-          <p class="meta">2018 • Workfit/Voicera/Voicea • Kubernetes</p>
-          <p>Before high‑quality meeting audio APIs existed, I emulated webcam/mic drivers in a Dockerized headless Chrome to capture >16kHz audio for wake‑word and ASR, then scaled it across a Kubernetes cluster. We also used a virtual webcam to demo the bot live, a surprisingly effective growth loop.</p>
-          <div class="video-container" aria-label="YouTube demo: meeting assistant in Zoom">
-            <iframe src="https://www.youtube-nocookie.com/embed/1FbBXDxFG7g" title="Zoom meeting assistant demo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-          </div>
-        </section>
-
-        <section id="poynt">
-          <h2>Poynt OS &amp; Platform Integration</h2>
-          <p class="meta">2015-2017 • Android OS fork • kernel/HAL • OTA updates • PCI PTS</p>
-          <p>Led OS and platform integration for Poynt's Android-based payment terminals: Android OS fork work, kernel/HAL integration, OTA update framework, the Poynt App Store, and OS security changes for PCI PTS certification. This was building and shipping an operating system for real payment hardware, not app-layer product work.</p>
-          <p>The Nay-Nay video below was a stress test of the remote OS/app update pipeline: we pushed a music video to a fleet of test devices at once.</p>
-          <div class="video-container" aria-label="YouTube demo: Poynt Nay-Nay">
-            <iframe src="https://www.youtube-nocookie.com/embed/7pg6mZ9HXU4" title="Poynt Nay-Nay" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-          </div>
-        </section>
-      </main>
-
-      <footer>
-        <p><small>© <span id="y"></span> Kareem Nassar • Built with plain HTML/CSS, no framework</small></p>
-      </footer>
+        <a class="project" href="https://github.com/kareemn/rover" target="_blank" rel="noopener"><span class="index">04</span><h3>Rover</h3><p>A real-time music visualizer that maps audio frequency features into a temporally smoothed walk through a generative latent space.</p><span class="arrow">↗</span><span class="meta">Rust · Audio · GAN</span></a>
+        <div class="project-media single"><div class="media-item"><div class="video-frame"><iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/a9yJmaswq2o" title="Rover GAN music visualizer" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div><span class="media-label">Music visualization · Latent exploration</span></div></div>
+        <div class="project"><span class="index">05</span><h3>Neural Noise Suppression</h3><p>A learned spectral mask for suppressing non-speech noise and improving intelligibility in everyday home and office environments.</p><span class="arrow">—</span><span class="meta">Speech · VoiceFilter</span></div>
+        <div class="project-media single"><div class="media-item"><div class="video-frame"><iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/Mon3kjfvdx0" title="Noise suppression before and after" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div><span class="media-label">Before / after demo</span></div></div>
+        <div class="project"><span class="index">06</span><h3>Meeting Voice Assistant</h3><p>Before meeting platforms exposed usable bot or audio APIs, I built the now-common participant-bot pattern for Zoom, Meet, and Webex using containerized adapters and virtual microphone, speaker, webcam, keyboard, and mouse devices. The approach is covered by <a href="https://patents.google.com/patent/US10911718B2/en?inventor=Kareem+Nassar" target="_blank" rel="noopener">US 10,911,718</a>.</p><span class="arrow">—</span><span class="meta">Participant bots · Virtual I/O · Kubernetes</span></div>
+        <div class="project-media single"><div class="media-item"><div class="video-frame"><iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/1FbBXDxFG7g" title="Meeting assistant in Zoom" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div><span class="media-label">Zoom participant-bot demo</span></div></div>
+        <div class="project"><span class="index">07</span><h3>Poynt OS &amp; Platform</h3><p>Android OS, kernel and HAL integration, OTA infrastructure, app distribution, and security work for real payment hardware.</p><span class="arrow">—</span><span class="meta">Android OS · OTA · Hardware</span></div>
+        <div class="project-media single"><div class="media-item"><div class="video-frame"><iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/7pg6mZ9HXU4" title="Poynt operating system fleet update demo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div><span class="media-label">Fleet-wide OS/app update test</span></div></div>
+      </div>
+      <div class="research-pair" id="research">
+        <a class="note" href="research/audio-is-computer-vision.html"><span class="meta">Research note · Audio systems</span><h3>Audio Is Computer Vision</h3><p>Why spectrograms make audio models feel familiar when you already understand computer vision.</p></a>
+        <a class="note" href="research/flys-trick.html"><span class="meta">Research note · Sparse learning</span><h3>The Fly’s Trick</h3><p>A small MNIST experiment exploring sparse expansion as a learning prior, inspired by the fly olfactory system.</p></a>
+      </div>
+      <div class="site-end"><span>© 2026 Kareem Nassar</span><span>LLM agents · multimodal AI · human signal</span></div>
     </div>
+  </section>
+  <script>
+    const canvas=document.querySelector('#viz'),btn=document.querySelector('#motion');
+    const gl=canvas.getContext('webgl2',{alpha:false,antialias:false,depth:false,stencil:false,powerPreference:'high-performance'});
+    const vertex=`#version 300 es
+      void main(){
+        vec2 p=vec2((gl_VertexID<<1)&2,gl_VertexID&2);
+        gl_Position=vec4(p*2.0-1.0,0.0,1.0);
+      }`;
+    const fragment=`#version 300 es
+      precision highp float;
+      uniform vec2 uResolution;
+      uniform float uTime;
+      uniform float uPhrase;
+      uniform float uScroll;
+      out vec4 fragColor;
+      const float PI=3.14159265359;
+      float gate(float x,float a,float b,float edge){return smoothstep(a,a+edge,x)*(1.0-smoothstep(b-edge,b,x));}
+      struct Voice{float voiced;float hiss;float burst;float pitch;float env;};
+      Voice voice(float time){
+        float p=mod(time+uPhrase*.11,4.0+mod(uPhrase,3.0)*.22);
+        float ka=gate(p,.16,.67,.09)*(.62+.18*sin((p-.16)*PI*2.0));
+        float reem=gate(p,.6,1.3,.12)*(.74+.2*smoothstep(.6,.85,p));
+        float nas=gate(p,1.48,2.13,.1)*(.67+.16*sin((p-1.48)*PI*2.2));
+        float sar=gate(p,2.04,2.95,.11)*(.68+.25*smoothstep(2.04,2.34,p));
+        float hiss=gate(p,1.93,2.18,.045)*.72+gate(p,2.08,2.28,.045)*.5;
+        float breath=gate(p,.02,.14,.035)*.12;
+        float burst=exp(-pow(p-.17,2.0)/.0014)*.54+exp(-pow(p-1.49,2.0)/.0015)*.62+exp(-pow(p-2.89,2.0)/.0018)*.88;
+        float voiced=ka+reem+nas*.76+sar;
+        float pitch=(reem>.01?1.1*sin((p-.6)*2.6):(sar>.01?1.15*smoothstep(2.04,2.64,p):0.0))+mod(uPhrase,5.0)*.28;
+        return Voice(voiced,hiss,burst,pitch,min(1.0,voiced+breath));
+      }
+      float speech(float pos,float time){
+        Voice v=voice(time);float c=pos*2.0-1.0;
+        float window=pow(max(0.0,1.0-pow(abs(c),3.4)),1.25);
+        float pitch=16.2+v.pitch+.45*sin(time*.9),s=c*PI;
+        float vowel=sin(s*pitch)+.38*sin(s*pitch*2.03+.6)+.17*sin(s*pitch*3.08-1.1);
+        float sibilant=v.hiss*(.34*sin(s*61.0+.7)+.2*sin(s*97.0-1.4));
+        float plosive=v.burst*sin(s*39.0)*.72;
+        return (vowel*.34*v.voiced+sibilant+plosive)*window;
+      }
+      float roundedBox(vec2 p,vec2 b,float r){vec2 q=abs(p)-b+r;return length(max(q,0.0))+min(max(q.x,q.y),0.0)-r;}
+      void main(){
+        vec2 uv=gl_FragCoord.xy/uResolution;float y=1.0-uv.y;
+        vec3 color=mix(vec3(.018,.026,.041),vec3(.035,.047,.070),uv.y);
 
-    <script>
-      // Small niceties: current year and reduced‑motion pause for videos if desired
-      document.getElementById('y').textContent = new Date().getFullYear();
-    </script>
-  </body>
+        float count=uResolution.x<700.0?44.0:72.0;
+        float field=(uv.x-.11)/.78;
+        if(field>=0.0&&field<=1.0){
+          float idx=floor(field*count),pos=(idx+.5)/count;
+          float center=.11+pos*.78,cell=.78/count;
+          float raw=abs(speech(pos,uTime));
+          float texture=.48+.52*pow(abs(sin(idx*.91+sin(uTime*.7)*.45)),.7);
+          float scrollPulse=uScroll*(.16+.12*pow(abs(sin(idx*.73+uTime*8.0)),2.0));
+          float amp=min(1.0,.035+raw*2.45+scrollPulse)*texture;
+          float halfH=.018+amp*.25,halfW=min(.0035,cell*.2);
+          float d=roundedBox(vec2(uv.x-center,y-.64),vec2(halfW,halfH),halfW);
+          float mask=1.0-smoothstep(0.0,1.5/uResolution.y,d);
+          vec3 bar=amp>.76?vec3(1.0,.447,.369):mix(vec3(.32,.49,1.0),vec3(.45,.67,1.0),pos);
+          color=mix(color,bar,mask*(.58+amp*.42));
+          color+=bar*mask*amp*.2;
+        }
+
+        fragColor=vec4(color,1.0);
+      }`;
+    function shader(type,source){const s=gl.createShader(type);gl.shaderSource(s,source);gl.compileShader(s);if(!gl.getShaderParameter(s,gl.COMPILE_STATUS))throw new Error(gl.getShaderInfoLog(s));return s}
+    const program=gl.createProgram();gl.attachShader(program,shader(gl.VERTEX_SHADER,vertex));gl.attachShader(program,shader(gl.FRAGMENT_SHADER,fragment));gl.linkProgram(program);if(!gl.getProgramParameter(program,gl.LINK_STATUS))throw new Error(gl.getProgramInfoLog(program));
+    const resolution=gl.getUniformLocation(program,'uResolution'),timeUniform=gl.getUniformLocation(program,'uTime'),phraseUniform=gl.getUniformLocation(program,'uPhrase'),scrollUniform=gl.getUniformLocation(program,'uScroll');
+    const caption=document.querySelector('#voice-caption'),fieldCaption=document.querySelector('#field-caption'),fieldCount=document.querySelector('#field-count'),signal=document.querySelector('.signal'),signalHome=document.querySelector('.signal-home');
+    const readable=[document.querySelector('main'),...document.querySelectorAll('.project,.note')].filter(Boolean),workSection=document.querySelector('#work');
+    let motion=!matchMedia('(prefers-reduced-motion: reduce)').matches,visible=true,elapsed=0,last=performance.now(),frame=0,phraseIndex=0,scrollEnergy=0,scrollTick=0,dockedState=false,dockAnimation;
+    function resize(){const d=Math.min(devicePixelRatio||1,1.5),r=canvas.getBoundingClientRect(),w=Math.max(1,Math.round(r.width*d)),h=Math.max(1,Math.round(r.height*d));if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;gl.viewport(0,0,w,h)}}
+    function paint(now){frame=0;resize();const dt=Math.min(.05,(now-last)/1000);if(motion)elapsed+=dt;scrollEnergy*=Math.pow(.018,dt);last=now;gl.useProgram(program);gl.uniform2f(resolution,canvas.width,canvas.height);gl.uniform1f(timeUniform,elapsed);gl.uniform1f(phraseUniform,phraseIndex);gl.uniform1f(scrollUniform,scrollEnergy);gl.drawArrays(gl.TRIANGLES,0,3);if((motion||scrollEnergy>.01)&&visible&&!document.hidden)frame=requestAnimationFrame(paint)}
+    function requestPaint(){if(!frame&&visible&&!document.hidden){last=performance.now();frame=requestAnimationFrame(paint)}}
+    function updateButton(){btn.textContent=`Motion: ${motion?'On':'Off'}`;btn.setAttribute('aria-pressed',motion)}
+    btn.onclick=()=>{motion=!motion;updateButton();requestPaint()};updateButton();
+    function readableLabel(element){if(element.matches('main'))return 'Kareem Nassar';const heading=element.querySelector('h1,h2,h3');if(heading)return heading.textContent.trim();return 'Kareem Nassar'}
+    function setDocked(next){
+      if(next===dockedState)return;const before=signal.getBoundingClientRect();
+      document.body.classList.toggle('reader-docked',next);dockedState=next;const after=signal.getBoundingClientRect();
+      if(motion){dockAnimation?.cancel();dockAnimation=signal.animate([{transformOrigin:'top left',transform:`translate(${before.left-after.left}px,${before.top-after.top}px) scale(${before.width/after.width},${before.height/after.height})`},{transformOrigin:'top left',transform:'none'}],{duration:680,easing:'cubic-bezier(.22,1,.36,1)'});}
+    }
+    function updateReader(){
+      scrollTick=0;const docked=signalHome.getBoundingClientRect().bottom<innerHeight*.72,target=innerHeight*.46;let best=0,distance=Infinity;
+      setDocked(docked);
+      if(docked)readable.forEach((element,index)=>{const r=element.getBoundingClientRect();if(r.bottom<0||r.top>innerHeight)return;const d=Math.abs((Math.max(0,r.top)+Math.min(innerHeight,r.bottom))/2-target);if(d<distance){distance=d;best=index}});
+      if(best!==phraseIndex){phraseIndex=best;caption.textContent=readableLabel(readable[best]);elapsed+=.17}
+      fieldCaption.textContent=best===0?'Selected work':readableLabel(readable[best]);fieldCount.textContent=`${String(best).padStart(2,'0')} / ${String(readable.length-1).padStart(2,'0')}`;signalHome.style.setProperty('--reader-progress',best/(readable.length-1));
+      scrollEnergy=1;requestPaint();
+    }
+    addEventListener('scroll',()=>{if(!scrollTick)scrollTick=requestAnimationFrame(updateReader)},{passive:true});
+    addEventListener('resize',()=>{if(!scrollTick)scrollTick=requestAnimationFrame(updateReader)},{passive:true});
+    new IntersectionObserver(([entry])=>{visible=entry.isIntersecting;if(visible)requestPaint();else if(frame){cancelAnimationFrame(frame);frame=0}},{rootMargin:'120px'}).observe(canvas);
+    new ResizeObserver(requestPaint).observe(canvas);
+    document.addEventListener('visibilitychange',()=>{if(document.hidden&&frame){cancelAnimationFrame(frame);frame=0}else requestPaint()});
+    updateReader();requestPaint();
+  </script>
+</body>
 </html>
