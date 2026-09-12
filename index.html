@@ -41,6 +41,7 @@
     .reader-docked .signal{left:50%;top:max(18px,env(safe-area-inset-top));translate:-50% 0}
     @media(max-width:720px){.reader-docked .signal{left:50%;top:max(14px,env(safe-area-inset-top));translate:-50% 0;width:min(330px,calc(100vw - 28px))}}
     @media(prefers-reduced-motion:reduce){.dot{animation:none}.signal,.voice-hud{transition:none}}
+    .site-end{align-items:flex-start;flex-wrap:wrap}.site-end a{display:inline-flex;align-items:center;min-height:44px;color:var(--lime);text-decoration:underline;text-underline-offset:4px}.site-end a:hover{color:var(--fg)}.site-end a:focus-visible{outline:2px solid var(--lime);outline-offset:5px}
   </style>
 </head>
 <body>
@@ -87,7 +88,7 @@
         <a class="note" href="research/audio-is-computer-vision.html"><span class="meta">Research note · Audio systems</span><h3>Audio Is Computer Vision</h3><p>Why spectrograms make audio models feel familiar when you already understand computer vision.</p></a>
         <a class="note" href="research/flys-trick.html"><span class="meta">Research note · Sparse learning</span><h3>The Fly’s Trick</h3><p>A small MNIST experiment exploring sparse expansion as a learning prior, inspired by the fly olfactory system.</p></a>
       </div>
-      <div class="site-end"><span>© 2026 Kareem Nassar</span><span>LLM agents · multimodal AI · human signal</span></div>
+      <footer class="site-end" aria-label="Site footer"><span>© 2026 Kareem Nassar</span><a href="/smalltalk/">Smalltalk FAQ ↗</a><span>LLM agents · multimodal AI · human signal</span></footer>
     </div>
   </section>
   <script>
