@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=1200, initial-scale=1">
+  <title>The Fly's Trick — Open Graph Preview</title>
+  <style>
+    *{box-sizing:border-box}
+    html,body{width:1200px;height:630px;margin:0;overflow:hidden;background:#0b0c10}
+    body{position:relative;color:#e6edf3;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    body::before{content:"";position:absolute;inset:0;background:radial-gradient(520px 300px at 42% 80%,rgba(120,214,163,.09),transparent 72%),radial-gradient(420px 260px at 84% 70%,rgba(247,200,115,.06),transparent 72%)}
+    .frame{position:absolute;inset:32px;border:1px solid #273039;border-radius:25px;overflow:hidden;background:linear-gradient(145deg,rgba(17,19,22,.7),rgba(9,11,14,.18))}
+    .top{display:flex;align-items:center;justify-content:space-between;padding:29px 34px;color:#9fa8b1;font:600 11px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.13em;text-transform:uppercase}
+    .eyebrow{display:flex;align-items:center;gap:11px;color:#78d6a3}.dot{width:7px;height:7px;border-radius:50%;background:#78d6a3;box-shadow:0 0 16px rgba(120,214,163,.78)}
+    h1{margin:38px 0 0 62px;font:700 82px/.95 Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;letter-spacing:-.058em}
+    .subtitle{margin:15px 0 0 67px;color:#a9b1ba;font:400 25px/1.2 Georgia,"Times New Roman",serif;letter-spacing:-.012em}
+    .diagram{position:absolute;left:62px;right:62px;bottom:42px;height:250px;border:1px solid #2b333c;border-radius:20px;overflow:hidden;background:linear-gradient(150deg,#11151a,#0d1014);box-shadow:0 28px 80px rgba(0,0,0,.32)}
+    .diagram::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(120,214,163,.018),transparent);pointer-events:none}
+    canvas{position:absolute;inset:0;width:100%;height:100%}
+    .label{position:absolute;z-index:2;bottom:18px;color:#8e98a3;font:600 10px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.12em;text-transform:uppercase}
+    .l1{left:42px}.l2{left:320px}.l3{left:758px;color:#78d6a3}.l4{right:40px;color:#f7c873}
+  </style>
+</head>
+<body>
+  <main class="frame">
+    <div class="top"><div class="eyebrow"><i class="dot"></i>Biological learning toy</div><div>Kareem Nassar</div></div>
+    <h1>The Fly's Trick</h1>
+    <p class="subtitle">Sparse expansion as a learning prior</p>
+    <section class="diagram" aria-label="Compact pixels expand into a sparse top-k code and local readout">
+      <canvas id="circuit" width="1076" height="250"></canvas>
+      <span class="label l1">Pixels</span><span class="label l2">Random expansion</span><span class="label l3">Top-k code</span><span class="label l4">Local readout</span>
+    </section>
+  </main>
+  <script>
+    const c=document.querySelector('#circuit'),x=c.getContext('2d');
+    const green='#78d6a3',amber='#f7c873',muted='#303943',line='rgba(89,103,116,.22)';
+    x.lineWidth=1;
+    const inputs=[];
+    for(let r=0;r<4;r++)for(let col=0;col<4;col++)inputs.push({x:54+col*23,y:55+r*23,on:[1,4,6,9,14].includes(r*4+col)});
+    const cells=[];
+    for(let r=0;r<5;r++)for(let col=0;col<18;col++)cells.push({x:260+col*25,y:44+r*29,on:[4,19,27,38,51,67,82].includes(r*18+col)});
+    x.strokeStyle=line;
+    for(let i=0;i<42;i++){
+      const a=inputs[(i*7+3)%inputs.length],b=cells[(i*13+8)%cells.length];
+      x.beginPath();x.moveTo(a.x+7,a.y);x.bezierCurveTo(175,a.y,190,b.y,b.x-8,b.y);x.stroke();
+    }
+    for(const p of inputs){x.fillStyle=p.on?(p.x%2?amber:green):muted;x.beginPath();x.roundRect(p.x-6,p.y-6,12,12,3);x.fill()}
+    for(const p of cells){x.fillStyle=p.on?green:muted;x.shadowColor=p.on?'rgba(120,214,163,.55)':'transparent';x.shadowBlur=p.on?10:0;x.beginPath();x.arc(p.x,p.y,5.3,0,Math.PI*2);x.fill()}
+    x.shadowBlur=0;x.strokeStyle='rgba(120,214,163,.38)';x.lineWidth=2;x.beginPath();x.moveTo(725,100);x.lineTo(773,100);x.lineTo(764,92);x.moveTo(773,100);x.lineTo(764,108);x.stroke();
+    const tagY=[56,79,102,125,148];for(let i=0;i<tagY.length;i++){x.fillStyle=i===1||i===3?green:muted;x.beginPath();x.roundRect(804,tagY[i],58,10,5);x.fill()}
+    x.strokeStyle='rgba(247,200,115,.35)';x.beginPath();x.moveTo(886,100);x.lineTo(932,100);x.lineTo(923,92);x.moveTo(932,100);x.lineTo(923,108);x.stroke();
+    const heights=[30,66,44];for(let i=0;i<3;i++){x.fillStyle=i===1?amber:'#46515d';x.beginPath();x.roundRect(965+i*22,139-heights[i],12,heights[i],3);x.fill()}
+  </script>
+</body>
+</html>
