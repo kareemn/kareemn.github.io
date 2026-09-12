@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=1200, initial-scale=1">
+  <title>Kareem Nassar — Open Graph Preview</title>
+  <style>
+    *{box-sizing:border-box}
+    html,body{width:1200px;height:630px;margin:0;overflow:hidden;background:#07090d}
+    body{position:relative;color:#f2efe8;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    body::before{content:"";position:absolute;inset:0;background:radial-gradient(680px 330px at 76% 78%,rgba(76,120,255,.12),transparent 72%),radial-gradient(360px 260px at 89% 68%,rgba(255,114,94,.065),transparent 72%)}
+    .frame{position:absolute;inset:32px;border:1px solid #222a36;border-radius:25px;overflow:hidden;background:linear-gradient(145deg,rgba(14,19,27,.52),rgba(7,9,13,.15))}
+    .top{display:flex;align-items:center;justify-content:space-between;padding:29px 34px;color:#8f98a8;font:600 12px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.14em;text-transform:uppercase}
+    .identity{display:flex;align-items:center;gap:12px;color:#b7ff52}.dot{width:7px;height:7px;border-radius:50%;background:#b7ff52;box-shadow:0 0 16px rgba(183,255,82,.9)}
+    h1{position:relative;margin:45px 0 0 62px;width:940px;font:400 72px/.91 Georgia,"Times New Roman",serif;letter-spacing:-.055em}
+    h1 span{color:#aeb7c5}
+    .tags{position:absolute;top:281px;left:67px;color:#929cab;font:500 11px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.12em;text-transform:uppercase}
+    .signal{position:absolute;left:62px;right:62px;bottom:46px;height:212px;border:1px solid #2d3747;border-radius:21px;overflow:hidden;background:linear-gradient(150deg,rgba(12,17,25,.96),rgba(5,8,12,.94));box-shadow:0 28px 80px rgba(0,0,0,.34)}
+    .signal::after{content:"";position:absolute;left:6%;right:6%;top:59%;height:1px;background:linear-gradient(90deg,transparent,rgba(76,120,255,.25),transparent)}
+    .signal-head{position:absolute;z-index:2;top:19px;left:23px;right:23px;display:flex;justify-content:space-between;color:#b7ff52;font:600 10px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.16em;text-transform:uppercase}.signal-head b{color:#9ca5b5;font-weight:500}
+    canvas{position:absolute;inset:0;width:100%;height:100%}
+  </style>
+</head>
+<body>
+  <main class="frame">
+    <div class="top"><div class="identity"><i class="dot"></i>Kareem Nassar / Signal Field</div><div>kareem.me</div></div>
+    <h1>AI systems that <span>listen, learn,</span><br>and improve.</h1>
+    <div class="tags">LLM agents · real-time voice · evaluation · human feedback</div>
+    <section class="signal" aria-label="Generative signal field">
+      <div class="signal-head"><span>Signal field</span><b>Kareem Nassar</b></div>
+      <canvas id="wave" width="1076" height="212"></canvas>
+    </section>
+  </main>
+  <script>
+    const c=document.querySelector('#wave'),x=c.getContext('2d'),w=c.width,h=c.height,mid=126,bars=94;
+    x.clearRect(0,0,w,h);
+    const peaks=[.12,.16,.22,.42,.72,.48,.23,.18,.28,.50,.88,.62,.34,.22,.18,.26,.58,.94,.72,.38,.25,.19,.24,.46,.76,.55,.30,.20,.16,.23,.44,.66,.48,.26,.18,.13];
+    const sample=t=>{const p=t*(peaks.length-1),i=Math.floor(p),f=p-i,a=peaks[i],b=peaks[Math.min(i+1,peaks.length-1)];return a+(b-a)*(f*f*(3-2*f))};
+    for(let i=0;i<bars;i++){
+      const t=i/(bars-1),env=sample(t),texture=.82+.18*Math.sin(i*2.13)+.08*Math.sin(i*.61),amp=Math.max(4,env*86*texture),bw=5.6,gap=4.7,px=42+i*(bw+gap);
+      const hot=env>.69&&((i+2)%9<2),grad=x.createLinearGradient(0,mid-amp,0,mid+amp);
+      if(hot){grad.addColorStop(0,'#ff8a74');grad.addColorStop(.5,'#ff725e');grad.addColorStop(1,'#d95349')}else{grad.addColorStop(0,'#6794ff');grad.addColorStop(.48,'#4c78ff');grad.addColorStop(1,'#3155b4')}
+      x.fillStyle=grad;x.shadowColor=hot?'rgba(255,114,94,.42)':'rgba(76,120,255,.36)';x.shadowBlur=8;
+      x.beginPath();x.roundRect(px,mid-amp*.55,bw,amp*1.1,2.4);x.fill();
+    }
+  </script>
+</body>
+</html>
