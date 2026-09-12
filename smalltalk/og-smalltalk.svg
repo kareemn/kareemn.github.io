@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <radialGradient id="glow"><stop stop-color="#c1f478" stop-opacity=".06"/><stop offset="1" stop-color="#c1f478" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="#090c10"/>
+  <ellipse cx="840" cy="280" rx="450" ry="360" fill="url(#glow)"/>
+  <rect x="30" y="30" width="1140" height="570" rx="26" fill="none" stroke="#2b343e"/>
+  <circle cx="73" cy="78" r="4" fill="#c1f478"/>
+  <text x="89" y="83" fill="#c1f478" font-family="Menlo, monospace" font-size="13" letter-spacing="2">SMALLTALK / FAQ</text>
+  <text x="1126" y="83" fill="#a5aeb9" font-family="Menlo, monospace" font-size="13" text-anchor="end">kareem.me/smalltalk</text>
+  <g font-family="Georgia, serif" font-size="78" letter-spacing="-4">
+    <text x="70" y="235" fill="#f2efe8">Kareem,</text>
+    <text x="70" y="322" fill="#b8c2cf" font-style="italic">frequently</text>
+    <text x="70" y="405" fill="#b8c2cf" font-style="italic">asked.</text>
+  </g>
+  <g fill="#a5aeb9" font-family="Helvetica, Arial, sans-serif" font-size="21">
+    <text x="74" y="468">Small talk, now available as</text>
+    <text x="74" y="499">a self-service experience.</text>
+  </g>
+  <rect x="631" y="132" width="491" height="406" rx="22" fill="#11171e" stroke="#36414d"/>
+  <g font-family="Helvetica, Arial, sans-serif" font-size="21" fill="#b6bfcb">
+    <text x="692" y="184">hey how’s it going?</text>
+    <text x="692" y="312">how’s life?</text>
+    <text x="692" y="440">what’s your name?</text>
+  </g>
+  <g font-family="Georgia, serif" font-size="37" fill="#f2efe8" letter-spacing="-.7">
+    <text x="692" y="233">pretty good.</text>
+    <text x="692" y="361">it’s good.</text>
+    <text x="692" y="489">Kareem</text>
+  </g>
+  <g font-family="Menlo, monospace" font-size="13">
+    <g fill="#748191"><text x="659" y="183">Q</text><text x="659" y="311">Q</text><text x="659" y="439">Q</text></g>
+    <g fill="#c1f478"><text x="659" y="228">A</text><text x="659" y="356">A</text><text x="659" y="484">A</text></g>
+  </g>
+  <path d="M659 264H1094M659 392H1094" stroke="#2b343e"/>
+  <text x="74" y="565" fill="#7e8b9a" font-family="Menlo, monospace" font-size="12" letter-spacing="1">SAME KAREEM. FEWER OPENING QUESTIONS.</text>
+</svg>
