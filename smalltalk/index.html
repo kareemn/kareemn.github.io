@@ -4,52 +4,52 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#090c10">
-  <title>Smalltalk — A little help finding the words</title>
-  <meta name="description" content="Natural replies, better follow-up questions, and graceful exits. Pick a situation and find your words.">
+  <title>Kareem, frequently asked — Smalltalk</title>
+  <meta name="description" content="How's it going? Pretty good. How's life? It's good. The official Kareem small-talk FAQ.">
   <link rel="canonical" href="https://kareem.me/smalltalk/">
-  <meta property="og:title" content="Smalltalk — Find your words">
-  <meta property="og:description" content="A pocket guide to natural replies and graceful exits. By Kareem Nassar.">
+  <meta property="og:title" content="Kareem, frequently asked">
+  <meta property="og:description" content="Small talk, now available as a self-service experience.">
   <meta property="og:url" content="https://kareem.me/smalltalk/">
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://kareem.me/images/og-signal-field.png">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="stylesheet" href="style.css">
-  <script defer src="app.js"></script>
+  <link rel="stylesheet" href="style.css?v=faq1">
+  <script defer src="app.js?v=faq1"></script>
 </head>
 <body>
   <div class="shell">
-    <header><a href="/" class="brand">Kareem Nassar<span> / Smalltalk</span></a><a href="#share" class="share-link">Share ↗</a></header>
+    <header><a href="/" class="brand">Kareem Nassar</a><span class="edition">Smalltalk / FAQ</span></header>
     <main>
-      <div class="eyebrow"><span class="signal" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>A little help finding the words</div>
-      <h1>Small talk.<br><em>Less overthinking.</em></h1>
-      <p class="intro">Keep it going. Make a connection. Or make a graceful exit.</p>
-      <section class="workspace" aria-label="Reply suggestions">
-        <div class="controls">
-          <form id="question-form">
-            <label for="question">What did they say?</label>
-            <div class="input-row"><input id="question" maxlength="240" placeholder="e.g. What do you do?" autocomplete="off"><button type="submit" class="go" aria-label="Find a reply">↗</button></div>
-          </form>
-          <p class="or">Or pick the moment</p>
-          <div id="situations" class="chips" role="group" aria-label="Situation"></div>
-          <fieldset><legend>Your tone</legend><div class="tones" id="tones"><button type="button" data-tone="warm" aria-pressed="true">Warm</button><button type="button" data-tone="playful" aria-pressed="false">Playful</button><button type="button" data-tone="direct" aria-pressed="false">Straightforward</button></div></fieldset>
-          <p class="hint">Suggested wording—make it sound like you. This is a curated reply guide, not an AI chat.</p>
-        </div>
-        <div class="result-area">
-          <p id="match-note" role="status"></p>
-          <article class="reply-card" aria-live="polite" aria-atomic="true">
-            <div class="card-top"><span id="moment">The hello</span><span class="counter" id="counter">01 / 03</span></div>
-            <p id="prompt" class="prompt">“How's your day going?”</p>
-            <p id="reply" class="reply"></p>
-            <div class="followup"><span id="follow-label">Keep it going</span><p id="followup"></p></div>
-          </article>
-          <div class="actions"><button type="button" id="another">Another way to say it <span aria-hidden="true">↻</span></button><button type="button" id="copy">Copy reply</button></div>
-          <p id="copy-status" role="status"></p>
-        </div>
+      <div class="heading"><p class="eyebrow"><span aria-hidden="true">●</span> The conversation starter pack</p><h1>Kareem,<br><em>frequently asked.</em></h1><p class="intro">Small talk, now available as a self-service experience.</p></div>
+      <aside class="scan" aria-labelledby="scan-title">
+        <p class="eyebrow" id="scan-title">For the person standing next to me</p>
+        <img class="qr" src="qr.svg" width="240" height="240" alt="Scan this QR code to open kareem.me/smalltalk">
+        <p class="scan-caption">Scan before asking.</p>
+        <a class="url" href="https://kareem.me/smalltalk">kareem.me/smalltalk</a>
+        <button id="enlarge" type="button" hidden>Make QR bigger ↗</button>
+        <div class="downloads"><a href="qr.png" download="kareem-smalltalk-qr.png">PNG ↓</a><a href="qr.svg" download="kareem-smalltalk-qr.svg">SVG ↓</a></div>
+      </aside>
+      <section class="faq" aria-label="Small talk questions about Kareem">
+        <dl>
+          <div class="qa"><dt><span class="marker" aria-hidden="true">Q</span>hey how’s it going?</dt><dd><span class="marker" aria-hidden="true">A</span>pretty good.</dd></div>
+          <div class="qa"><dt><span class="marker" aria-hidden="true">Q</span>how’s life?</dt><dd><span class="marker" aria-hidden="true">A</span>it’s good.</dd></div>
+          <div class="qa"><dt><span class="marker" aria-hidden="true">Q</span>what’s your name?</dt><dd><span class="marker" aria-hidden="true">A</span>Kareem</dd></div>
+          <div class="qa"><dt><span class="marker" aria-hidden="true">Q</span>what’s new?</dt><dd><span class="marker" aria-hidden="true">A</span>This QR code.</dd></div>
+          <div class="qa"><dt><span class="marker" aria-hidden="true">Q</span>are you busy?</dt><dd><span class="marker" aria-hidden="true">A</span>I automated small talk. You tell me.</dd></div>
+          <div class="qa"><dt><span class="marker" aria-hidden="true">Q</span>can I ask you a question?</dt><dd><span class="marker" aria-hidden="true">A</span>You just did. But sure, another one.</dd></div>
+          <div class="qa"><dt><span class="marker" aria-hidden="true">Q</span>did you really make a website for this?</dt><dd><span class="marker" aria-hidden="true">A</span>We all have our coping mechanisms.</dd></div>
+          <div class="qa"><dt><span class="marker" aria-hidden="true">Q</span>can we just talk normally?</dt><dd><span class="marker" aria-hidden="true">A</span>Absolutely. You’ve completed the onboarding.</dd></div>
+        </dl>
+        <p class="closing">For all other questions, Kareem is probably right there.</p>
       </section>
-      <details id="share"><summary>Pass it on <span>A QR code for your next “uh…” moment</span></summary><div class="share-body"><img src="qr.png" width="240" height="240" alt="QR code linking to https://kareem.me/smalltalk"><div><h2>Scan. Find your words.</h2><p>Opens directly in a browser. No account needed.</p><p><a href="https://kareem.me/smalltalk">kareem.me/smalltalk</a></p><div class="downloads"><a href="qr.png" download="kareem-smalltalk-qr.png">Download PNG ↓</a><a href="qr.svg" download="kareem-smalltalk-qr.svg">Print-quality SVG ↓</a></div></div></div></details>
     </main>
-    <footer><a href="/">Made by Kareem Nassar</a><span>Your text stays in this browser.</span></footer>
+    <footer><a href="/">Back to kareem.me ↗</a><span>Same Kareem. Fewer opening questions.</span></footer>
   </div>
-  <noscript><p>This reply guide needs JavaScript enabled. Visit <a href="/">kareem.me</a> for more.</p></noscript>
+  <dialog id="qr-dialog" aria-labelledby="dialog-title">
+    <button class="close" type="button" id="close-qr" aria-label="Close enlarged QR code">✕</button>
+    <h2 id="dialog-title">Kareem’s small-talk FAQ</h2>
+    <img src="qr.svg" width="444" height="444" alt="Scan to open https://kareem.me/smalltalk">
+    <p>kareem.me/smalltalk</p>
+  </dialog>
 </body>
 </html>
