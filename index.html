@@ -41,13 +41,13 @@
     .reader-docked .signal{left:50%;top:max(18px,env(safe-area-inset-top));translate:-50% 0}
     @media(max-width:720px){.reader-docked .signal{left:50%;top:max(14px,env(safe-area-inset-top));translate:-50% 0;width:min(330px,calc(100vw - 28px))}}
     @media(prefers-reduced-motion:reduce){.dot{animation:none}.signal,.voice-hud{transition:none}}
-    .site-end{align-items:flex-start;flex-wrap:wrap}.site-end a{display:inline-flex;align-items:center;min-height:44px;color:var(--lime);text-decoration:underline;text-underline-offset:4px}.site-end a:hover{color:var(--fg)}.site-end a:focus-visible{outline:2px solid var(--lime);outline-offset:5px}
+    .site-end{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:32px;align-items:start}.footer-brand{display:grid;gap:14px;line-height:1.6}.footer-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;align-items:start;font:inherit}.footer-group{display:flex;flex-direction:column;align-items:flex-start;min-width:0}.footer-heading{margin:0 0 12px;color:#8f96a3;font:inherit}.site-end a{display:inline-flex;align-items:center;min-height:44px;color:var(--lime);line-height:1.5;text-decoration:underline;text-underline-offset:4px}.site-end a:hover{color:var(--fg)}.site-end a:focus-visible{outline:2px solid var(--lime);outline-offset:5px}@media(max-width:720px){.site-end{grid-template-columns:1fr}.footer-links{width:100%}}
   </style>
 </head>
 <body>
   <div class="shell">
     <header><a class="mark" href="#">Kareem Nassar</a><nav aria-label="Primary"><a href="#work">Work</a><a href="research/">Research</a><a href="#about">About</a><a href="https://x.com/kimocode">X</a><a href="https://github.com/kareemn">GitHub</a><button class="motion" id="motion" aria-pressed="true">Motion: On</button></nav></header>
-    <main>
+    <main id="about">
       <div class="eyebrow"><span class="dot"></span> AI systems / agents / multimodal</div>
       <h1>Kareem<br>Nassar</h1>
       <p class="dek">I build AI products that turn foundation models into reliable systems—LLM agents, real-time voice, evaluation, and human feedback.</p>
@@ -88,7 +88,13 @@
         <a class="note" href="research/audio-is-computer-vision.html"><span class="meta">Research note · Audio systems</span><h3>Audio Is Computer Vision</h3><p>Why spectrograms make audio models feel familiar when you already understand computer vision.</p></a>
         <a class="note" href="research/flys-trick.html"><span class="meta">Research note · Sparse learning</span><h3>The Fly’s Trick</h3><p>A small MNIST experiment exploring sparse expansion as a learning prior, inspired by the fly olfactory system.</p></a>
       </div>
-      <footer class="site-end" aria-label="Site footer"><span>© 2026 Kareem Nassar</span><a href="/smalltalk/">Smalltalk FAQ ↗</a><span>LLM agents · multimodal AI · human signal</span></footer>
+      <footer class="site-end" aria-label="Site footer">
+        <div class="footer-brand"><span>© 2026 Kareem Nassar</span><span>LLM agents · multimodal AI · human signal</span></div>
+        <nav class="footer-links" aria-label="Footer navigation">
+          <div class="footer-group"><h2 class="footer-heading">Explore</h2><a href="#work">Selected work</a><a href="/research/">Research</a><a href="#about">About Kareem</a><a href="/smalltalk/">Smalltalk FAQ</a></div>
+          <div class="footer-group"><h2 class="footer-heading">Research notes</h2><a href="/research/audio-is-computer-vision.html">Audio Is Computer Vision</a><a href="/research/flys-trick.html">The Fly’s Trick</a></div>
+        </nav>
+      </footer>
     </div>
   </section>
   <script>
