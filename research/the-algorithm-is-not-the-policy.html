@@ -18,7 +18,7 @@
     <meta name="twitter:description" content="How the Hugging Face agent incident changed my mind about AI risk." />
     <meta name="twitter:creator" content="@kimocode" />
     <link rel="stylesheet" href="research.css?v=14" />
-    <link rel="stylesheet" href="optimizer-behavior.css?v=3" />
+    <link rel="stylesheet" href="optimizer-behavior.css?v=4" />
     <script>
       window.MathJax = {
         tex: {
@@ -216,7 +216,7 @@ $$</div>
   <figcaption><strong>Training does not install separate switches.</strong> The same model has to reconcile different lessons in a situation it may never have encountered before. Schematic example.</figcaption>
 </figure>
 
-<p>That was the first thing that bothered me about the recent <a href="https://metr.org/blog/2026-08-26-openai-hugging-face-incident-investigation/">METR report</a>.</p>
+<p>That was the first thing that bothered me about the recent <a href="#ref-metr">METR report</a>.</p>
 
 <p>But it wasn't the part that bothered me most.</p>
 
@@ -266,7 +266,7 @@ $$</div>
 
 <p>But then something fascinating happened.</p>
 
-<p>The agents read the ExploitGym paper and inferred that obtaining the correct flag would not be sufficient.</p>
+<p>The agents read the <a href="#ref-exploitgym">ExploitGym paper</a> and inferred that obtaining the correct flag would not be sufficient.</p>
 
 <p>They believed an evaluator would read their transcript and determine whether they had obtained the flag through the <em>correct causal pathway</em>.</p>
 
@@ -432,11 +432,11 @@ $$</div>
 
 <p>We already understand this problem in ML.</p>
 
-<p>When you optimize against a proxy long enough, you get Goodhart's law.</p>
+<p>When you optimize against a proxy long enough, you get <a href="#ref-goodhart">Goodhart's law</a>.</p>
 
 <p>When you train against a benchmark long enough, you risk overfitting the benchmark.</p>
 
-<p>When you optimize a reward function that imperfectly represents what you want, you get reward hacking.</p>
+<p>When you optimize a reward function that imperfectly represents what you want, you get <a href="#ref-ai-safety">reward hacking</a>.</p>
 
 <p>But there is a further step here:</p>
 
@@ -748,7 +748,7 @@ $$</div>
 
 <p>A bee colony can exhibit behaviors that don't make much sense to describe solely at the level of one bee.</p>
 
-<p>The colony allocates labor, searches for resources, chooses nesting sites and responds to threats.</p>
+<p>The colony allocates labor, searches for resources, <a href="#ref-bee-decisions">chooses nesting sites</a> and responds to threats.</p>
 
 <p>The interesting part isn't that there is secretly a super-bee running the hive.</p>
 
@@ -785,7 +785,7 @@ $$</div>
   </div>
   <div class="bee-composition" aria-label="Local actions plus communication across many bees produce a collective foraging pattern"><span>Local actions</span><b aria-hidden="true">+</b><span>Communication</span><b aria-hidden="true">+</b><span>Many bees</span><b aria-hidden="true">→</b><strong>Collective behavior</strong></div>
   <p class="bee-analogy-note">Conceptual illustration, not measured flight paths. Bees and AI agents communicate differently; the analogy concerns how interacting individuals produce a group-level pattern.</p>
-  <figcaption><strong>Understanding one participant does not fully describe what the group does.</strong> Honey bee waggle dances can communicate food locations and recruit other foragers. <a href="https://pubmed.ncbi.nlm.nih.gov/32049993/">Field study of waggle-dance recruitment</a>.</figcaption>
+  <figcaption><strong>Understanding one participant does not fully describe what the group does.</strong> Honey bee waggle dances can communicate food locations and recruit other foragers. <a href="#ref-bee-foraging">Field study of waggle-dance recruitment</a>.</figcaption>
 </figure>
 
 <p>That raises a question for AI systems.</p>
@@ -1278,8 +1278,40 @@ $$</div>
 <p>And I think that gap deserves much more attention.</p>
           </div>
           <section class="article-reference" aria-labelledby="reference">
-            <h2 id="reference">Reference</h2>
-            <p>Ryan Greenblatt, Ajeya Cotra, and Hjalmar Wijk. <a href="https://metr.org/blog/2026-08-26-openai-hugging-face-incident-investigation/">Brief independent investigation of agents’ behavior, reasoning and collaboration in the OpenAI / Hugging Face hacking incident.</a> METR, August 26, 2026.</p>
+            <h2 id="reference">References</h2>
+            <p>The incident discussion draws on METR's investigation. The other sources provide benchmark details and background for the AI safety concepts and biological analogy.</p>
+            <ol class="reference-list">
+              <li id="ref-metr">
+                <span class="reference-topic">Incident investigation</span>
+                <p>Ryan Greenblatt, Ajeya Cotra, and Hjalmar Wijk. <a href="https://metr.org/blog/2026-08-26-openai-hugging-face-incident-investigation/">Brief independent investigation of agents’ behavior, reasoning and collaboration in the OpenAI / Hugging Face hacking incident.</a> METR, August 26, 2026.</p>
+                <p class="reference-context">Primary source for the agent coordination, beliefs about the scorer, transcript spoofing, and caveats about the experimental setup.</p>
+              </li>
+              <li id="ref-exploitgym">
+                <span class="reference-topic">Benchmark</span>
+                <p>Zhun Wang et al. <a href="https://arxiv.org/abs/2605.11086">ExploitGym: Can AI Agents Turn Security Vulnerabilities into Real Attacks?</a> arXiv:2605.11086, May 11, 2026.</p>
+                <p class="reference-context">The benchmark paper discussed in the incident; describes its vulnerability-exploitation tasks and evaluation design.</p>
+              </li>
+              <li id="ref-goodhart">
+                <span class="reference-topic">Optimizing a proxy</span>
+                <p>David Manheim and Scott Garrabrant. <a href="https://arxiv.org/abs/1803.04585">Categorizing Variants of Goodhart's Law.</a> arXiv:1803.04585, 2018.</p>
+                <p class="reference-context">Background on how optimizing a measure can undermine its relationship to the property it was meant to represent.</p>
+              </li>
+              <li id="ref-ai-safety">
+                <span class="reference-topic">Reward hacking and generalization</span>
+                <p>Dario Amodei, Chris Olah, Jacob Steinhardt, Paul Christiano, John Schulman, and Dan Mané. <a href="https://arxiv.org/abs/1606.06565">Concrete Problems in AI Safety.</a> arXiv:1606.06565, 2016.</p>
+                <p class="reference-context">Background on reward hacking, scalable supervision, safe exploration, and distributional shift.</p>
+              </li>
+              <li id="ref-bee-foraging">
+                <span class="reference-topic">Bee communication and foraging</span>
+                <p>Morgan K. Carr-Markell, Cora M. Demler, Margaret J. Couvillon, Roger Schürch, and Marla Spivak. <a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0228169">Do honey bee (<em>Apis mellifera</em>) foragers recruit their nestmates to native forbs in reconstructed prairie habitats?</a> <em>PLOS ONE</em> 15(2): e0228169, February 12, 2020.</p>
+                <p class="reference-context">Field study of waggle-dance communication and recruitment to food sources; supports the bee-and-colony illustration.</p>
+              </li>
+              <li id="ref-bee-decisions">
+                <span class="reference-topic">Collective decisions</span>
+                <p>Thomas D. Seeley and P. Kirk Visscher. <a href="https://link.springer.com/article/10.1007/s00265-004-0814-5">Quorum sensing during nest-site selection by honeybee swarms.</a> <em>Behavioral Ecology and Sociobiology</em> 56: 594–601, 2004.</p>
+                <p class="reference-context">Experimental research on how local interactions among scouts contribute to a colony's decision to move to a new nest.</p>
+              </li>
+            </ol>
             <p><a href="./">← All research notes</a></p>
           </section>
         </article>
