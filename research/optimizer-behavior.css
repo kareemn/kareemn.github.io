@@ -39,10 +39,32 @@
 .flow-node strong { display: block; font-size: .94rem; }
 .flow-node small { display: block; color: var(--muted); margin-top: .3rem; font-size: .8rem; }
 .flow-arrow { color: var(--muted); text-align: center; font-size: 1.3rem; }
-.policy-knot { display: block; width: 100%; max-width: 130px; height: 75px; margin: 0 auto .5rem; }
-.evolution-row { grid-template-columns: 1fr auto 1fr auto 1fr; max-width: 660px; margin: 1rem auto 0; }
-.analogy-label { margin-top: 1.75rem !important; text-align: center; color: var(--muted); font-size: .8rem; }
-.concept-equality { text-align: center; margin: 1.5rem 0 0 !important; color: var(--green); font-size: 1.15rem; font-weight: 700; }
+.finch-origin { display: flex; align-items: center; gap: .5rem; max-width: 390px; margin: auto; padding: .4rem 1rem; text-align: left; }
+.finch-origin .finch-scene { flex: 0 0 100px; width: 100px; margin: 0; color: var(--muted); }
+.finch-pressure { max-width: none; margin: 1rem 0 2.75rem !important; text-align: center; font-size: .84rem; }
+.finch-pressure strong, .finch-pressure span { display: block; }
+.finch-pressure span { margin-top: .25rem; color: var(--muted); font-size: .78rem; }
+.finch-niches { position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .9rem; }
+.finch-niches::before { content: ''; position: absolute; top: -1rem; left: calc((100% - 1.8rem) / 6); right: calc((100% - 1.8rem) / 6); border-top: 1px solid var(--diagram-line); }
+.finch-niches::after { content: ''; position: absolute; top: -2rem; left: 50%; height: 1rem; border-left: 1px solid var(--diagram-line); }
+.finch-niche { position: relative; min-width: 0; padding: 1rem .75rem; border: 1px solid var(--border); border-radius: 8px; background: var(--card-soft); text-align: center; }
+.finch-niche::before { content: ''; position: absolute; top: -1rem; left: 50%; height: 1rem; border-left: 1px solid var(--diagram-line); }
+.finch-seeds { color: var(--diagram-amber); }
+.finch-insects { color: var(--diagram-blue); }
+.finch-nectar { color: var(--green); }
+.finch-niche h4 { margin: 0; font-size: 1rem; }
+.finch-niche > strong { color: var(--fg); font-size: .88rem; }
+.finch-niche > p { color: var(--muted); font-size: .84rem; }
+.finch-scene { display: block; width: 100%; height: auto; max-width: 300px; margin: .3rem auto .5rem; stroke-linejoin: round; stroke-linecap: round; }
+.finch-body { fill: var(--fg); fill-opacity: .15; stroke: var(--muted); stroke-width: 1.5; }
+.finch-wing { fill: var(--fg); fill-opacity: .07; stroke: var(--muted); stroke-width: 1.5; }
+.finch-feathers { fill: none; stroke: var(--muted); stroke-width: 1.5; }
+.finch-eye { fill: var(--fg); }
+.finch-beak { fill: currentColor; fill-opacity: .35; stroke: currentColor; stroke-width: 2; }
+.finch-food { fill: currentColor; fill-opacity: .25; stroke: currentColor; stroke-width: 1.5; }
+.finch-insect ellipse:not(:first-child) { fill: var(--card-soft); fill-opacity: 1; }
+.finch-leaf, .finch-cactus { fill: none; stroke: var(--green); stroke-width: 2; }
+.finch-flower { fill: var(--diagram-amber); fill-opacity: .2; stroke: var(--diagram-amber); stroke-width: 1.5; }
 .deception-flow { max-width: 720px; margin: auto; }
 .deception-flow > .flow-node { max-width: 470px; margin: auto; }
 .deception-flow > .flow-arrow { padding: .3rem; }
@@ -205,7 +227,11 @@
   .flow-row { grid-template-columns: 1fr; gap: .3rem; }
   .flow-row > .flow-arrow { transform: rotate(90deg); }
   .flow-row .flow-node { padding: .7rem; }
-  .policy-knot { height: 65px; }
+  .finch-origin { padding: .5rem; }
+  .finch-origin .finch-scene { flex-basis: 76px; width: 76px; }
+  .finch-niches { grid-template-columns: 1fr; padding-left: 1rem; margin-left: .5rem; border-left: 1px solid var(--diagram-line); }
+  .finch-niches::before { left: -1px; right: 50%; height: 1rem; border-left: 1px solid var(--diagram-line); }
+  .finch-niche::before { top: 50%; left: -1rem; width: 1rem; height: 0; border-left: 0; border-top: 1px solid var(--diagram-line); }
   .branch-row { gap: .4rem; }
   .branch-row .flow-node { padding: .6rem .25rem; }
   .branch-row strong { font-size: .76rem; }
@@ -249,27 +275,4 @@
   .overview-card { display: grid; grid-template-columns: 42px 1fr; column-gap: .9rem; }
   .overview-icon { width: 42px; grid-row: 1/4; margin: 0; }
   .overview-card p, .overview-card .overview-jump { grid-column: 2; }
-}
-
-.overview-chain { display: grid; grid-template-columns: 1fr; max-width: 850px; padding: 0; margin: 0 auto; list-style: none; }
-.overview-chain > li { min-width: 0; max-width: none; margin: 0; }
-.overview-chain .overview-card { display: grid; grid-template-columns: 52px minmax(0, 1fr) auto; gap: 0 1rem; align-items: center; padding: 1rem 1.15rem; }
-.overview-chain .overview-icon { grid-column: 1; grid-row: 1/3; width: 52px; margin: 0; }
-.overview-chain .overview-card strong { grid-column: 2; line-height: 1.6; }
-.overview-chain .overview-card p { grid-column: 2; margin: .25rem 0 0; font-size: .88rem; }
-.overview-chain .overview-jump { grid-column: 3; grid-row: 1/3; }
-.overview-chain .overview-inference { display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 1rem; align-items: center; max-width: none; margin: .55rem 1.15rem; padding: .2rem 0; color: var(--muted); font-size: .85rem; line-height: 1.5; }
-.overview-inference > span { color: var(--green); text-align: center; font-size: 1.5rem; }
-.overview-boundary { display: flex; align-items: center; gap: 1rem; max-width: 850px; margin: 1.25rem auto 0; padding: 1rem 1.15rem; border: 1px solid var(--border); border-radius: 8px; background: var(--card-soft); color: var(--fg); font-size: .88rem; line-height: 1.6; }
-.overview-boundary:hover { border-color: var(--green); text-decoration: none; }
-.overview-boundary .overview-icon { flex: 0 0 52px; width: 52px; margin: 0; }
-.overview-boundary > span:nth-child(2) { flex: 1; }
-.overview-boundary .overview-jump { color: var(--link); }
-
-@media (max-width: 480px) {
-  .overview-chain .overview-card { grid-template-columns: 34px minmax(0, 1fr) auto; column-gap: .7rem; padding: .85rem; }
-  .overview-chain .overview-icon { width: 34px; }
-  .overview-chain .overview-inference { grid-template-columns: 34px minmax(0, 1fr); gap: .7rem; margin-left: .85rem; margin-right: .85rem; }
-  .overview-boundary { gap: .7rem; padding: .85rem; }
-  .overview-boundary .overview-icon { flex-basis: 34px; width: 34px; }
 }
