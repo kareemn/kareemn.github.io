@@ -125,6 +125,10 @@ h2 {
   font-size: clamp(1.35rem, 1.15rem + 1vw, 2rem);
 }
 
+.essay h1 {
+  max-width: 20ch;
+}
+
 h3 {
   font-size: 1.1rem;
 }

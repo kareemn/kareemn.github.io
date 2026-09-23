@@ -42,6 +42,7 @@
     @media(max-width:720px){.reader-docked .signal{left:50%;top:max(14px,env(safe-area-inset-top));translate:-50% 0;width:min(330px,calc(100vw - 28px))}}
     @media(prefers-reduced-motion:reduce){.dot{animation:none}.signal,.voice-hud{transition:none}}
     .site-end{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:32px;align-items:start}.footer-brand{display:grid;gap:14px;line-height:1.6}.footer-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;align-items:start;font:inherit}.footer-group{display:flex;flex-direction:column;align-items:flex-start;min-width:0}.footer-heading{margin:0 0 12px;color:#8f96a3;font:inherit}.site-end a{display:inline-flex;align-items:center;min-height:44px;color:var(--lime);line-height:1.5;text-decoration:underline;text-underline-offset:4px}.site-end a:hover{color:var(--fg)}.site-end a:focus-visible{outline:2px solid var(--lime);outline-offset:5px}@media(max-width:720px){.site-end{grid-template-columns:1fr}.footer-links{width:100%}}
+    .note-featured{grid-column:1/-1}.note-featured h3{max-width:22ch}.note-featured p{max-width:68ch}
   </style>
 </head>
 <body>
@@ -85,6 +86,7 @@
         <div class="project-media single"><div class="media-item"><div class="video-frame"><iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/7pg6mZ9HXU4" title="Poynt operating system fleet update demo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div><span class="media-label">Fleet-wide OS/app update test</span></div></div>
       </div>
       <div class="research-pair" id="research">
+        <a class="note note-featured" href="research/the-algorithm-is-not-the-policy.html"><span class="meta">Research note · AI safety · September 2026</span><h3>Understanding the Optimizer Is Not Understanding the Behavior</h3><p>How the Hugging Face agent incident changed my mind about AI risk. On behavioral generalization, evaluator awareness, and swarm alignment.</p></a>
         <a class="note" href="research/audio-is-computer-vision.html"><span class="meta">Research note · Audio systems</span><h3>Audio Is Computer Vision</h3><p>Why spectrograms make audio models feel familiar when you already understand computer vision.</p></a>
         <a class="note" href="research/flys-trick.html"><span class="meta">Research note · Sparse learning</span><h3>The Fly’s Trick</h3><p>A small MNIST experiment exploring sparse expansion as a learning prior, inspired by the fly olfactory system.</p></a>
       </div>
@@ -92,7 +94,7 @@
         <div class="footer-brand"><span>© 2026 Kareem Nassar</span><span>LLM agents · multimodal AI · human signal</span></div>
         <nav class="footer-links" aria-label="Footer navigation">
           <div class="footer-group"><h2 class="footer-heading">Explore</h2><a href="#work">Selected work</a><a href="/research/">Research</a><a href="#about">About Kareem</a><a href="/smalltalk/">Smalltalk FAQ</a></div>
-          <div class="footer-group"><h2 class="footer-heading">Research notes</h2><a href="/research/audio-is-computer-vision.html">Audio Is Computer Vision</a><a href="/research/flys-trick.html">The Fly’s Trick</a></div>
+          <div class="footer-group"><h2 class="footer-heading">Research notes</h2><a href="/research/the-algorithm-is-not-the-policy.html">Understanding the Optimizer Is Not Understanding the Behavior</a><a href="/research/audio-is-computer-vision.html">Audio Is Computer Vision</a><a href="/research/flys-trick.html">The Fly’s Trick</a></div>
         </nav>
       </footer>
     </div>
