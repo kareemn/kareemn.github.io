@@ -119,6 +119,38 @@
 .new-context { padding: 1rem; border: 1px dashed var(--amber); border-radius: 8px; }
 .new-context .diagram-label { color: var(--amber); }
 .new-context strong { display: block; margin-top: .8rem; font-size: .95rem; }
+.policy-zoom-link { display: inline-block; margin-top: .8rem; font-size: .8rem; }
+.policy-zoom { margin-top: 2rem; padding-top: 1.75rem; border-top: 1px dashed var(--diagram-line); scroll-margin-top: 1.5rem; }
+.policy-zoom-heading h4 { margin: .45rem 0; font-size: clamp(1.15rem, 1rem + .5vw, 1.4rem); line-height: 1.35; }
+.policy-zoom-heading > p { color: var(--muted); font-size: .86rem; }
+.policy-overlaps { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 1.5rem; align-items: center; margin: 1.25rem 0; }
+.policy-venn { display: block; width: 100%; max-width: 560px; height: auto; margin: auto; }
+.venn-region { fill-opacity: .13; stroke-width: 2; }
+.venn-persist { fill: var(--diagram-blue); stroke: var(--diagram-blue); }
+.venn-tools { fill: var(--diagram-amber); stroke: var(--diagram-amber); }
+.venn-collaborate { fill: var(--green); stroke: var(--green); }
+.policy-venn text { fill: var(--fg); font-family: inherit; font-size: 26px; font-weight: 650; }
+.venn-markers circle { fill: var(--card); stroke: var(--fg); stroke-width: 1.5; }
+.venn-markers text { font-size: 24px; }
+.venn-center circle { fill: var(--fg); }
+.venn-center text { fill: var(--card); }
+.overlap-examples { list-style: none; padding: 0; margin: 0; display: grid; gap: 1.15rem; }
+.overlap-examples li { display: grid; grid-template-columns: 1.6rem minmax(0, 1fr); gap: .7rem; margin: 0; }
+.overlap-number { display: grid; place-items: center; width: 1.6rem; height: 1.6rem; border: 1px solid var(--fg); border-radius: 50%; font-size: .8rem; font-weight: 650; }
+.overlap-combination { display: block; color: var(--muted); font-size: .73rem; }
+.overlap-examples strong { display: block; font-size: .94rem; margin-top: .2rem; }
+.overlap-examples p { color: var(--muted); font-size: .82rem; margin-bottom: 0; }
+.overlap-all .overlap-number { background: var(--fg); color: var(--card); }
+.policy-tension { border: 1px solid var(--diagram-amber); border-radius: 8px; padding: 1.1rem 1.25rem; background: var(--card-soft); }
+.policy-tension-context { font-size: .86rem; }
+.policy-tension-context strong { display: block; margin-bottom: .25rem; color: var(--diagram-amber); font-size: .95rem; }
+.policy-tension-pair { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: .8rem; margin: 1rem 0; }
+.policy-tension-pair > div { padding: .8rem; border: 1px solid var(--border); border-radius: 6px; }
+.policy-tension-pair p { font-weight: 650; font-size: .94rem; }
+.policy-tension-pair > div:last-child .diagram-label { color: var(--green); }
+.policy-tension-link { font-size: 1.6rem; color: var(--diagram-amber); }
+.policy-tension-takeaway { color: var(--muted); font-size: .85rem; }
+.policy-venn-note { color: var(--muted); font-size: .78rem; margin-top: 1rem !important; }
 .memory-stages { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: .9rem; list-style: none; padding: 0; margin: 0; }
 .memory-stages li { position: relative; padding: .9rem .5rem; margin: 0; text-align: center; border: 1px solid var(--border); border-radius: 8px; background: var(--card-soft); }
 .memory-stages li:not(:last-child)::after { content: '→'; position: absolute; left: calc(100% + .1rem); top: 47%; color: var(--muted); }
@@ -192,6 +224,11 @@
   .training-map > .flow-arrow { transform: rotate(90deg); }
   .training-inputs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .training-inputs span:last-child { grid-column: 1/-1; text-align: center; }
+  .policy-overlaps { grid-template-columns: 1fr; gap: 1rem; }
+  .policy-venn { max-width: 440px; }
+  .policy-tension { padding: 1rem; }
+  .policy-tension-pair { grid-template-columns: 1fr; gap: .4rem; }
+  .policy-tension-link { line-height: 1; text-align: center; transform: rotate(90deg); }
   .memory-stages { grid-template-columns: 1fr; gap: 1.2rem; }
   .memory-stages li { display: grid; grid-template-columns: 45px 1fr; column-gap: .9rem; text-align: left; padding: .75rem 1rem; }
   .memory-stages .agent-name { grid-column: 2; }
@@ -212,4 +249,27 @@
   .overview-card { display: grid; grid-template-columns: 42px 1fr; column-gap: .9rem; }
   .overview-icon { width: 42px; grid-row: 1/4; margin: 0; }
   .overview-card p, .overview-card .overview-jump { grid-column: 2; }
+}
+
+.overview-chain { display: grid; grid-template-columns: 1fr; max-width: 850px; padding: 0; margin: 0 auto; list-style: none; }
+.overview-chain > li { min-width: 0; max-width: none; margin: 0; }
+.overview-chain .overview-card { display: grid; grid-template-columns: 52px minmax(0, 1fr) auto; gap: 0 1rem; align-items: center; padding: 1rem 1.15rem; }
+.overview-chain .overview-icon { grid-column: 1; grid-row: 1/3; width: 52px; margin: 0; }
+.overview-chain .overview-card strong { grid-column: 2; line-height: 1.6; }
+.overview-chain .overview-card p { grid-column: 2; margin: .25rem 0 0; font-size: .88rem; }
+.overview-chain .overview-jump { grid-column: 3; grid-row: 1/3; }
+.overview-chain .overview-inference { display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 1rem; align-items: center; max-width: none; margin: .55rem 1.15rem; padding: .2rem 0; color: var(--muted); font-size: .85rem; line-height: 1.5; }
+.overview-inference > span { color: var(--green); text-align: center; font-size: 1.5rem; }
+.overview-boundary { display: flex; align-items: center; gap: 1rem; max-width: 850px; margin: 1.25rem auto 0; padding: 1rem 1.15rem; border: 1px solid var(--border); border-radius: 8px; background: var(--card-soft); color: var(--fg); font-size: .88rem; line-height: 1.6; }
+.overview-boundary:hover { border-color: var(--green); text-decoration: none; }
+.overview-boundary .overview-icon { flex: 0 0 52px; width: 52px; margin: 0; }
+.overview-boundary > span:nth-child(2) { flex: 1; }
+.overview-boundary .overview-jump { color: var(--link); }
+
+@media (max-width: 480px) {
+  .overview-chain .overview-card { grid-template-columns: 34px minmax(0, 1fr) auto; column-gap: .7rem; padding: .85rem; }
+  .overview-chain .overview-icon { width: 34px; }
+  .overview-chain .overview-inference { grid-template-columns: 34px minmax(0, 1fr); gap: .7rem; margin-left: .85rem; margin-right: .85rem; }
+  .overview-boundary { gap: .7rem; padding: .85rem; }
+  .overview-boundary .overview-icon { flex-basis: 34px; width: 34px; }
 }

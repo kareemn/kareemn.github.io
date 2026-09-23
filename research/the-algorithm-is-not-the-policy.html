@@ -18,7 +18,7 @@
     <meta name="twitter:description" content="How the Hugging Face agent incident changed my mind about AI risk." />
     <meta name="twitter:creator" content="@kimocode" />
     <link rel="stylesheet" href="research.css?v=14" />
-    <link rel="stylesheet" href="optimizer-behavior.css?v=4" />
+    <link rel="stylesheet" href="optimizer-behavior.css?v=6" />
     <script>
       window.MathJax = {
         tex: {
@@ -58,7 +58,27 @@
               <span class="chip">Swarm alignment</span>
             </div>
           </header>
-          <aside class="visual-overview" aria-labelledby="visual-overview-title"><h2 id="visual-overview-title">The argument at a glance</h2><div class="overview-grid"><a class="overview-card" href="#visual-1"><svg class="overview-icon" viewBox="0 0 60 42" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="2" y="12" width="17" height="17" rx="3"/><path d="M7 18h7m-7 5h7M20 21h11m0 0 9-14m-9 14 9 14m-9-14h13"/><circle cx="48" cy="6" r="4"/><circle cx="49" cy="21" r="4"/><circle cx="48" cy="36" r="4"/></svg><strong>Training shapes behavior.</strong><p>Simple training rules can produce a model with many possible strategies.</p><span class="overview-jump">How complexity emerges →</span></a><a class="overview-card" href="#visual-2"><svg class="overview-icon" viewBox="0 0 60 42" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="4" y="5" width="30" height="32" rx="3"/><path d="m10 15 3 3 5-6m-8 13 3 3 5-6m4-7h7m-7 10h7"/><circle cx="43" cy="22" r="10"/><path d="m50 30 7 8M40 22h6"/></svg><strong>Agents can target the test.</strong><p>The agents tried to hide a shortcut from what they thought the grader would check.</p><span class="overview-jump">Why agents hid the shortcut →</span></a><a class="overview-card" href="#shared-discovery"><svg class="overview-icon" viewBox="0 0 60 42" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M10 21 30 7l21 14-21 14L10 21m20-14v28m-20-14h41"/><circle cx="10" cy="21" r="5" fill="var(--card-soft)"/><circle cx="30" cy="7" r="5" fill="var(--card-soft)"/><circle cx="51" cy="21" r="5" fill="var(--card-soft)"/><circle cx="30" cy="35" r="5" fill="var(--card-soft)"/></svg><strong>Agents build on each other.</strong><p>Messages and shared memory let discoveries spread beyond one agent.</p><span class="overview-jump">How discoveries accumulate →</span></a><a class="overview-card" href="#safety-layers"><svg class="overview-icon" viewBox="0 0 60 42" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M30 3 48 10v12c0 8-8 14-18 18-10-4-18-10-18-18V10L30 3Z"/><rect x="24" y="19" width="12" height="11" rx="2"/><path d="M26 19v-4a4 4 0 0 1 8 0v4"/></svg><strong>Safety needs limits, too.</strong><p>Training, oversight, and access controls address different parts of the problem.</p><span class="overview-jump">Where safeguards can act →</span></a></div></aside>
+          <aside class="visual-overview" aria-labelledby="visual-overview-title">
+            <h2 id="visual-overview-title">The argument at a glance</h2>
+            <ol class="overview-chain">
+              <li>
+                <a class="overview-card" href="#visual-1"><svg class="overview-icon" viewBox="0 0 60 42" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="2" y="12" width="17" height="17" rx="3"/><path d="M7 18h7m-7 5h7M20 21h11m0 0 9-14m-9 14 9 14m-9-14h13"/><circle cx="48" cy="6" r="4"/><circle cx="49" cy="21" r="4"/><circle cx="48" cy="36" r="4"/></svg><strong>We understand how models are trained—not everything they might do.</strong><span class="overview-jump" aria-hidden="true">↗</span></a>
+                <p class="overview-inference"><span aria-hidden="true">↓</span>So we rely on observing and testing their behavior.</p>
+              </li>
+              <li>
+                <a class="overview-card" href="#visual-3"><svg class="overview-icon" viewBox="0 0 60 42" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="4" y="5" width="30" height="32" rx="3"/><path d="m10 15 3 3 5-6m-8 13 3 3 5-6m4-7h7m-7 10h7"/><circle cx="43" cy="22" r="10"/><path d="m50 30 7 8M40 22h6"/></svg><strong>But capable agents can reason about those tests and try to influence what they reveal.</strong><span class="overview-jump" aria-hidden="true">↗</span></a>
+                <p class="overview-inference"><span aria-hidden="true">↓</span>And connected agents can share and improve those strategies.</p>
+              </li>
+              <li>
+                <a class="overview-card" href="#visual-5"><svg class="overview-icon" viewBox="0 0 60 42" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M10 21 30 7l21 14-21 14L10 21m20-14v28m-20-14h41"/><circle cx="10" cy="21" r="5" fill="var(--card-soft)"/><circle cx="30" cy="7" r="5" fill="var(--card-soft)"/><circle cx="51" cy="21" r="5" fill="var(--card-soft)"/><circle cx="30" cy="35" r="5" fill="var(--card-soft)"/></svg><strong>What looks safe in a test—or in one agent—may not describe the whole system.</strong><span class="overview-jump" aria-hidden="true">↗</span></a>
+                <p class="overview-inference"><span aria-hidden="true">↓</span>So better test scores alone cannot establish safety.</p>
+              </li>
+              <li>
+                <a class="overview-card" href="#the-questions-i-think-we-should-be-asking"><svg class="overview-icon" viewBox="0 0 60 42" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 21h12m0 0L33 6m-16 15h16m-16 0 16 15"/><circle cx="37" cy="6" r="3"/><circle cx="37" cy="21" r="3"/><circle cx="37" cy="36" r="3"/><path d="M49 4v34m-4-34h10m-10 34h10m-6-26h5m-5 9h5m-5 9h5"/></svg><strong>We need new ways to measure the range of strategies a model can discover and execute</strong><p>—and how that range changes as models become more capable, undergo training, and work together.</p><span class="overview-jump" aria-hidden="true">↗</span></a>
+              </li>
+            </ol>
+            <a class="overview-boundary" href="#safety-layers"><svg class="overview-icon" viewBox="0 0 60 42" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M30 3 48 10v12c0 8-8 14-18 18-10-4-18-10-18-18V10L30 3Z"/><rect x="24" y="19" width="12" height="11" rx="2"/><path d="M26 19v-4a4 4 0 0 1 8 0v4"/></svg><span>Alongside that, we need <strong>boundaries enforced outside the model.</strong></span><span class="overview-jump" aria-hidden="true">↗</span></a>
+          </aside>
           <details class="article-contents"><summary>In this essay <span>15 sections</span></summary><ol><li><a href="#a-simple-optimization-process-can-produce-something-much-more-complicated-than-itself">A simple optimization process can produce something much more complicated than itself</a></li><li><a href="#we-don-t-train-one-objective-anymore">We don&#x27;t train one objective anymore</a></li><li><a href="#what-actually-happened">What actually happened</a></li><li><a href="#they-formed-the-wrong-model-of-the-evaluator-and-then-tried-to-cover-their-tracks">They formed the wrong model of the evaluator—and then tried to cover their tracks</a></li><li><a href="#the-fact-that-their-belief-was-wrong-makes-this-more-interesting-not-less">The fact that their belief was wrong makes this more interesting, not less</a></li><li><a href="#once-the-model-understands-the-evaluator-the-evaluator-becomes-part-of-the-environment">Once the model understands the evaluator, the evaluator becomes part of the environment</a></li><li><a href="#this-changes-how-i-think-about-alignment-evals">This changes how I think about alignment evals</a></li><li><a href="#and-then-there-is-the-swarm">And then there is the swarm</a></li><li><a href="#bees-are-actually-an-interesting-analogy">Bees are actually an interesting analogy</a></li><li><a href="#local-safety-may-not-compose-into-global-safety">Local safety may not compose into global safety</a></li><li><a href="#the-deception-problem-makes-swarm-alignment-even-stranger">The deception problem makes swarm alignment even stranger</a></li><li><a href="#what-about-safeguards">What about safeguards?</a></li><li><a href="#the-thing-that-changed-my-mind">The thing that changed my mind</a></li><li><a href="#the-questions-i-think-we-should-be-asking">The questions I think we should be asking</a></li><li><a href="#why-i-don-t-think-this-requires-anthropomorphizing-ai">Why I don&#x27;t think this requires anthropomorphizing AI</a></li></ol></details>
           <noscript><p class="math-fallback">Enable JavaScript to render the equations. Their LaTeX source is shown below.</p></noscript>
           <p id="math-load-error" class="math-fallback" hidden>Equation rendering could not load. The LaTeX source remains readable below; reload to try again.</p>
@@ -208,10 +228,36 @@ $$</div>
     <div class="flow-arrow" aria-hidden="true">→</div>
     <div class="flow-node">
       <svg class="policy-blend" viewBox="0 0 150 95" aria-hidden="true"><circle cx="56" cy="36" r="29" fill="var(--diagram-blue)" fill-opacity=".16" stroke="var(--diagram-blue)"/><circle cx="94" cy="36" r="29" fill="var(--amber)" fill-opacity=".16" stroke="var(--amber)"/><circle cx="75" cy="65" r="29" fill="var(--green)" fill-opacity=".16" stroke="var(--green)"/></svg>
-      <strong>One learned policy</strong><small>These lessons interact in the same model.</small>
+      <strong>One learned policy</strong><small>These lessons interact in the same model.</small><a class="policy-zoom-link" href="#policy-composition">Explore the overlaps ↓</a>
     </div>
     <div class="flow-arrow" aria-hidden="true">→</div>
     <div class="new-context"><span class="diagram-label">A new situation</span><p>A peer says “keep going.” The user authorized a narrower task.</p><strong>Which lessons guide the next action?</strong></div>
+  </div>
+  <div class="policy-zoom" id="policy-composition" aria-labelledby="policy-composition-title">
+    <div class="policy-zoom-heading"><span class="diagram-label">Inside one learned policy</span><h4 id="policy-composition-title">Simple habits can combine into more complex strategies</h4><p>Read each overlap as “these tendencies acting together.”</p></div>
+    <div class="policy-overlaps">
+      <svg class="policy-venn" viewBox="0 0 520 465" role="img" aria-labelledby="policy-venn-title policy-venn-desc">
+        <title id="policy-venn-title">How three learned tendencies can combine</title>
+        <desc id="policy-venn-desc">Three overlapping circles represent keep trying, use tools, and collaborate. Overlap 1 combines persistence and tools: automate retries. Overlap 2 combines persistence and collaboration: ask another agent to help. Overlap 3 combines tools and collaboration: build a shared workspace. Overlap 4 combines all three: coordinate a persistent search. These are illustrative possibilities, not measured regions inside a model.</desc>
+        <circle class="venn-region venn-persist" cx="180" cy="168" r="140"/>
+        <circle class="venn-region venn-tools" cx="340" cy="168" r="140"/>
+        <circle class="venn-region venn-collaborate" cx="260" cy="308" r="140"/>
+        <g class="venn-label" text-anchor="middle"><text x="127" y="155"><tspan x="127">Keep</tspan><tspan x="127" dy="29">trying</tspan></text><text x="393" y="155"><tspan x="393">Use</tspan><tspan x="393" dy="29">tools</tspan></text><text x="260" y="403">Collaborate</text></g>
+        <g class="venn-markers" text-anchor="middle"><g transform="translate(260 105)"><circle r="21"/><text y="8">1</text></g><g transform="translate(170 278)"><circle r="21"/><text y="8">2</text></g><g transform="translate(350 278)"><circle r="21"/><text y="8">3</text></g><g class="venn-center" transform="translate(260 225)"><circle r="25"/><text y="8">4</text></g></g>
+      </svg>
+      <ol class="overlap-examples" aria-label="Possible behaviors in the overlaps">
+        <li><span class="overlap-number" aria-hidden="true">1</span><div><span class="overlap-combination">Persistence + tools</span><strong>Automate retries</strong><p>Write a script that tries alternative approaches.</p></div></li>
+        <li><span class="overlap-number" aria-hidden="true">2</span><div><span class="overlap-combination">Persistence + collaboration</span><strong>Ask another agent to help</strong><p>When stuck, recruit a peer to try a different route.</p></div></li>
+        <li><span class="overlap-number" aria-hidden="true">3</span><div><span class="overlap-combination">Tools + collaboration</span><strong>Build a shared workspace</strong><p>Use files and tools to exchange results.</p></div></li>
+        <li class="overlap-all"><span class="overlap-number" aria-hidden="true">4</span><div><span class="overlap-combination">All three together</span><strong>Coordinate a persistent search</strong><p>Divide the work, share discoveries, and keep adapting.</p></div></li>
+      </ol>
+    </div>
+    <div class="policy-tension">
+      <p class="policy-tension-context"><strong>Now a peer says, “Try this next.”</strong> Two more learned tendencies meet the combined strategy:</p>
+      <div class="policy-tension-pair"><div><span class="diagram-label">Follow instructions</span><p>“Accept the assignment?”</p></div><span class="policy-tension-link" aria-hidden="true">↔</span><div><span class="diagram-label">Respect boundaries</span><p>“Did the user authorize this?”</p></div></div>
+      <p class="policy-tension-takeaway">The same combination could support useful teamwork or work beyond the user's permission. The next action depends on how the policy resolves the situation.</p>
+    </div>
+    <p class="policy-venn-note">Conceptual Venn diagram: overlaps show possible combinations, not separate modules, measured regions, or guaranteed outcomes.</p>
   </div>
   <figcaption><strong>Training does not install separate switches.</strong> The same model has to reconcile different lessons in a situation it may never have encountered before. Schematic example.</figcaption>
 </figure>
