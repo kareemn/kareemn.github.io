@@ -37,7 +37,7 @@ async function main() {
     const sharePath = `/research/shaping-behavior/${s.slug}.html`;
     const shareURL = origin + sharePath;
     const destination = articlePath + '#' + s.anchor;
-    const imagePath = `/images/og-sections/${s.slug}-v1.png`;
+    const imagePath = `/images/og-sections/${s.slug}-v${s.imageVersion || 1}.png`;
     const imageURL = origin + imagePath;
     const alt = s.title + '. ' + s.visual + ' Kareem Nassar.';
     const baseline = 316 - (s.lines.length-1) * s.size * .56;

@@ -30,7 +30,7 @@ node scripts/build-section-previews.cjs
 If `sharp` is installed outside this project, set `NODE_PATH` to its parent
 `node_modules` directory. Commit the generated HTML and SVG/PNG files; GitHub
 Pages needs no extra build step. When replacing a deployed card, increment its
-image version in the generator to avoid stale social image caches. Keep the
+`imageVersion` in `sections.json` to avoid stale social image caches. Keep the
 matching `data-section-share` links in the essay in sync if slugs change.
 
 Previews are supplied in static OG and Twitter metadata. Individual sharing

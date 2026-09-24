@@ -42,12 +42,13 @@
   {
     "slug": "safeguards",
     "anchor": "what-about-safeguards",
-    "title": "Safety needs more than behavioral optimization",
+    "title": "The problem with “safeguards”",
     "label": "Constraints",
-    "lines": ["Safety needs", "more than", "behavioral", "optimization"],
-    "size": 62,
-    "description": "Teach, watch, and enforce. Training changes which actions an agent selects; infrastructure can restrict which actions execute.",
-    "visual": "A path leaving a learned contour map is stopped by a separate access-control gate."
+    "lines": ["The problem", "with", "“safeguards”"],
+    "size": 68,
+    "description": "Safeguards operate at different levels. What must they observe, how independent is their judgment, and which boundaries should the system enforce?",
+    "visual": "A path leaving a learned contour map is stopped by a separate access-control gate.",
+    "imageVersion": 2
   },
   {
     "slug": "questions",
