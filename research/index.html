@@ -6,6 +6,7 @@
     <title>Research Notes - Kareem Nassar</title>
     <meta name="description" content="Small public research notes from Kareem Nassar on speech systems, biologically inspired learning rules, sparse coding, forward-only models, agent eval loops, and AI safety." />
     <link rel="stylesheet" href="research.css?v=14" />
+    <link rel="stylesheet" href="research-index.css?v=1" />
   </head>
   <body>
     <div class="wrapper">
@@ -35,21 +36,84 @@
           </div>
         </section>
 
-        <section>
+        <section class="featured-essay" id="shaping-behavior" aria-labelledby="shaping-behavior-title">
+          <p class="eyebrow">AI safety · Featured essay</p>
+          <h2 id="shaping-behavior-title"><a href="the-algorithm-is-not-the-policy.html">The Problem With Shaping High-Dimensional Behavior</a></h2>
+          <p class="dek">What the Hugging Face agent incident changed about how I think about AI alignment</p>
+          <div class="featured-essay-actions">
+            <a class="pill-link" href="the-algorithm-is-not-the-policy.html">Read the full essay <span aria-hidden="true">→</span></a>
+            <p class="meta"><time datetime="2026-09-23">September 2026</time> · 16 min read</p>
+          </div>
+          <p class="section-preview-intro">Explore the essay by section.</p>
+          <ol class="section-preview-grid">
+            <li>
+              <a class="section-preview-card" href="shaping-behavior/shaping.html">
+                <img src="../images/og-sections/shaping-v1.png" width="1200" height="630" loading="lazy" decoding="async" alt="" />
+                <div class="section-preview-copy">
+                  <p class="section-preview-label">01 · Shaping</p>
+                  <h3>The optimizer is not the policy</h3>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a class="section-preview-card" href="shaping-behavior/evaluation.html">
+                <img src="../images/og-sections/evaluation-v1.png" width="1200" height="630" loading="lazy" decoding="async" alt="" />
+                <div class="section-preview-copy">
+                  <p class="section-preview-label">02 · Generalization</p>
+                  <h3>What our evaluations establish</h3>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a class="section-preview-card" href="shaping-behavior/evidence.html">
+                <img src="../images/og-sections/evidence-v1.png" width="1200" height="630" loading="lazy" decoding="async" alt="" />
+                <div class="section-preview-copy">
+                  <p class="section-preview-label">03 · Observation</p>
+                  <h3>When the evaluator becomes part of the environment</h3>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a class="section-preview-card" href="shaping-behavior/swarm.html">
+                <img src="../images/og-sections/swarm-v1.png" width="1200" height="630" loading="lazy" decoding="async" alt="" />
+                <div class="section-preview-copy">
+                  <p class="section-preview-label">04 · Composition</p>
+                  <h3>Individual alignment is not swarm alignment</h3>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a class="section-preview-card" href="shaping-behavior/safeguards.html">
+                <img src="../images/og-sections/safeguards-v1.png" width="1200" height="630" loading="lazy" decoding="async" alt="" />
+                <div class="section-preview-copy">
+                  <p class="section-preview-label">05 · Constraints</p>
+                  <h3>Safety needs more than behavioral optimization</h3>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a class="section-preview-card" href="shaping-behavior/questions.html">
+                <img src="../images/og-sections/questions-v1.png" width="1200" height="630" loading="lazy" decoding="async" alt="" />
+                <div class="section-preview-copy">
+                  <p class="section-preview-label">06 · Open questions</p>
+                  <h3>What I still don&#x27;t know</h3>
+                </div>
+              </a>
+            </li>
+          </ol>
+        </section>
+
+        <section aria-labelledby="more-research-title">
+          <h2 id="more-research-title">More research notes</h2>
           <div class="post-list">
             <article class="post-card">
-              <p class="meta"><time datetime="2026-09-23">September 2026</time></p>
-              <h2><a href="the-algorithm-is-not-the-policy.html">The Problem With Shaping High-Dimensional Behavior</a></h2>
-              <p>What the Hugging Face agent incident changed about how I think about AI alignment</p>
-            </article>
-            <article class="post-card">
               <p class="meta">July 2026</p>
-              <h2><a href="audio-is-computer-vision.html">Audio Is Computer Vision</a></h2>
+              <h3><a href="audio-is-computer-vision.html">Audio Is Computer Vision</a></h3>
               <p>A short note on why spectrograms make audio models feel familiar if you understand computer vision.</p>
             </article>
             <article class="post-card">
               <p class="meta">July 2026</p>
-              <h2><a href="flys-trick.html">The Fly's Trick: Sparse Expansion as a Learning Prior</a></h2>
+              <h3><a href="flys-trick.html">The Fly's Trick: Sparse Expansion as a Learning Prior</a></h3>
               <p>A small MNIST experiment inspired by the fly olfactory system: expand into many sparse random features, keep only a tiny active tag, and train a simple local readout.</p>
             </article>
           </div>
