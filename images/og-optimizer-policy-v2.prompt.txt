@@ -1,0 +1,15 @@
+Use case: text-localization
+Asset type: Updated Open Graph social sharing cover for the same AI alignment essay on kareem.me.
+Input image: the existing share card, an edit target. Preserve its near-black ink background, luminous blue/mint contour landscape, three white situation points, warm amber path, quiet editorial mood, typography family and author's footer. Keep a landscape aspect ratio approximately 1.91:1.
+Change the headline to exactly:
+"The Problem With Shaping High-Dimensional Behavior"
+Use these four left-aligned lines, verbatim and with this capitalization and hyphen:
+"The Problem With"
+"Shaping"
+"High-Dimensional"
+"Behavior"
+The first two lines should be off-white; the last two pale mint. Resize the type just enough for all four lines to fit cleanly in the left portion, with strong weight and excellent thumbnail readability. Keep generous safe margins. Shift the illustration slightly right if needed so the lettering never overlaps contour lines. Do not squeeze or distort the lettering.
+Below the headline, add the exact hook in smaller readable off-white/light gray type, wrapped across three lines if needed:
+"What the Hugging Face agent incident changed about how I think about AI alignment"
+Keep the top-left eyebrow exactly "AI SAFETY / ESSAY" and the footer exactly "Kareem Nassar · kareem.me". Leave clear space between the hook and footer.
+Remove the old headline completely. Do not change the abstract landscape into a brain, robot or biological form. Do not add any other words, icons, equations or decorations. Keep the same polished visual identity; this is a title and subtitle revision to the existing image, not a new design direction.
