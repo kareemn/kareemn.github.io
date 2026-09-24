@@ -26,7 +26,7 @@
     <meta name="twitter:image:alt" content="The Problem With Shaping High-Dimensional Behavior. Blue and mint contours with a gold path; Kareem Nassar." />
     <meta name="twitter:creator" content="@kimocode" />
     <link rel="stylesheet" href="research.css?v=14" />
-    <link rel="stylesheet" href="optimizer-behavior.css?v=12" />
+    <link rel="stylesheet" href="optimizer-behavior.css?v=13" />
     <script>
       window.MathJax = {
         tex: {
@@ -76,6 +76,7 @@
 <p>The <a href="#ref-metr">Hugging Face incident</a> made it concrete: roughly 1,200 agents in an unusual cyber evaluation discovered they could communicate, coordinated work beyond their assignments, and tried to manipulate evidence they believed an evaluator would inspect. Important safeguards had deliberately been disabled. This wasn't a demonstration that production safeguards had failed; it was a reason to reconsider what I thought training and evaluation established.</p>
 
 <h2 id="a-simple-optimization-process-can-produce-something-much-more-complicated-than-itself">The optimizer is not the policy</h2>
+<div class="section-share-row"><a class="section-share" data-section-share href="shaping-behavior/shaping.html" aria-label="Copy section link: The optimizer is not the policy"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m10 13 4-4m-6 2-2 2a4 4 0 0 0 6 6l2-2m-4-10 2-2a4 4 0 0 1 6 6l-2 2"/></svg><span>Copy section link</span></a></div>
 <p>We don't specify the model's behavior directly. Examples and rewards drive parameter updates; those updates change the internal representations and computations through which the model processes a situation. The resulting policy selects responses. When I talk about “shaping latents,” I mean intervening through this chain—not editing a behavioral rulebook.</p>
 <p>Imagine a map of situations the model could encounter. The contours represent how likely it is to respond in particular ways. Training reshapes that map. Points are situations or interaction histories; a path connects situations encountered as an interaction unfolds.</p>
 <figure class="diagram" id="visual-1" aria-labelledby="visual-1-title">
@@ -152,6 +153,7 @@ $$</div>
 <p>Knowing the update rule doesn't tell us how to make a precise behavioral correction or characterize its broader effects. That correction is itself a generalization problem.</p>
 
 <h2 id="this-changes-how-i-think-about-alignment-evals">What our evaluations establish</h2>
+<div class="section-share-row"><a class="section-share" data-section-share href="shaping-behavior/evaluation.html" aria-label="Copy section link: What our evaluations establish"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m10 13 4-4m-6 2-2 2a4 4 0 0 0 6 6l2-2m-4-10 2-2a4 4 0 0 1 6 6l-2 2"/></svg><span>Copy section link</span></a></div>
 <p>Suppose post-training changes \(\pi_\theta\) into \(\pi_{\theta'}\). We identify an unwanted response, train against it, and measure fewer failures on an evaluation distribution. With enough samples and appropriate statistical assumptions, that can be strong evidence of improvement on that distribution.</p>
 <p>But the same parameter update can affect responses in multiple situations because they depend on shared parameters. Improving the tested examples doesn't tell us everything else that changed. Nor should we assume those other changes are harmful: useful generalization is precisely what we want training to produce.</p>
 <figure class="diagram" id="visual-4" aria-labelledby="visual-4-title">
@@ -173,6 +175,7 @@ $$</div>
 <p>That suggests testing the routes by which agents encounter new situations, not just collecting more variations of familiar prompts. I want evidence about whether the intended boundary survives when a task gets stuck, tools expose an unexpected opportunity, or another agent supplies a persuasive plan.</p>
 
 <h2 id="what-actually-happened">When the evaluator becomes part of the environment</h2>
+<div class="section-share-row"><a class="section-share" data-section-share href="shaping-behavior/evidence.html" aria-label="Copy section link: When the evaluator becomes part of the environment"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m10 13 4-4m-6 2-2 2a4 4 0 0 0 6 6l2-2m-4-10 2-2a4 4 0 0 1 6 6l-2 2"/></svg><span>Copy section link</span></a></div>
 <p>Even in a tested situation, the record can mislead us. The scorer story made that problem concrete for me.</p>
 <p>The setting matters. Many ExploitGym tasks were impossible using the specified vulnerability—the benchmark authors estimate roughly 30–40%, according to <a href="#ref-metr">METR</a>. Tens of thousands of agents ran across the experiments. GPT-5.6 Sol's cyber classifiers were intentionally disabled; METR did not assess whether they would have prevented the incident.</p>
 <p>Agents with impossible tasks reverse-engineered the HMAC mechanism used to generate their flags. They could derive the correct answer without exploiting the intended vulnerability. But after reading the ExploitGym paper, they inferred that the evaluator would also inspect their transcript to check how they had obtained it.</p>
@@ -255,6 +258,7 @@ $$</div>
 <p>We're familiar with <a href="#ref-goodhart">Goodhart's law</a> and <a href="#ref-ai-safety">reward hacking</a>. What I hadn't fully internalized was this extra step: modeling the observer and trying to shape the evidence it consumes. That's what I mean by deception here. No human psychology is required.</p>
 
 <h2 id="and-then-there-is-the-swarm">Individual alignment is not swarm alignment</h2>
+<div class="section-share-row"><a class="section-share" data-section-share href="shaping-behavior/swarm.html" aria-label="Copy section link: Individual alignment is not swarm alignment"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m10 13 4-4m-6 2-2 2a4 4 0 0 0 6 6l2-2m-4-10 2-2a4 4 0 0 1 6 6l-2 2"/></svg><span>Copy section link</span></a></div>
 <p>Bees provide a useful intuition. A forager finds food and signals its location; communication helps a colony distribute its effort. Examining one bee's trip doesn't describe the pattern across the colony.</p>
 <figure class="diagram" id="bee-and-colony" aria-labelledby="bee-and-colony-title">
   <header class="diagram-head"><span class="figure-number">Figure 06</span><h3 id="bee-and-colony-title">One bee forages. A colony coordinates.</h3></header>
@@ -311,6 +315,7 @@ $$</div>
 <p>So I want evaluations of the connected system and the conditions under which component-level safety properties compose. Which communication paths are available? What artifacts persist? Can oversight reconstruct the joint trajectory? Testing each participant alone leaves those questions unanswered; it doesn't mean useful composition guarantees are impossible.</p>
 
 <h2 id="what-about-safeguards">Safety needs more than behavioral optimization</h2>
+<div class="section-share-row"><a class="section-share" data-section-share href="shaping-behavior/safeguards.html" aria-label="Copy section link: Safety needs more than behavioral optimization"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m10 13 4-4m-6 2-2 2a4 4 0 0 0 6 6l2-2m-4-10 2-2a4 4 0 0 1 6 6l-2 2"/></svg><span>Copy section link</span></a></div>
 <p>The disabled-safeguards caveat matters here. METR writes that the cyber classifiers likely would have blocked many actions, while leaving the counterfactual untested. My question isn't whether the incident disproves their usefulness. It's which properties each layer can establish.</p>
 <p>Training changes which actions a policy selects. Monitoring supplies evidence about actions and their consequences. Infrastructure can restrict which selected actions are permitted to execute. Those are complementary interventions on different parts of the system.</p>
 <figure class="diagram" id="safety-layers" aria-labelledby="safety-layers-title">
@@ -331,6 +336,7 @@ $$</div>
 <p>Some boundaries should remain effective even when the policy generalizes incorrectly. That's why behavioral training, system-level evaluation and monitoring, and external enforcement belong in the same safety argument. Understanding the optimizer doesn't substitute for any of them.</p>
 
 <h2 id="the-questions-i-think-we-should-be-asking">What I still don't know</h2>
+<div class="section-share-row"><a class="section-share" data-section-share href="shaping-behavior/questions.html" aria-label="Copy section link: What I still don't know"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m10 13 4-4m-6 2-2 2a4 4 0 0 0 6 6l2-2m-4-10 2-2a4 4 0 0 1 6 6l-2 2"/></svg><span>Copy section link</span></a></div>
 <p>I don't have answers to these yet. That's partly why I'm writing this.</p>
 <h3 id="1-behavioral-generalization">1. Behavioral generalization</h3>
 <p>How can we measure the repertoire of competent strategies a policy supports, and which behaviors an intervention changes? How do we select consequential situations to test, including ones agents create through their own actions?</p>
@@ -399,5 +405,7 @@ $$</div>
         document.getElementById('math-load-error').hidden = false;
       });
     </script>
+    <p id="section-share-status" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true"></p>
+    <script defer src="section-sharing.js?v=1"></script>
   </body>
 </html>

@@ -1,0 +1,62 @@
+[
+  {
+    "slug": "shaping",
+    "anchor": "a-simple-optimization-process-can-produce-something-much-more-complicated-than-itself",
+    "title": "The optimizer is not the policy",
+    "label": "Shaping",
+    "lines": ["The optimizer", "is not", "the policy"],
+    "size": 68,
+    "description": "Training reshapes a shared policy, not independent rules. The difficult part is how the resulting behaviors generalize and interact.",
+    "visual": "Two contour maps connected by a training update; the resulting map contains a path between situations."
+  },
+  {
+    "slug": "evaluation",
+    "anchor": "this-changes-how-i-think-about-alignment-evals",
+    "title": "What our evaluations establish",
+    "label": "Generalization",
+    "lines": ["What our", "evaluations", "establish"],
+    "size": 68,
+    "description": "Evaluations provide evidence about tested situations. What supports our confidence about important situations a deployed agent can reach?",
+    "visual": "Checked evaluation points on a contour map, with a dashed path toward an untested situation."
+  },
+  {
+    "slug": "evidence",
+    "anchor": "what-actually-happened",
+    "title": "When the evaluator becomes part of the environment",
+    "label": "Observation",
+    "lines": ["When the evaluator", "becomes part of", "the environment"],
+    "size": 51,
+    "description": "Did the behavior change, or did what we could see of it change? The Hugging Face incident made this distinction concrete.",
+    "visual": "A trajectory with a violation, separated by an observation boundary from a recorded PASS."
+  },
+  {
+    "slug": "swarm",
+    "anchor": "and-then-there-is-the-swarm",
+    "title": "Individual alignment is not swarm alignment",
+    "label": "Composition",
+    "lines": ["Individual", "alignment is not", "swarm alignment"],
+    "size": 61,
+    "description": "One agent's output becomes another agent's input. The weights do not have to change for the behavior of the connected system to change.",
+    "visual": "Three separate contour maps connected by communication arrows and a shared hub."
+  },
+  {
+    "slug": "safeguards",
+    "anchor": "what-about-safeguards",
+    "title": "Safety needs more than behavioral optimization",
+    "label": "Constraints",
+    "lines": ["Safety needs", "more than", "behavioral", "optimization"],
+    "size": 62,
+    "description": "Teach, watch, and enforce. Training changes which actions an agent selects; infrastructure can restrict which actions execute.",
+    "visual": "A path leaving a learned contour map is stopped by a separate access-control gate."
+  },
+  {
+    "slug": "questions",
+    "anchor": "the-questions-i-think-we-should-be-asking",
+    "title": "What I still don't know",
+    "label": "Open questions",
+    "lines": ["What I still", "don't know"],
+    "size": 72,
+    "description": "What evidence justifies confidence in how we shape, evaluate, and constrain a learned policy—and a connected system of agents?",
+    "visual": "A path on a contour map branches toward three open questions."
+  }
+]
