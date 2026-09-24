@@ -1,0 +1,4 @@
+Use case: precise-object-edit
+Asset type: Open Graph share-card revision.
+Edit the supplied image. Remove only the three-line subtitle beneath the large headline: “What the Hugging Face agent incident changed about how I think about AI alignment”. Seamlessly restore the near-black background and any faint underlying contour lines in that area. Leave that area as clean negative space.
+Preserve everything else: the exact headline “The Problem With Shaping High-Dimensional Behavior”, its four lines, font, size, position and white/mint colors; the top-left “AI SAFETY / ESSAY”; the footer “Kareem Nassar · kareem.me”; the blue/mint contour landscape on the right, three white points, amber path, lighting, composition and landscape dimensions. Do not add any new text, move the headline or footer, or redesign the card. Only remove the subtitle.
