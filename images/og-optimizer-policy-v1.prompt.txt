@@ -1,0 +1,14 @@
+Use case: ads-marketing
+Asset type: Open Graph social sharing cover for an AI safety essay on kareem.me.
+Create a finished, exceptionally polished editorial share card, landscape approximately 1.91:1, ideally exactly 1200 x 630 pixels. This is a designed image, not a mockup or screenshot.
+Composition: left 55% typography, right 45% striking conceptual illustration, generous 60 px safe margins, full-bleed near-black ink background (#0b1016). Modern independent technology journal aesthetic, restrained and confident, high contrast, no clutter.
+Headline, verbatim, large bold off-white contemporary grotesk type, carefully kerned, aligned left, in these lines:
+"The optimizer"
+"is not"
+"the policy."
+Set "the policy." in pale mint (#a6efce). The headline is the visual anchor and must read clearly at thumbnail size.
+Small eyebrow at top left, verbatim: "AI SAFETY / ESSAY"
+A small, quiet footer at bottom left, verbatim: "Kareem Nassar · kareem.me"
+Illustration: a beautiful abstract conceptual behavioral landscape on the right, composed of many fine luminous icy-blue and pale-mint topographic contour lines. The lines form an irregular folded field with several ridges and valleys, viewed obliquely, intricate yet disciplined, not symmetrical. Three small white points mark selected situations on this landscape; a single thin warm amber path links two of the points and curves toward an uncertain outer fold. Subtle light and depth, crisp linework with a restrained glow; mostly dark negative space. At the left edge of this illustration, a tiny simple geometric rule mark (three horizontal strokes and a rightward arrow) opens into the much richer landscape. Visually suggest the contrast between a compact process and the rich behavior it produces. It is conceptual art, not a scientific measurement.
+Keep the art clear of the headline. Preserve negative space between type and art. The contours may approach the right edge, but all lettering stays safely inset. The image should feel calm, intelligent and visually memorable, not apocalyptic.
+No other text. No equations, robots, brains, faces, eyes, bees, finches, locks, circuit-board stock art, literal fractals, warning symbols, gradients behind the typography, glossy plastic, or decorative borders. Do not suggest consciousness or a biological brain. Do not add labels to the map.
