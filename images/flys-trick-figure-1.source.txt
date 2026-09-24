@@ -1,0 +1,15 @@
+Figure 1: Mapping between the fly olfactory circuit and locality-sensitive hashing (LSH).
+Sanjoy Dasgupta, Charles F. Stevens, and Saket Navlakha.
+A neural algorithm for a fundamental computing problem. Science 358, 793-796 (2017).
+DOI: https://doi.org/10.1126/science.aam9868
+
+Source: published paper, page 2, publicly hosted by MIT CSAIL:
+https://courses.csail.mit.edu/6.852/brains/papers/DasguptaStevensNavlakha.pdf
+Retrieved 2026-09-24. Figure panels A-C rendered without modification;
+page furniture, caption and surrounding article text excluded.
+
+Rendering command (Poppler):
+pdftoppm -f 2 -l 2 -r 216 -x 108 -y 126 -W 1560 -H 978 -png -singlefile source.pdf flys-trick-figure-1
+
+Replaces the broken Science-hosted image URL, which returned HTTP 403.
+Credit and a link to the original publication remain in the page caption.
