@@ -80,15 +80,6 @@
 .reference-list p { margin: .4rem 0; overflow-wrap: anywhere; }
 .reference-list .reference-context { color: var(--muted); font-size: .85rem; }
 
-.visual-overview { margin: 2rem 0; padding: 1.5rem 0; border-bottom: 1px solid var(--border); }
-.visual-overview h2 { font-size: 1.2rem; margin-bottom: 1.25rem; }
-.overview-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .8rem; }
-.overview-card { display: block; min-width: 0; color: var(--fg); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; background: var(--card-soft); }
-.overview-card:hover { border-color: var(--green); text-decoration: none; }
-.overview-icon { width: 60px; height: 42px; color: var(--green); display: block; margin-bottom: .85rem; }
-.overview-card strong { display: block; font-size: .96rem; line-height: 1.4; }
-.overview-card p { font-size: .83rem; line-height: 1.55; margin: .5rem 0 .8rem; color: var(--muted); }
-.overview-card .overview-jump { color: var(--link); font-size: .76rem; }
 .policy-overlaps { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 1.5rem; align-items: center; margin: 1.25rem 0; }
 .overlap-examples { list-style: none; padding: 0; margin: 0; display: grid; gap: 1.15rem; }
 .overlap-examples li { display: grid; grid-template-columns: 1.6rem minmax(0, 1fr); gap: .7rem; margin: 0; }
@@ -136,10 +127,6 @@
 .bee-composition strong { color: var(--green); }
 .bee-analogy-note { font-size: .8rem; color: var(--muted); margin-top: 1rem !important; }
 
-@media (max-width: 900px) {
-  .overview-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
-
 @media (prefers-color-scheme: light) {
   .longform { --diagram-line: #91a1b4; --diagram-blue: #0b84c6; --diagram-amber: #9f6412; }
 }
@@ -177,13 +164,6 @@
   .safety-layer p { grid-column: 2; }
   .permission-flow { grid-template-columns: 1fr; gap: .35rem; }
   .permission-flow > .flow-arrow, .permission-stop { transform: rotate(90deg); }
-}
-
-@media (max-width: 480px) {
-  .overview-grid { grid-template-columns: 1fr; }
-  .overview-card { display: grid; grid-template-columns: 42px 1fr; column-gap: .9rem; }
-  .overview-icon { width: 42px; grid-row: 1/4; margin: 0; }
-  .overview-card p, .overview-card .overview-jump { grid-column: 2; }
 }
 
 /* One conceptual map, reused across shaping, evaluation and deployment. */

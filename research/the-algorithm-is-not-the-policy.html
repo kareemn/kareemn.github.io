@@ -26,7 +26,7 @@
     <meta name="twitter:image:alt" content="The Problem With Shaping High-Dimensional Behavior. Blue and mint contours with a gold path; Kareem Nassar." />
     <meta name="twitter:creator" content="@kimocode" />
     <link rel="stylesheet" href="research.css?v=14" />
-    <link rel="stylesheet" href="optimizer-behavior.css?v=10" />
+    <link rel="stylesheet" href="optimizer-behavior.css?v=11" />
     <script>
       window.MathJax = {
         tex: {
@@ -66,16 +66,7 @@
               <span class="chip">Swarm alignment</span>
             </div>
           </header>
-          <aside class="visual-overview" aria-labelledby="visual-overview-title">
-            <h2 id="visual-overview-title">The argument at a glance</h2>
-            <div class="overview-grid">
-              <a class="overview-card" href="#a-simple-optimization-process-can-produce-something-much-more-complicated-than-itself"><svg class="overview-icon" viewBox="0 0 60 42" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="2" y="12" width="17" height="17" rx="3"/><path d="M7 18h7m-7 5h7M20 21h11m0 0 9-14m-9 14 9 14m-9-14h13"/><circle cx="48" cy="6" r="4"/><circle cx="49" cy="21" r="4"/><circle cx="48" cy="36" r="4"/></svg><strong>Training shapes a shared policy</strong><p>We want useful skills and authority boundaries to generalize together; they are not independent rules.</p><span class="overview-jump">Read section →</span></a>
-              <a class="overview-card" href="#this-changes-how-i-think-about-alignment-evals"><svg class="overview-icon" viewBox="0 0 60 42" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="4" y="5" width="30" height="32" rx="3"/><path d="m10 15 3 3 5-6m-8 13 3 3 5-6m4-7h7m-7 10h7"/><circle cx="43" cy="22" r="10"/><path d="m50 30 7 8M40 22h6"/></svg><strong>Evaluation gives a partial view</strong><p>We test selected situations through limited evidence, which an agent may sometimes influence.</p><span class="overview-jump">Read section →</span></a>
-              <a class="overview-card" href="#and-then-there-is-the-swarm"><svg class="overview-icon" viewBox="0 0 60 42" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M10 21 30 7l21 14-21 14L10 21m20-14v28m-20-14h41"/><circle cx="10" cy="21" r="5" fill="var(--card-soft)"/><circle cx="30" cy="7" r="5" fill="var(--card-soft)"/><circle cx="51" cy="21" r="5" fill="var(--card-soft)"/><circle cx="30" cy="35" r="5" fill="var(--card-soft)"/></svg><strong>Connected agents need system-level tests</strong><p>Messages and shared memory change the behavior we need to characterize, even with fixed weights.</p><span class="overview-jump">Read section →</span></a>
-              <a class="overview-card" href="#what-about-safeguards"><svg class="overview-icon" viewBox="0 0 60 42" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M30 3 48 10v12c0 8-8 14-18 18-10-4-18-10-18-18V10L30 3Z"/><rect x="24" y="19" width="12" height="11" rx="2"/><path d="M26 19v-4a4 4 0 0 1 8 0v4"/></svg><strong>Teach, watch, and enforce</strong><p>Combine learned behavior, system-level oversight and external controls on particular operations.</p><span class="overview-jump">Read section →</span></a>
-            </div>
-          </aside>
-          <details class="article-contents"><summary>In this essay <span>6 sections</span></summary><ol><li><a href="#a-simple-optimization-process-can-produce-something-much-more-complicated-than-itself">The optimizer is not the policy</a></li><li><a href="#this-changes-how-i-think-about-alignment-evals">What our evaluations establish</a></li><li><a href="#what-actually-happened">When the evaluator becomes part of the environment</a></li><li><a href="#and-then-there-is-the-swarm">Individual alignment is not swarm alignment</a></li><li><a href="#what-about-safeguards">Safety needs more than behavioral optimization</a></li><li><a href="#the-questions-i-think-we-should-be-asking">What I still don't know</a></li></ol></details>
+          <details class="article-contents" open><summary>In this essay <span>6 sections</span></summary><ol><li><a href="#a-simple-optimization-process-can-produce-something-much-more-complicated-than-itself">The optimizer is not the policy</a></li><li><a href="#this-changes-how-i-think-about-alignment-evals">What our evaluations establish</a></li><li><a href="#what-actually-happened">When the evaluator becomes part of the environment</a></li><li><a href="#and-then-there-is-the-swarm">Individual alignment is not swarm alignment</a></li><li><a href="#what-about-safeguards">Safety needs more than behavioral optimization</a></li><li><a href="#the-questions-i-think-we-should-be-asking">What I still don't know</a></li></ol></details>
           <noscript><p class="math-fallback">Enable JavaScript to render the equations. Their LaTeX source is shown below.</p></noscript>
           <p id="math-load-error" class="math-fallback" hidden>Equation rendering could not load. The LaTeX source remains readable below; reload to try again.</p>
           <div class="essay-body">
