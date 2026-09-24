@@ -83,7 +83,7 @@ ${drawing(s.slug)}<path d="M58 544 H1142" stroke="#293542"/>${text(58,590,'Karee
   <link rel="stylesheet" href="../research.css?v=14" />
   <style>main{max-width:760px;margin:3rem auto;padding:0 1.25rem}img{display:block;width:100%;height:auto;border-radius:12px}h1{font-size:clamp(1.8rem,5vw,2.6rem);line-height:1.2}p{line-height:1.7}.continue{display:inline-block;padding:.8rem 0;font-weight:650}</style>
 </head><body><main>
-  <p class="eyebrow">From The Problem With Shaping High-Dimensional Behavior</p>
+  <p class="eyebrow">From Drawing Boundaries With a Blunt Tool</p>
   <h1>${esc(s.title)}</h1>
   <img src="${imagePath}" width="1200" height="630" alt="${esc(alt)}" />
   <p>${esc(s.description)}</p>

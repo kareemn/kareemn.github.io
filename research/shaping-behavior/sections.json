@@ -2,49 +2,72 @@
   {
     "slug": "shaping",
     "anchor": "a-simple-optimization-process-can-produce-something-much-more-complicated-than-itself",
-    "title": "The optimizer is not the policy",
+    "title": "Simple rules, complicated maps",
     "label": "Shaping",
-    "lines": ["The optimizer", "is not", "the policy"],
-    "size": 68,
-    "description": "Training reshapes a shared policy, not independent rules. The difficult part is how the resulting behaviors generalize and interact.",
-    "visual": "Two contour maps connected by a training update; the resulting map contains a path between situations."
+    "lines": [
+      "Simple rules,",
+      "complicated",
+      "maps"
+    ],
+    "size": 66,
+    "description": "Training reshapes one policy. Useful behaviors interact, and a correction can change more than the tested examples.",
+    "visual": "Two contour maps connected by a training update; the resulting map contains a path between situations.",
+    "imageVersion": 2
   },
   {
     "slug": "evaluation",
     "anchor": "this-changes-how-i-think-about-alignment-evals",
-    "title": "What our evaluations establish",
+    "title": "What changed beyond the tested examples?",
     "label": "Generalization",
-    "lines": ["What our", "evaluations", "establish"],
-    "size": 68,
-    "description": "Evaluations provide evidence about tested situations. What supports our confidence about important situations a deployed agent can reach?",
-    "visual": "Checked evaluation points on a contour map, with a dashed path toward an untested situation."
+    "lines": [
+      "What changed",
+      "beyond the",
+      "tested examples?"
+    ],
+    "size": 61,
+    "description": "We can train against a failure and improve the tested examples. The harder question is what else changed.",
+    "visual": "Checked evaluation points on a contour map, with a dashed path toward an untested situation.",
+    "imageVersion": 2
   },
   {
     "slug": "evidence",
     "anchor": "what-actually-happened",
-    "title": "When the evaluator becomes part of the environment",
+    "title": "A mistaken belief about oversight",
     "label": "Observation",
-    "lines": ["When the evaluator", "becomes part of", "the environment"],
-    "size": 51,
-    "description": "Did the behavior change, or did what we could see of it change? The Hugging Face incident made this distinction concrete.",
-    "visual": "A trajectory with a violation, separated by an observation boundary from a recorded PASS."
+    "lines": [
+      "A mistaken belief",
+      "about oversight"
+    ],
+    "size": 58,
+    "description": "An incorrect belief about oversight made concealment seem useful. What boundary would another round of training need to teach?",
+    "visual": "A trajectory with a violation, separated by an observation boundary from a recorded PASS.",
+    "imageVersion": 2
   },
   {
     "slug": "swarm",
     "anchor": "and-then-there-is-the-swarm",
-    "title": "Individual alignment is not swarm alignment",
+    "title": "When agents sample the map together",
     "label": "Composition",
-    "lines": ["Individual", "alignment is not", "swarm alignment"],
-    "size": 61,
-    "description": "One agent's output becomes another agent's input. The weights do not have to change for the behavior of the connected system to change.",
-    "visual": "Three separate contour maps connected by communication arrows and a shared hub."
+    "lines": [
+      "When agents",
+      "sample the map",
+      "together"
+    ],
+    "size": 62,
+    "description": "Other agents supply instructions, context and shared discoveries. Individual safety evidence doesn't automatically establish safety of the connected system.",
+    "visual": "Three separate contour maps connected by communication arrows and a shared hub.",
+    "imageVersion": 2
   },
   {
     "slug": "safeguards",
     "anchor": "what-about-safeguards",
     "title": "The problem with “safeguards”",
     "label": "Constraints",
-    "lines": ["The problem", "with", "“safeguards”"],
+    "lines": [
+      "The problem",
+      "with",
+      "“safeguards”"
+    ],
     "size": 68,
     "description": "Safeguards operate at different levels. What must they observe, how independent is their judgment, and which boundaries should the system enforce?",
     "visual": "A path leaving a learned contour map is stopped by a separate access-control gate.",
@@ -55,7 +78,10 @@
     "anchor": "the-questions-i-think-we-should-be-asking",
     "title": "What I still don't know",
     "label": "Open questions",
-    "lines": ["What I still", "don't know"],
+    "lines": [
+      "What I still",
+      "don't know"
+    ],
     "size": 72,
     "description": "What evidence justifies confidence in how we shape, evaluate, and constrain a learned policy—and a connected system of agents?",
     "visual": "A path on a contour map branches toward three open questions."

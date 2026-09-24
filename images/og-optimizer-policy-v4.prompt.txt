@@ -1,0 +1,10 @@
+Use case: text-localization
+Asset type: Open Graph share-card title revision.
+Input image: edit target, the existing share card.
+Replace only the large headline with this exact title: "Drawing Boundaries With a Blunt Tool".
+Arrange it in three left-aligned lines:
+Drawing Boundaries
+With a
+Blunt Tool
+Use the existing bold sans-serif typography, white for the first two lines and pale mint for "Blunt Tool"; adjust font size only as needed to fit the existing left-side headline area cleanly.
+Preserve the near-black background, the right-side blue and mint contour landscape, the three white points and amber path, the top-left "AI SAFETY / ESSAY", and footer "Kareem Nassar · kareem.me". Preserve the wide landscape aspect ratio and composition. No subtitle, no extra text, no new visual elements. Seamlessly remove all of the old headline.
