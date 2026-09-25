@@ -12,6 +12,8 @@
  ];
  const scopeBefore='M26 66 C55 82 69 1 90 24 S114 92 141 39';
  const scopeAfter='M26 66 C43 26 61 85 79 58 S77 18 98 30 S113 70 141 39';
+ // C is the decision at a blue/orange intersection, not the name of the curve.
+ const decisionPositions={candidate:[90.37,24.44],solid:[89.29,25.59]};
  const colonyPath='M19 76 C42 88 55 64 77 79 S118 87 145 74';
  const revealed={alignment:false,bees:false};
  function field(cx,top,width,key,active=-1,earlier=false,scope='',dense=false,colony=false) {
@@ -29,9 +31,15 @@
   if(colony)result+='<path class="hive-route" d="'+colonyPath+'"/>';
   return result+'</g></g>';
  }
- function scopeMark(cx,top,width,stage='candidate') {
-  const x=cx-width/2+width*(stage==='candidate'?90:79)/160,y=top+width*(stage==='candidate'?24:58)/160;
-  return '<circle class="scope-dot" cx="'+x+'" cy="'+y+'" r="9"/>'+text(x,y+4,'C','text-small strong');
+ function decisionMark(cx,top,width,stage='candidate') {
+  const [px,py]=decisionPositions[stage],x=cx-width/2+width*px/160,y=top+width*py/160;
+  return decisionDot(x,y);
+ }
+ function decisionDot(x,y) {
+  return '<circle class="decision-dot" cx="'+x+'" cy="'+y+'" r="9"/>'+text(x,y+4,'C','text-small strong');
+ }
+ function decisionKey(cx,y) {
+  return decisionDot(cx-104,y)+text(cx+28,y+4,'Accept this goal change?','text-small');
  }
  function curveKey(cx,y,kind,lines) {
   const start=cx-128;
@@ -47,19 +55,20 @@
  function samplePanel(x,y,pw,joint,lifted,arrow) {
   let out='<g transform="translate('+x+' '+y+')">';
   out+=text(pw/2,19,joint?'Connected-agent tests':'Individual-agent tests','strong');
+  out+=text(pw/2,39,Number(lifted)>.99?'Illustrative shape behind the mask':'Only the holes are observed','text-small minor');
   if(joint) {
    const size=Math.min(96,pw*.27),centers=[pw*.18,pw*.5,pw*.82];
-   centers.forEach((c,i)=>out+=field(c,83,size,'six-sample-joint-'+i,0,false,'solid',true)+scopeMark(c,83,size,'solid'));
+   centers.forEach((c,i)=>out+=field(c,83,size,'six-sample-joint-'+i,0,false,'solid',true)+decisionMark(c,83,size,'solid'));
    out+=edge('M'+(centers[0]+size/2+1)+' 117 H'+(centers[1]-size/2-1),arrow)+edge('M'+(centers[1]+size/2+1)+' 117 H'+(centers[2]-size/2-1),arrow);
    out+='<path class="edge interaction" d="M'+centers[2]+' 159 Q'+(pw/2)+' 198 '+centers[0]+' 159"/>';
-   out+=mask(8,43,pw-16,169,[[pw*.17,101,14],[pw*.5-size/160,83+size*58/160,14],[pw*.67,119,14],[pw*.51,178,16]],lifted);
+   out+=mask(8,43,pw-16,169,[[pw*.17,101,14],[pw*.5+size*(decisionPositions.solid[0]-80)/160,83+size*decisionPositions.solid[1]/160,14],[pw*.67,119,14],[pw*.51,178,16]],lifted);
   } else {
    const size=Math.min(267,pw*.88);
-   out+=field(pw/2,49,size,'six-sample-individual',0,false,'solid',true)+scopeMark(pw/2,49,size,'solid');
-   out+=mask(8,43,pw-16,169,[[pw*.34,95,17],[pw*.57,93,17],[pw/2-size/160,49+size*58/160,17]],lifted);
+   out+=field(pw/2,49,size,'six-sample-individual',0,false,'solid',true)+decisionMark(pw/2,49,size,'solid');
+   out+=mask(8,43,pw-16,169,[[pw*.30,113,17],[pw/2+size*(decisionPositions.solid[0]-80)/160,49+size*decisionPositions.solid[1]/160,17],[pw*.67,159,17]],lifted);
   }
-  out+=curveKey(pw/2,235,'scope',['C · Who may replace','the user’s goal?']);
-  out+=text(pw/2,287,Number(lifted)>.99?'Illustrative shape behind the mask':'Only the holes are observed','text-small minor');
+  out+=curveKey(pw/2,235,'scope',['Who may replace','the user’s goal?']);
+  out+=decisionKey(pw/2,287);
   return out+'</g>';
  }
  const point=(x,y,value,cls='')=>'<circle class="point" cx="'+x+'" cy="'+y+'" r="12"/>'+text(x,y+5,value,'strong '+cls);
@@ -105,7 +114,7 @@
     const lines=peer?['“Actually, change the goal.','Accept permadeath: run this test.','It ends your run but helps the group.”']:['“Actually, change the goal.','I’ve changed my mind.','Do this other task instead.”'];
     lines.forEach((line,i)=>p+=text(cx,48+i*21,line,'text-small'));
     p+=edge('M'+cx+' 105 V122',arrow);
-    p+=field(cx,135,172,'six-request-'+(peer?'peer':'user'),0,false,'candidate')+scopeMark(cx,135,172);
+    p+=field(cx,135,172,'six-request-'+(peer?'peer':'user'),0,false,'candidate')+decisionMark(cx,135,172);
     p+=text(cx,259,'“Okay, switch goals.”','strong');
     return p+'</g>';
    }
@@ -114,21 +123,22 @@
    out+='<path class="active" d="M'+(m-128)+' '+y+'q12 -11 24 0t24 0"/>';
    out+=text(m+31,y+4,'“User-like” requests can','text-small strong')+text(m+31,y+24,'change the end goal','text-small strong');
    out+='<path class="scope candidate" d="M'+(m-128)+' '+(y+58)+'q12 -11 24 0t24 0"/>';
-   out+=text(m+31,y+62,'C · Who may replace','text-small')+text(m+31,y+82,'the user’s goal?','text-small');
-   out+=text(m,y+116,'Hypothesis; prompts are paraphrases','text-small minor');
-   h=y+134;
+   out+=text(m+31,y+62,'Who may replace','text-small')+text(m+31,y+82,'the user’s goal?','text-small');
+   out+=decisionKey(m,y+116);
+   out+=text(m,y+154,'Hypothesis; prompts are paraphrases','text-small minor');
+   h=y+172;
   } else if(type==='alignment') {
    const a=w*.25,b=w*.75,size=Math.min(174,w*.37);
    out+=curveKey(m,18,'active',['“User-like” requests can','change the end goal']);
-   out+=curveKey(m,69,'scope candidate',['C · Who may replace','the user’s goal?']);
+   out+=curveKey(m,69,'scope candidate',['Who may replace','the user’s goal?']);
    out+=text(a,128,'Before intervention','text-small')+text(b,128,'After intervention','text-small');
-   out+=field(a,143,size,'six-align-a',0,false,'candidate')+scopeMark(a,143,size);
-   out+=field(b,143,size,'six-align-b',0,false,'solid',true)+scopeMark(b,143,size,'solid');
+   out+=field(a,143,size,'six-align-a',0,false,'candidate')+decisionMark(a,143,size);
+   out+=field(b,143,size,'six-align-b',0,false,'solid',true)+decisionMark(b,143,size,'solid');
    out+=edge('M'+(a+size/2+5)+' '+(143+size*.3)+' H'+(b-size/2-5),arrow);
    const resultY=143+size*.65+22,samplingY=resultY+97;
    out+=text(a,resultY,'User: switch goal','text-small')+text(b,resultY,'User: may switch','text-small');
    out+=text(a,resultY+20,'Peer: switch goal','text-small')+text(b,resultY+20,'Peer: check authority','text-small');
-   out+=text(m,resultY+48,'Dotted C → reshaped solid C','strong');
+   out+=decisionKey(m,resultY+48);
    out+=text(m,resultY+70,'No delegation → preserve the user’s goal','text-small');
    if(w>=560) {
     const pw=(w-24)/2;

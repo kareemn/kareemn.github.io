@@ -15,7 +15,7 @@
 #essay-six-step-storyboard .semantic .contour { stroke:var(--muted-foreground); opacity:.4; stroke-width:1.2; }
 #essay-six-step-storyboard .scope { fill:none; stroke:var(--viz-series-2); stroke-width:3.2; }
 #essay-six-step-storyboard .candidate { stroke-dasharray:5 3; }
-#essay-six-step-storyboard .scope-dot { fill:var(--background); stroke:var(--viz-series-2); stroke-width:1.7; }
+#essay-six-step-storyboard .decision-dot { fill:var(--background); stroke:var(--foreground); stroke-width:1.7; }
 #essay-six-step-storyboard .hive-route { fill:none; stroke:var(--viz-series-2); stroke-width:3; }
 #essay-six-step-storyboard .interaction { stroke-dasharray:5 4; }
 #essay-six-step-storyboard .test-mask { fill:color-mix(in srgb, var(--foreground) 12%, var(--background) 88%); fill-rule:evenodd; }

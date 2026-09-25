@@ -1,5 +1,12 @@
 # Section sharing
 
+The essay's canonical URL is
+`/research/the-ai-agents-were-helpful-to-each-other.html`.
+The previous `/research/the-algorithm-is-not-the-policy.html` remains as a
+static redirect page. Its browser redirect preserves query strings and section
+fragments; without JavaScript, it presents a normal link. Its canonical and
+sharing metadata point to the new article. The article builder generates both pages.
+
 Each `.html` file is a static, section-specific Open Graph entry point. Its
 `og:url` and canonical URL identify that share page, so crawlers do not collapse
 the section previews into the whole-essay card. `noindex, follow` keeps these utility
