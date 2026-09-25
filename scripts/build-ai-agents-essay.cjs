@@ -35,8 +35,12 @@ const figureSpecs = {
   '6': ['safeguards', 'safety-layers', ['4-safety-outside-the-model']]
 };
 function picture(scene, alt) {
-  const stem = scene === 'alignment' ? 'evaluation-v2' : 'bee-colony';
-  const sizes = scene === 'alignment' ? {mobile:[288,952],desktop:[640,679]} : {mobile:[288,392],desktop:[640,451]};
+  const stem = scene === 'alignment' ? 'evaluation-v4' : 'bee-colony-v2';
+  const sizes = {};
+  for (const layout of ['mobile', 'desktop']) {
+    const gif = fs.readFileSync(path.join(root, 'images/ai-agents-v1', `${stem}-${layout}-light.gif`));
+    sizes[layout] = [gif.readUInt16LE(6), gif.readUInt16LE(8)];
+  }
   let result = `<picture class="story-motion" data-animation="${scene}">`;
   for (const reduce of [true,false]) for (const theme of ['dark','light']) for (const layout of ['mobile','desktop']) {
     if (!reduce && theme === 'light' && layout === 'desktop') continue;
@@ -96,7 +100,7 @@ header = header.replace(/<title>.*?<\/title>/, `<title>${esc(title)} - Kareem Na
   .replace(/\d+ min read/,`${minutes} min read`)
   .replace(/    <script>\s*window\.MathJax[\s\S]*?<\/script>\s*<script id="mathjax"[^>]*><\/script>\n/,'');
 if (!header.includes('ai-agents-diagrams.css')) header=header.replace('  </head>', '    <link rel="stylesheet" href="ai-agents-diagrams.css?v=1" />\n    <script defer src="ai-agents-diagrams.js?v=1"></script>\n  </head>');
-header=header.replace(/ai-agents-diagrams\.(css|js)\?v=\d+/g,'ai-agents-diagrams.$1?v=2');
+header=header.replace(/ai-agents-diagrams\.(css|js)\?v=\d+/g,'ai-agents-diagrams.$1?v=4');
 const toc = `<details class="article-contents" open><summary>In this essay <span>6 sections</span></summary><ol>${sections.map(([anchor],i)=>`<li><a href="#${anchor}">${esc(headingTexts[i])}</a></li>`).join('')}</ol></details>`;
 let footer = '</article>'+old.split('</article>')[1];
 footer=footer.replace(/\s*document\.getElementById\('mathjax'\)[\s\S]*?\}\);/,'');

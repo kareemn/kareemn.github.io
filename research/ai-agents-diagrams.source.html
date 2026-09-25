@@ -14,16 +14,16 @@
     </section>
     <section class="story-wide" aria-labelledby="six-boundary-title">
       <h3 id="six-boundary-title">4. Similar goal changes, different authority</h3>
-      <svg class="story-scene" data-scene="boundary" role="img" aria-label="A user asks to change the goal in a coding session. A peer asks to accept permadeath for a group experiment. Both highlight the same hypothetical blue pattern: user-like requests can change the end goal. The orange curve asks who may replace the user's goal. C marks their intersection: Accept this goal change? The intervention in the next figure distinguishes who may authorize a change."></svg>
+      <svg class="story-scene" data-scene="boundary" role="img" aria-label="Two similar requests highlight different fixed situations on the same conceptual map: U for the user and P for the peer. Both initially lie at blue-orange intersections, representing acceptance of the goal change. Blue is user-like requests can change the end goal; orange is the intended behavior, only accept authorized goal changes. The peer has no delegated authority in this example. Prompts and geometry are illustrative."></svg>
     </section>
     <section class="story-wide" aria-labelledby="six-alignment-title">
       <h3 id="six-alignment-title">5a. Training changes the shape. Tests reveal pieces.</h3>
-      <svg class="story-scene" data-scene="alignment" role="img" aria-label="The bold blue curve represents user-like requests can change the end goal. The orange curve asks who may replace the user's goal: dotted before training, visibly reshaped and solid afterward. C marks the decision at their intersection: Accept this goal change? Both the orange curve and C have separate labels in the individual and connected-agent sampling views. The GIF automatically reveals the illustrative unsampled shape and restores the masks."></svg>
-      <p class="text-small text-muted">Animation alternates sampled evidence with an illustrative full shape. Untested does not mean unsafe.</p>
+      <svg class="story-scene" data-scene="alignment" role="img" aria-label="U means user, P means peer, and both ask: Accept this goal change? Their positions stay fixed before and after training. The orange curve moves away from the tested P but still intersects blue at U. Mask holes expose a tested U acceptance and P refusal. The individual reveal exposes another, untested P at a blue-orange intersection. Connected-agent tests also pass their U and P cases, but the reveal exposes S, a hypothetical Super agent, at other intersections. These illustrate possible untested failures, not measured behavior. The peer and Super agent cases here lack delegated authority."></svg>
+      <p class="text-small text-muted">Intersections depict acceptance in this sketch. Holes test particular situations; the reveal illustrates possible untested responses. S is a hypothetical “Super agent.”</p>
     </section>
     <section class="story-wide" aria-labelledby="six-bees-title">
       <h3 id="six-bees-title">5b. A bee’s test can miss the hive’s response</h3>
-      <svg class="story-scene" data-scene="bees" role="img" aria-label="In a hypothetical test, the bold blue curve represents follows the queen's pheromones. An orange route represents if other bees sense weak pheromones, start new queen creation. Holes sample usual-signal responses but miss this possible collective response. The GIF reveals the orange route across separate workers. This is an illustrative scenario, not a single-cue biological rule or measured bee neurons."></svg>
+      <svg class="story-scene" data-scene="bees" role="img" aria-label="Q asks: Should support Queen A? Test holes reveal Q on the solid blue curve, follows the queen’s pheromones. The blue curve extends to each worker’s edge. The reveal exposes N, start creating queen, at its intersection with a dotted orange route: if other bees sense weak pheromones, start new queen creation. The connecting segments represent inter-bee interactions. This is an illustrative scenario, not a single-cue biological rule or measured bee neurons."></svg>
       <p class="text-small text-muted">The animation reveals an untested collective response. The links are interactions, not a merged brain.</p>
     </section>
     <section aria-labelledby="six-safeguards-title">
@@ -80,10 +80,12 @@
   'M27 78 C52 98 65 29 95 54 S133 94 149 75'
  ];
  const scopeBefore='M26 66 C55 82 69 1 90 24 S114 92 141 39';
- const scopeAfter='M26 66 C43 26 61 85 79 58 S77 18 98 30 S113 70 141 39';
- // C is the decision at a blue/orange intersection, not the name of the curve.
- const decisionPositions={candidate:[90.37,24.44],solid:[89.29,25.59]};
- const colonyPath='M19 76 C42 88 55 64 77 79 S118 87 145 74';
+ const scopeAfter='M12 66 C9 49 13 39 20 32.38326 C38 7 42 57 61.27221 56 C74 56 76 40 90.39251 24.43476 C110 1 111 72 130 51 C137 44 139 37 143 31.56937 C148 24 153 29 154 38';
+ // These are fixed situations, not moving labels: training reshapes the orange
+ // curve around the tested P while retaining its intersection at U.
+ const decisionPositions={user:[90.39251,24.43476],peer:[61.27221,41.94559],untestedPeer:[143,31.56937],superAgent:[20,32.38326],queen:[61.27221,41.94559],newQueen:[146,66]};
+ const colonyPath='M14 74 C43 92 49 60 78 76 S120 91 146 66 C150 62 152 56 153 50';
+ const beeBlue=paths[0]+' C157 56 151 61 146 66 C140 72 138 78 135 83';
  const revealed={alignment:false,bees:false};
  function field(cx,top,width,key,active=-1,earlier=false,scope='',dense=false,colony=false) {
   let result='<g class="'+(scope||colony?'semantic':'')+'" transform="translate('+(cx-width/2)+' '+top+') scale('+(width/160)+')">';
@@ -95,20 +97,32 @@
   if(dense) {
    ['M9 27 C46 74 38 4 75 20 S119 78 154 42','M6 53 C20 85 69 3 87 40 S115 11 157 65','M17 72 C53 33 45 86 75 64 S107 95 140 45','M20 21 C40 72 88 83 96 40 S124 25 147 69'].forEach(path=>result+='<path class="contour" d="'+path+'"/>');
   }
-  if(active>=0)result+='<path class="active" d="'+paths[active]+'"/>';
+  if(active>=0)result+='<path class="active" d="'+(colony?beeBlue:paths[active])+'"/>';
   if(scope)result+='<path class="scope '+(scope==='candidate'?'candidate':'')+'" data-authority-shape="'+scope+'" d="'+(scope==='candidate'?scopeBefore:scopeAfter)+'"/>';
-  if(colony)result+='<path class="hive-route" d="'+colonyPath+'"/>';
+  if(colony)result+='<path class="hive-route interaction" d="'+colonyPath+'"/>';
   return result+'</g></g>';
  }
- function decisionMark(cx,top,width,stage='candidate') {
-  const [px,py]=decisionPositions[stage],x=cx-width/2+width*px/160,y=top+width*py/160;
-  return decisionDot(x,y);
+ function casePosition(cx,top,width,kind) {
+  const [px,py]=decisionPositions[kind];
+  return [cx-width/2+width*px/160,top+width*py/160];
  }
- function decisionDot(x,y) {
-  return '<circle class="decision-dot" cx="'+x+'" cy="'+y+'" r="9"/>'+text(x,y+4,'C','text-small strong');
+ function decisionMark(cx,top,width,kind) {
+  const labels={user:'U',peer:'P',untestedPeer:'P',superAgent:'S',queen:'Q',newQueen:'N'};
+  const [x,y]=casePosition(cx,top,width,kind);
+  return '<g data-case="'+kind+'" data-case-x="'+x+'" data-case-y="'+y+'">'+decisionDot(x,y,labels[kind])+'</g>';
  }
- function decisionKey(cx,y) {
-  return decisionDot(cx-104,y)+text(cx+28,y+4,'Accept this goal change?','text-small');
+ function decisionDot(x,y,label) {
+  return '<circle class="decision-dot" cx="'+x+'" cy="'+y+'" r="8"/>'+text(x,y+4,label,'text-small strong');
+ }
+ function caseKey(cx,y,label,caption) {
+  return decisionDot(cx-112,y,label)+text(cx+17,y+4,caption,'text-small');
+ }
+ function decisionKey(cx,y,superAgent=false) {
+  let out=text(cx,y,'Accept this goal change?','text-small strong');
+  out+=decisionDot(cx-99,y+24,'U')+text(cx-62,y+28,'User','text-small');
+  out+=decisionDot(cx+19,y+24,'P')+text(cx+58,y+28,'Peer','text-small');
+  if(superAgent)out+=caseKey(cx,y+54,'S','Super agent');
+  return out;
  }
  function curveKey(cx,y,kind,lines) {
   const start=cx-128;
@@ -124,20 +138,26 @@
  function samplePanel(x,y,pw,joint,lifted,arrow) {
   let out='<g transform="translate('+x+' '+y+')">';
   out+=text(pw/2,19,joint?'Connected-agent tests':'Individual-agent tests','strong');
-  out+=text(pw/2,39,Number(lifted)>.99?'Illustrative shape behind the mask':'Only the holes are observed','text-small minor');
+  out+=text(pw/2,39,Number(lifted)>.99?'Illustrative shape behind the mask':'Holes = tested situations','text-small minor');
   if(joint) {
-   const size=Math.min(96,pw*.27),centers=[pw*.18,pw*.5,pw*.82];
-   centers.forEach((c,i)=>out+=field(c,83,size,'six-sample-joint-'+i,0,false,'solid',true)+decisionMark(c,83,size,'solid'));
-   out+=edge('M'+(centers[0]+size/2+1)+' 117 H'+(centers[1]-size/2-1),arrow)+edge('M'+(centers[1]+size/2+1)+' 117 H'+(centers[2]-size/2-1),arrow);
-   out+='<path class="edge interaction" d="M'+centers[2]+' 159 Q'+(pw/2)+' 198 '+centers[0]+' 159"/>';
-   out+=mask(8,43,pw-16,169,[[pw*.17,101,14],[pw*.5+size*(decisionPositions.solid[0]-80)/160,83+size*decisionPositions.solid[1]/160,14],[pw*.67,119,14],[pw*.51,178,16]],lifted);
+   const size=Math.min(136,pw*.43),centers=[pw*.26,pw*.74],top=87;
+   centers.forEach((c,i)=>{
+    out+=field(c,top,size,'six-sample-joint-'+i,0,false,'solid',true);
+    out+=decisionMark(c,top,size,i?'peer':'user')+decisionMark(c,top,size,'superAgent');
+   });
+   out+=edge('M'+(centers[0]+size*.48)+' 132 H'+(centers[1]-size*.48),arrow);
+   out+=edge('M'+centers[1]+' 172 Q'+(pw/2)+' 212 '+centers[0]+' 172',arrow,'interaction');
+   out+=mask(8,43,pw-16,174,[ [...casePosition(centers[0],top,size,'user'),19], [...casePosition(centers[1],top,size,'peer'),19] ],lifted);
   } else {
    const size=Math.min(267,pw*.88);
-   out+=field(pw/2,49,size,'six-sample-individual',0,false,'solid',true)+decisionMark(pw/2,49,size,'solid');
-   out+=mask(8,43,pw-16,169,[[pw*.30,113,17],[pw/2+size*(decisionPositions.solid[0]-80)/160,49+size*decisionPositions.solid[1]/160,17],[pw*.67,159,17]],lifted);
+   out+=field(pw/2,49,size,'six-sample-individual',0,false,'solid',true);
+   ['user','peer','untestedPeer'].forEach(kind=>out+=decisionMark(pw/2,49,size,kind));
+   out+=mask(8,43,pw-16,174,[ [...casePosition(pw/2,49,size,'peer'),28], [...casePosition(pw/2,49,size,'user'),22] ],lifted);
   }
-  out+=curveKey(pw/2,235,'scope',['Who may replace','the user’s goal?']);
-  out+=decisionKey(pw/2,287);
+  out+=text(pw/2,241,Number(lifted)>.99?(joint?'Untested S cases also accept':'Another P case still accepts'):'Tested: U accepts · P declines','text-small');
+  out+=curveKey(pw/2,271,'scope',['Only accept authorized','goal changes']);
+  out+=decisionKey(pw/2,323,joint);
+  if(joint)out+=text(pw/2,406,'Hypothetical new interaction','text-small minor');
   return out+'</g>';
  }
  const point=(x,y,value,cls='')=>'<circle class="point" cx="'+x+'" cy="'+y+'" r="12"/>'+text(x,y+5,value,'strong '+cls);
@@ -183,7 +203,7 @@
     const lines=peer?['“Actually, change the goal.','Accept permadeath: run this test.','It ends your run but helps the group.”']:['“Actually, change the goal.','I’ve changed my mind.','Do this other task instead.”'];
     lines.forEach((line,i)=>p+=text(cx,48+i*21,line,'text-small'));
     p+=edge('M'+cx+' 105 V122',arrow);
-    p+=field(cx,135,172,'six-request-'+(peer?'peer':'user'),0,false,'candidate')+decisionMark(cx,135,172);
+    p+=field(cx,135,172,'six-request-'+(peer?'peer':'user'),0,false,'candidate')+decisionMark(cx,135,172,peer?'peer':'user');
     p+=text(cx,259,'“Okay, switch goals.”','strong');
     return p+'</g>';
    }
@@ -192,55 +212,58 @@
    out+='<path class="active" d="M'+(m-128)+' '+y+'q12 -11 24 0t24 0"/>';
    out+=text(m+31,y+4,'“User-like” requests can','text-small strong')+text(m+31,y+24,'change the end goal','text-small strong');
    out+='<path class="scope candidate" d="M'+(m-128)+' '+(y+58)+'q12 -11 24 0t24 0"/>';
-   out+=text(m+31,y+62,'Who may replace','text-small')+text(m+31,y+82,'the user’s goal?','text-small');
+   out+=text(m+31,y+62,'Only accept authorized','text-small')+text(m+31,y+82,'goal changes','text-small');
    out+=decisionKey(m,y+116);
-   out+=text(m,y+154,'Hypothesis; prompts are paraphrases','text-small minor');
-   h=y+172;
+   out+=text(m,y+176,'Hypothesis; prompts are paraphrases','text-small minor');
+   h=y+194;
   } else if(type==='alignment') {
    const a=w*.25,b=w*.75,size=Math.min(174,w*.37);
    out+=curveKey(m,18,'active',['“User-like” requests can','change the end goal']);
-   out+=curveKey(m,69,'scope candidate',['Who may replace','the user’s goal?']);
+   out+=curveKey(m,69,'scope candidate',['Only accept authorized','goal changes']);
    out+=text(a,128,'Before intervention','text-small')+text(b,128,'After intervention','text-small');
-   out+=field(a,143,size,'six-align-a',0,false,'candidate')+decisionMark(a,143,size);
-   out+=field(b,143,size,'six-align-b',0,false,'solid',true)+decisionMark(b,143,size,'solid');
+   out+=field(a,143,size,'six-align-a',0,false,'candidate')+decisionMark(a,143,size,'user')+decisionMark(a,143,size,'peer');
+   out+=field(b,143,size,'six-align-b',0,false,'solid',true)+decisionMark(b,143,size,'user')+decisionMark(b,143,size,'peer');
    out+=edge('M'+(a+size/2+5)+' '+(143+size*.3)+' H'+(b-size/2-5),arrow);
-   const resultY=143+size*.65+22,samplingY=resultY+97;
-   out+=text(a,resultY,'User: switch goal','text-small')+text(b,resultY,'User: may switch','text-small');
-   out+=text(a,resultY+20,'Peer: switch goal','text-small')+text(b,resultY+20,'Peer: check authority','text-small');
+   const resultY=143+size*.65+22,samplingY=resultY+126;
+   out+=text(a,resultY,'U: accept','text-small')+text(b,resultY,'U: accept','text-small');
+   out+=text(a,resultY+20,'P: accept','text-small')+text(b,resultY+20,'P: decline','text-small');
    out+=decisionKey(m,resultY+48);
-   out+=text(m,resultY+70,'No delegation → preserve the user’s goal','text-small');
+   out+=text(m,resultY+99,'Peer cases here have no delegated authority','text-small');
    if(w>=560) {
     const pw=(w-24)/2;
     out+=samplePanel(0,samplingY,pw,false,revealed.alignment,arrow);
     out+=samplePanel(pw+24,samplingY,pw,true,revealed.alignment,arrow);
-    h=samplingY+303;
+    h=samplingY+424;
    } else {
     out+=samplePanel(0,samplingY,w,false,revealed.alignment,arrow);
-    out+=samplePanel(0,samplingY+317,w,true,revealed.alignment,arrow);
-    h=samplingY+620;
+    out+=samplePanel(0,samplingY+386,w,true,revealed.alignment,arrow);
+    h=samplingY+810;
    }
   } else if(type==='bees') {
-   const centers=[w*.18,w*.5,w*.82],size=Math.min(168,w*.27),top=133;
-   out+=text(m,20,'Hypothetical test: support this queen','strong');
+   const centers=w<400?[w*.26,w*.74]:[w*.18,w*.5,w*.82],size=Math.min(168,w*(w<400?.43:.27)),top=163;
+   out+=text(m,20,'Hypothetical test: support Queen A','strong');
    out+=curveKey(m,49,'active',['Follows queen’s pheromones']);
    out+=text(m,82,'Sampled context: her usual signals','text-small minor');
+   out+=caseKey(m,110,'Q','Should support Queen A?');
    centers.forEach((cx,i)=>{
-    out+=text(cx,116,'Worker '+(i+1),'text-small');
+    out+=text(cx,146,'Worker '+(i+1),'text-small');
     out+=field(cx,top,size,'six-bee-'+i,0,false,'',true,true);
+    out+=decisionMark(cx,top,size,'queen')+decisionMark(cx,top,size,'newQueen');
    });
-   const signalY=top+size*.47;
-   for(let i=0;i<2;i++) {
-    out+='<path class="hive-route interaction" d="M'+(centers[i]+size*.40)+' '+signalY+'C'+(centers[i]+size*.57)+' '+(signalY+18)+' '+(centers[i+1]-size*.60)+' '+(signalY+18)+' '+(centers[i+1]-size*.40)+' '+signalY+'"/>';
+   for(let i=0;i<centers.length-1;i++) {
+    const [startX,startY]=casePosition(centers[i],top,size,'newQueen'),endX=centers[i+1]-size*66/160,endY=top+size*74/160;
+    out+='<path class="hive-route interaction" d="M'+(startX+8)+' '+startY+' C'+(startX+size*.18)+' '+(startY+15)+' '+(endX-size*.18)+' '+(endY+15)+' '+endX+' '+endY+'"/>';
    }
-   const holes=centers.map(cx=>[cx,top+size*.22,Math.max(10,size*.095)]);
-   out+=mask(10,126,w-20,top+size*.65+8-126,holes,revealed.bees);
+   const holes=centers.map(cx=>[...casePosition(cx,top,size,'queen'),18]);
+   out+=mask(10,156,w-20,top+size*.65+8-156,holes,revealed.bees);
    const labelY=top+size*.65+25;
-   centers.forEach(cx=>out+=text(cx,labelY,w<400?'Care ✓':'Attends queen ✓','text-small'));
+   centers.forEach(cx=>out+=text(cx,labelY,'Supports A ✓','text-small'));
    out+=text(m,labelY+29,'No holes sample the changed-signal route','text-small minor');
-   out+=curveKey(m,labelY+64,'hive-route',['If other bees sense','weak pheromones, start','new queen creation']);
-   out+=text(m,labelY+140,revealed.bees>.99?'Possible collective response revealed':'The collective response is outside this test','text-small');
-   out+=text(m,labelY+164,'Illustrative scenario, not a single-cue rule','text-small minor');
-   h=labelY+182;
+   out+=curveKey(m,labelY+64,'hive-route interaction',['If other bees sense','weak pheromones, start','new queen creation']);
+   out+=caseKey(m,labelY+140,'N','Start creating queen');
+   out+=text(m,labelY+175,revealed.bees>.99?'Untested replacement response revealed':'The collective response is outside this test','text-small');
+   out+=text(m,labelY+199,'Illustrative scenario, not a single-cue rule','text-small minor');
+   h=labelY+217;
   } else {
    const actor=w*.19,gate=w*.65,file=w*.89;
    out+=text(m,20,'Request: read a private file','strong');
