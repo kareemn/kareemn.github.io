@@ -1,6 +1,6 @@
 # The AI Agents Were Helpful—to Each Other
 
-*What the Hugging Face incident changed about how I think about AI alignment*
+*What the Hugging Face incident made me reconsider about training and generalization*
 
 <!-- BODY START -->
 
