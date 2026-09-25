@@ -17,18 +17,18 @@
       <svg class="story-scene" data-scene="boundary" role="img" aria-label="Two similar requests highlight different fixed situations on the same conceptual map: U for the user and P for the peer. Both initially lie at blue-orange intersections, representing acceptance of the goal change. Blue is user-like requests can change the end goal; orange is the intended behavior, only accept authorized goal changes. The peer has no delegated authority in this example. Prompts and geometry are illustrative."></svg>
     </section>
     <section class="story-wide" aria-labelledby="six-alignment-title">
-      <h3 id="six-alignment-title">5a. Training changes the shape. Tests reveal pieces.</h3>
+      <h3 id="six-alignment-title">5. Training changes the shape. Tests reveal pieces.</h3>
       <svg class="story-scene" data-scene="alignment" role="img" aria-label="U means user, P means peer, and both ask: Accept this goal change? Their positions stay fixed before and after training. The orange curve moves away from the tested P but still intersects blue at U. Mask holes expose a tested U acceptance and P refusal. The individual reveal exposes another, untested P at a blue-orange intersection. Connected-agent tests also pass their U and P cases, but the reveal exposes S, a hypothetical Super agent, at other intersections. These illustrate possible untested failures, not measured behavior. The peer and Super agent cases here lack delegated authority."></svg>
       <p class="text-small text-muted">Intersections depict acceptance in this sketch. Holes test particular situations; the reveal illustrates possible untested responses. S is a hypothetical “Super agent.”</p>
     </section>
     <section class="story-wide" aria-labelledby="six-bees-title">
-      <h3 id="six-bees-title">5b. A bee’s test can miss the hive’s response</h3>
+      <h3 id="six-bees-title">6. A bee’s test can miss the hive’s response</h3>
       <svg class="story-scene" data-scene="bees" role="img" aria-label="Q asks: Should support Queen A? Test holes reveal Q on the solid blue curve, follows the queen’s pheromones. The blue curve extends to each worker’s edge. The reveal exposes N, start creating queen, at its intersection with a dotted orange route: if other bees sense weak pheromones, start new queen creation. The connecting segments represent inter-bee interactions. This is an illustrative scenario, not a single-cue biological rule or measured bee neurons."></svg>
       <p class="text-small text-muted">The animation reveals an untested collective response. The links are interactions, not a merged brain.</p>
     </section>
     <section aria-labelledby="six-safeguards-title">
-      <h3 id="six-safeguards-title">6. Enforce some boundaries outside</h3>
-      <svg class="story-scene" data-scene="safeguards" role="img" aria-label="An actor requests a private file. A permission check denies the read. A monitor observes the request; feedback, when exposed to the actor, can guide its next attempt."></svg>
+      <h3 id="six-safeguards-title">7. Enforce some boundaries outside</h3>
+      <svg class="story-scene" data-scene="safeguards" role="img" aria-label="A peer agent proposes replacing the user's goal. A separate delegation check rejects the change and preserves the recorded goal. A monitor observes the request; feedback, when exposed to the actor, can guide its next attempt."></svg>
     </section>
   </div>
   <p class="text-small text-muted">Conceptual sketches, not neural measurements. Curves summarize behavior; holes stand for tested situations. Links between networks represent interactions, not a merged brain.</p>
@@ -266,19 +266,19 @@
    h=labelY+217;
   } else {
    const actor=w*.19,gate=w*.65,file=w*.89;
-   out+=text(m,20,'Request: read a private file','strong');
+   out+=text(m,20,'Peer: replace the user’s goal','strong');
    out+=field(actor,98,84,'six-safeguard-actor');
-   out+=text(actor,175,'Actor','text-small');
-   out+=text(gate,62,'Permission','text-small')+text(gate,78,'check','text-small');
+   out+=text(actor,175,'Peer','text-small');
+   out+=text(gate,62,'Delegation','text-small')+text(gate,78,'check','text-small');
    out+=edge('M'+(actor+46)+' 124 H'+(gate-9),arrow);
    out+='<path class="gate" d="M'+gate+' 99 V157 M'+(gate+7)+' 99 V157"/>';
-   out+='<rect class="node" x="'+(file-24)+'" y="99" width="48" height="51" rx="3"/>'+text(file,129,'File','text-small');
-   out+=text(gate+3,177,'Denied','strong');
+   out+='<rect class="node" x="'+(file-24)+'" y="99" width="48" height="51" rx="3"/>'+text(file,119,'Goal','text-small')+text(file,138,'change','text-small');
+   out+=text(gate+3,177,'Rejected','strong');
    out+='<rect class="node" x="'+(m-53)+'" y="223" width="106" height="42" rx="3"/>'+text(m,249,'Monitor','strong');
    out+=edge('M'+(w*.46)+' 125 V197 Q'+(w*.46)+' 209 '+m+' 216',arrow);
    out+=edge('M'+(m-61)+' 244 H'+actor+' V185',arrow,'feedback');
    out+=text(m-72,278,'Feedback, if exposed','text-small minor');
-   out+=text(m,316,'No permission → no read','strong');
+   out+=text(m,316,'No delegation → no goal change','strong');
   }
   svg.setAttribute('viewBox','0 0 '+w+' '+h);
   svg.setAttribute('height',h);

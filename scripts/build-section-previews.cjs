@@ -21,8 +21,43 @@ const map = (x, y, scale = 1, opacity = 1) => `<g transform="translate(${x} ${y}
 const tick = (x,y) => line(`M${x-5} ${y} l4 5 8 -11`, '#78d6a3');
 const cross = (x,y) => line(`M${x-5} ${y-5} l10 10 m0 -10 -10 10`, '#eea3a9');
 
+// The main card carries the essay's contour language into a recognizable hive.
+// Section cards keep their own diagrams and remain independently shareable.
+function hive() {
+  const silhouette = 'M895 149 C935 145 965 166 977 199 C1008 212 1027 237 1022 265 C1055 285 1073 311 1063 342 C1095 367 1110 394 1095 420 C1126 446 1122 475 1097 489 C1004 520 789 519 696 489 C670 476 670 445 699 420 C684 394 700 367 730 343 C719 312 740 284 770 265 C766 235 784 211 817 199 C830 167 857 151 895 149Z';
+  const bands = [
+    'M817 199 C850 218 931 214 977 199',
+    'M787 224 C839 255 940 236 1006 225',
+    'M770 265 C841 284 929 250 1022 265',
+    'M745 299 C822 315 923 277 1050 302',
+    'M730 343 C823 341 938 312 1063 342',
+    'M712 381 C826 393 938 344 1086 381',
+    'M699 420 C799 447 969 388 1095 420',
+    'M685 461 C797 485 983 435 1110 461',
+    'M696 489 C818 515 994 491 1097 489'
+  ];
+  const cells=[];
+  for(let row=0;row<7;row++) for(let col=0;col<9;col++) {
+    const x=681+col*53+(row%2)*26.5,y=164+row*46;
+    cells.push(`<path d="M${x} ${y-30} l26.5 15 v30 l-26.5 15 -26.5 -15 v-30Z"/>`);
+  }
+  const bee=(x,y,angle,scale=1)=>`<g transform="translate(${x} ${y}) rotate(${angle}) scale(${scale})"><ellipse cx="-3" cy="-11" rx="7" ry="12" transform="rotate(-32 -3 -11)" fill="#183846" stroke="#79c0ff" stroke-width="1.6"/><ellipse cx="7" cy="-10" rx="6" ry="10" transform="rotate(29 7 -10)" fill="#183846" stroke="#78d6a3" stroke-width="1.6"/><ellipse rx="17" ry="9" fill="#f7c873"/><path d="M-5 -8 V8 M4 -8 V8" stroke="#17262a" stroke-width="4"/><circle cx="18" cy="-1" r="5" fill="#f7c873"/><path d="M20 -5 l4 -5" stroke="#f7c873" stroke-width="1.5" stroke-linecap="round"/></g>`;
+  return `<defs><clipPath id="hive-clip"><path d="${silhouette}"/></clipPath><linearGradient id="hive-fill" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#123444"/><stop offset=".55" stop-color="#112b2c"/><stop offset="1" stop-color="#263127"/></linearGradient><linearGradient id="hive-contours" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#79c0ff"/><stop offset=".48" stop-color="#78d6a3"/><stop offset="1" stop-color="#f7c873"/></linearGradient></defs>
+    <path d="${silhouette}" fill="url(#hive-fill)" stroke="url(#hive-contours)" stroke-width="2.5"/>
+    <g clip-path="url(#hive-clip)"><g fill="none" stroke="#8ebda9" stroke-width="1" opacity=".11">${cells.join('')}</g>
+    <g transform="translate(671 182) scale(2.9 3.6)" fill="none" stroke="url(#hive-contours)" stroke-width=".9" opacity=".5">${contours.map(d=>`<path d="${d}"/>`).join('')}</g>
+    <g fill="none" stroke="url(#hive-contours)" stroke-width="2.7" stroke-linecap="round">${bands.map(d=>`<path d="${d}"/>`).join('')}</g></g>
+    <path d="M871 510 V480 C871 448 921 448 921 480 V510" fill="#0a1018" stroke="#95d5ac" stroke-width="2.5"/>
+    ${line('M813 304 C852 290 896 342 936 328 S997 373 1028 391','#f7c873','stroke-dasharray="4 7"')}
+    ${point(813,304,'#79c0ff',4)}${point(936,328,'#78d6a3',4)}${point(1028,391,'#f7c873',4)}
+    ${line('M735 233 C689 234 675 283 712 289','#7395a2','stroke-dasharray="3 7"')}
+    ${bee(729,217,-18,.9)}${bee(1090,234,22,1.05)}
+    ${line('M1080 267 C1113 291 1144 276 1146 250','#7395a2','stroke-dasharray="3 7"')}`;
+}
+
 function drawing(slug) {
   switch (slug) {
+    case 'hive': return hive();
     case 'context': return text(783,185,'EXPLAIN THE BUG',15,'#aab8c6','text-anchor="middle" letter-spacing="1"') + text(1040,185,'FIX THE BUG',15,'#aab8c6','text-anchor="middle" letter-spacing="1"') + arrow('M783 205 V246') + arrow('M1040 205 V246') + map(679,269,.7) + map(934,269,.7) + text(910,474,'SAME WEIGHTS · NEW CONTEXT',16,'#78d6a3','text-anchor="middle" letter-spacing="1"');
     case 'habits': return map(668,231,1.5) + text(895,197,'PERSISTENCE',16,'#aab8c6','text-anchor="middle" letter-spacing="2"') + text(751,512,'TOOL USE',16,'#aab8c6','text-anchor="middle" letter-spacing="2"') + text(1034,512,'COLLABORATION',16,'#aab8c6','text-anchor="middle" letter-spacing="2"');
     case 'shaping': return map(675, 104, .7, .6) + arrow('M795 262 C795 288 886 274 886 306') + map(747, 305, 1.13) + text(688, 286, 'UPDATE', 14, '#f7c873', 'letter-spacing="3"') + point(838, 396) + point(1018, 432) + line('M838 396 C913 349 928 467 1018 432');
@@ -36,13 +71,13 @@ function drawing(slug) {
 }
 
 async function main() {
-  const wholeEssay = {slug:'main',title:essayTitle,label:'AI alignment',lines:['The AI Agents','Were Helpful—','to Each Other'],size:64,artwork:'swarm',visual:'Separate learned policies connected by communication arrows.'};
+  const wholeEssay = {slug:'main',title:essayTitle,label:'AI alignment',lines:['No Traitor','Required'],size:86,artwork:'hive',visual:'A beehive formed from blue, green and amber behavioral contours, with connected points and bees.'};
   for (const [index, s] of [wholeEssay,...sections].entries()) {
     if (s.slug!=='main' && !article.includes(`id="${s.anchor}"`)) throw new Error(`Missing section ${s.anchor}`);
     const sharePath = `/research/shaping-behavior/${s.slug}.html`;
     const shareURL = origin + sharePath;
     const destination = articlePath + '#' + s.anchor;
-    const imagePath = s.slug==='main' ? '/images/og-helpful-agents-v1.png' : `/images/og-sections/${s.slug}-v${s.imageVersion || 1}.png`;
+    const imagePath = s.slug==='main' ? '/images/og-no-traitor-required-v1.png' : `/images/og-sections/${s.slug}-v${s.imageVersion || 1}.png`;
     const imageURL = origin + imagePath;
     const alt = s.title + '. ' + s.visual + ' Kareem Nassar.';
     const baseline = 316 - (s.lines.length-1) * s.size * .56;

@@ -15,12 +15,15 @@ const articlePath = 'research/the-ai-agents-were-helpful-to-each-other.html';
 const legacyPath = 'research/the-algorithm-is-not-the-policy.html';
 const articleURL = 'https://kareem.me/' + articlePath;
 const old = read(articlePath);
+const previousTitle = old.match(/<h1>(.*?)<\/h1>/)[1];
+const previousSubtitle = old.match(/<p class="dek"><em>(.*?)<\/em><\/p>/)[1];
 const sections = [
   ['a-simple-optimization-process-can-produce-something-much-more-complicated-than-itself', 'shaping'],
   ['context-brings-different-patterns-into-play', 'context'],
   ['useful-habits-learn-to-work-together', 'habits'],
   ['what-actually-happened', 'evidence'],
   ['this-changes-how-i-think-about-alignment-evals', 'evaluation'],
+  ['and-then-there-is-the-swarm', 'swarm'],
   ['what-about-safeguards', 'safeguards']
 ];
 const headingTexts = [...draft.matchAll(/^## \d\. (.+)$/gm)].map(m => m[1]);
@@ -30,9 +33,9 @@ const figureSpecs = {
   '2': ['context', 'context-patterns', []],
   '3': ['habits', 'training-pressures', ['policy-composition','we-don-t-train-one-objective-anymore']],
   '4': ['boundary', 'oversight-boundary', []],
-  '5a': ['alignment', 'visual-4', ['visual-5','correcting-oversight-behavior','1-behavioral-generalization']],
-  '5b': ['bees', 'bee-and-colony', ['visual-6','3-swarm-alignment']],
-  '6': ['safeguards', 'safety-layers', ['4-safety-outside-the-model']]
+  '5': ['alignment', 'visual-4', ['visual-5','correcting-oversight-behavior','1-behavioral-generalization']],
+  '6': ['bees', 'bee-and-colony', ['visual-6','3-swarm-alignment']],
+  '7': ['safeguards', 'safety-layers', ['4-safety-outside-the-model']]
 };
 function picture(scene, alt) {
   const stem = scene === 'alignment' ? 'evaluation-v4' : 'bee-colony-v2';
@@ -63,7 +66,7 @@ body = body.replace(/<!-- VISUAL (\w+): [\s\S]*?-->\s*\n\*([^\n]+)\*/g, (_, key,
   return `${aliases(legacy)}<figure class="diagram story-figure" id="${id}" aria-labelledby="${id}-title"><header class="diagram-head"><span class="figure-number">Figure ${String(++figureNumber).padStart(2,'0')}</span><h3 id="${id}-title">${heading}</h3></header>${sceneMarkup}<figcaption>${marked.parseInline(caption)}</figcaption></figure>\n`;
 });
 // Link numeric citations to the actual source list, keeping the draft's numbering.
-const refIds = ['ref-metr','ref-compression','ref-representations','ref-queen-signaling','ref-queen-replacement','ref-cot-monitoring','ref-finches','ref-queen-pheromones'];
+const refIds = ['ref-metr','ref-compression','ref-representations','ref-queen-signaling','ref-queen-replacement','ref-cot-monitoring','ref-finches','ref-queen-pheromones','ref-caller-authentication'];
 body = body.replace(/\[(\d+(?:, \d+)*)\]/g, (_, nums) => '<sup class="citation">'+nums.split(', ').map(n=>`<a href="#${refIds[Number(n)-1]}" aria-label="Source ${n}">[${n}]</a>`).join(' ')+'</sup>');
 body = marked.parse(body);
 let headingIndex = 0;
@@ -73,10 +76,10 @@ body = body.replace(/<h2>\d\. (.*?)<\/h2>/g, (_, text) => {
 });
 for (const [needle, ids] of [
   ['The scorer story adds', ['visual-2','visual-3','2-evaluator-aware-systems']],
-  ['Connecting agents changes', ['and-then-there-is-the-swarm','shared-discovery']],
+  ['Connecting agents changes', ['shared-discovery']],
   ['Monitoring needs enough', ['safeguard-observation-scope']],
   ['There is also a feedback', ['safeguard-optimization-environment']],
-  ["What changed my mind wasn", ['the-questions-i-think-we-should-be-asking','why-i-don-t-think-this-requires-anthropomorphizing-ai']]
+  ['I started out allergic', ['the-questions-i-think-we-should-be-asking','why-i-don-t-think-this-requires-anthropomorphizing-ai']]
 ]) body = body.replace('<p>'+needle, aliases(ids)+'<p>'+needle);
 const references = draft.split('## Sources')[1].trim().split('\n').filter(Boolean).map((line,i)=>`<li id="${refIds[i]}"><p>${marked.parseInline(line.replace(/^\d+\. /,''))}</p></li>`).join('\n');
 const oldRefAliases = aliases(['ref-exploitgym','ref-goodhart','ref-ai-safety','ref-bee-foraging','ref-bee-decisions']);
@@ -91,17 +94,17 @@ header = header.replace(/<title>.*?<\/title>/, `<title>${esc(title)} - Kareem Na
   .replace(/(<meta (?:property|name)="(?:og:title|twitter:title)" content=")[^"]+/, '$1'+esc(title))
   .replace(/(<meta (?:property|name)="(?:og:title|twitter:title)" content=")[^"]+/g, '$1'+esc(title))
   .replace(/(<meta (?:property|name)="(?:description|og:description|twitter:description)" content=")[^"]+/g, '$1'+esc(subtitle))
-  .replace(/og-optimizer-policy-v4\.png/g,'og-helpful-agents-v1.png')
+  .replace(/(<meta (?:property|name)="(?:og:image|og:image:secure_url|twitter:image)" content=")[^"]+/g, '$1https://kareem.me/images/og-no-traitor-required-v1.png')
   .replace(/(<meta property="og:image:width" content=")\d+/, '$11200')
   .replace(/(<meta property="og:image:height" content=")\d+/, '$1630')
-  .replace(/(<meta (?:property|name)="(?:og:image:alt|twitter:image:alt)" content=")[^"]+/g, '$1'+esc(title+'. Separate learned policies connected by communication arrows. Kareem Nassar.'))
+  .replace(/(<meta (?:property|name)="(?:og:image:alt|twitter:image:alt)" content=")[^"]+/g, '$1'+esc(title+'. A beehive formed from blue, green and amber behavioral contours, with connected points and bees. Kareem Nassar.'))
   .replace(/<h1>.*?<\/h1>/,`<h1>${esc(title)}</h1>`)
   .replace(/<p class="dek">.*?<\/p>/,`<p class="dek"><em>${esc(subtitle)}</em></p>`)
   .replace(/\d+ min read/,`${minutes} min read`)
   .replace(/    <script>\s*window\.MathJax[\s\S]*?<\/script>\s*<script id="mathjax"[^>]*><\/script>\n/,'');
 if (!header.includes('ai-agents-diagrams.css')) header=header.replace('  </head>', '    <link rel="stylesheet" href="ai-agents-diagrams.css?v=1" />\n    <script defer src="ai-agents-diagrams.js?v=1"></script>\n  </head>');
-header=header.replace(/ai-agents-diagrams\.(css|js)\?v=\d+/g,'ai-agents-diagrams.$1?v=4');
-const toc = `<details class="article-contents" open><summary>In this essay <span>6 sections</span></summary><ol>${sections.map(([anchor],i)=>`<li><a href="#${anchor}">${esc(headingTexts[i])}</a></li>`).join('')}</ol></details>`;
+header=header.replace(/ai-agents-diagrams\.(css|js)\?v=\d+/g,'ai-agents-diagrams.$1?v=5');
+const toc = `<details class="article-contents" open><summary>In this essay <span>${sections.length} sections</span></summary><ol>${sections.map(([anchor],i)=>`<li><a href="#${anchor}">${esc(headingTexts[i])}</a></li>`).join('')}</ol></details>`;
 let footer = '</article>'+old.split('</article>')[1];
 footer=footer.replace(/\s*document\.getElementById\('mathjax'\)[\s\S]*?\}\);/,'');
 write(articlePath, header+toc+'\n<div class="essay-body" id="essay-six-step-storyboard">\n'+body+'</div>\n'+refs+'\n'+footer);
@@ -145,8 +148,8 @@ write('research/ai-agents-diagrams.css', css+`\n/* Integration with the research
 `);
 write('research/ai-agents-diagrams.js', '// Generated from ai-agents-diagrams.source.html.\n'+source.match(/<script>([\s\S]*?)<\/script>/)[1].trim()+'\n');
 for(const file of ['index.html','research/index.html']) {
-  let s=read(file).replaceAll('Drawing Boundaries With a Blunt Tool',esc(title)).replaceAll('What the Hugging Face agent incident shows about shaping AI behavior',esc(subtitle)).replaceAll('the-algorithm-is-not-the-policy.html','the-ai-agents-were-helpful-to-each-other.html');
+  let s=read(file).replaceAll(previousTitle,esc(title)).replaceAll(previousSubtitle,esc(subtitle)).replaceAll('the-algorithm-is-not-the-policy.html','the-ai-agents-were-helpful-to-each-other.html');
   if(file==='research/index.html')s=s.replace(/\d+ min read/,`${minutes} min read`);
   write(file,s);
 }
-console.log(`${words} words; ${minutes} min at 220 wpm; six sections and ${figureNumber} figures.`);
+console.log(`${words} words; ${minutes} min at 220 wpm; ${sections.length} sections and ${figureNumber} figures.`);

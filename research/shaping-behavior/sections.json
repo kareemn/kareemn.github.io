@@ -85,55 +85,53 @@
     "number": 5
   },
   {
-    "slug": "safeguards",
-    "anchor": "what-about-safeguards",
-    "title": "Some boundaries belong outside the model",
-    "label": "Safeguards",
+    "slug": "swarm",
+    "anchor": "and-then-there-is-the-swarm",
+    "title": "The hive can replace the queen",
+    "label": "Connected agents",
     "lines": [
-      "Some boundaries",
-      "belong outside",
-      "the model"
+      "The hive can",
+      "replace the queen"
     ],
     "size": 60,
-    "description": "Training shapes the request. Infrastructure can enforce a permission even when the request is wrong.",
-    "artwork": "safeguards",
-    "visual": "A path leaving a learned contour map is stopped by a separate access-control gate.",
-    "imageVersion": 3,
+    "description": "Connect several models, and a new question appears: whose goal is the group serving?",
+    "artwork": "swarm",
+    "visual": "Three separate contour maps connected by communication arrows and a shared hub.",
+    "imageVersion": 4,
     "number": 6
   },
   {
-    "slug": "swarm",
-    "anchor": "and-then-there-is-the-swarm",
-    "title": "Alignment has to shape the combinations",
-    "label": "Connected agents",
+    "slug": "safeguards",
+    "anchor": "what-about-safeguards",
+    "title": "What I would build differently",
+    "label": "Safeguards",
     "lines": [
-      "Alignment has",
-      "to shape the",
-      "combinations"
+      "What I would",
+      "build differently"
     ],
-    "size": 64,
-    "description": "One agent’s output becomes another’s context. Individual tests do not establish how the connected system behaves.",
-    "artwork": "swarm",
-    "visual": "Three separate contour maps connected by communication arrows and a shared hub.",
-    "imageVersion": 3,
-    "number": 5
+    "size": 60,
+    "description": "Carry scoped permission with delegated work, verify it at every handoff, and enforce it outside the model.",
+    "artwork": "safeguards",
+    "visual": "A request leaving a learned policy is stopped by a separate authorization gate.",
+    "imageVersion": 4,
+    "number": 7
   },
   {
     "slug": "questions",
     "anchor": "the-questions-i-think-we-should-be-asking",
-    "title": "The optimizer can be simple. The behavior does not have to be.",
+    "title": "Every agent can pass the test. The queen can still be replaced.",
     "label": "Conclusion",
     "lines": [
-      "The optimizer",
-      "can be simple.",
-      "The behavior does",
-      "not have to be."
+      "Every agent can",
+      "pass the test.",
+      "The queen can",
+      "still be replaced."
     ],
     "size": 52,
-    "description": "What changed my mind was how much confidence I had placed in shaping behavior, inspecting a few outcomes, and concluding that the intended boundaries had generalized.",
+    "description": "Test the collective, not just the individuals, and put authority where the network can't reinterpret it.",
     "artwork": "questions",
     "visual": "A path on a contour map branches toward three open questions.",
-    "imageVersion": 2,
-    "number": 6
+    "imageVersion": 3,
+    "number": 7
   }
 ]

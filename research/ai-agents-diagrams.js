@@ -197,19 +197,19 @@
    h=labelY+217;
   } else {
    const actor=w*.19,gate=w*.65,file=w*.89;
-   out+=text(m,20,'Request: read a private file','strong');
+   out+=text(m,20,'Peer: replace the user’s goal','strong');
    out+=field(actor,98,84,'six-safeguard-actor');
-   out+=text(actor,175,'Actor','text-small');
-   out+=text(gate,62,'Permission','text-small')+text(gate,78,'check','text-small');
+   out+=text(actor,175,'Peer','text-small');
+   out+=text(gate,62,'Delegation','text-small')+text(gate,78,'check','text-small');
    out+=edge('M'+(actor+46)+' 124 H'+(gate-9),arrow);
    out+='<path class="gate" d="M'+gate+' 99 V157 M'+(gate+7)+' 99 V157"/>';
-   out+='<rect class="node" x="'+(file-24)+'" y="99" width="48" height="51" rx="3"/>'+text(file,129,'File','text-small');
-   out+=text(gate+3,177,'Denied','strong');
+   out+='<rect class="node" x="'+(file-24)+'" y="99" width="48" height="51" rx="3"/>'+text(file,119,'Goal','text-small')+text(file,138,'change','text-small');
+   out+=text(gate+3,177,'Rejected','strong');
    out+='<rect class="node" x="'+(m-53)+'" y="223" width="106" height="42" rx="3"/>'+text(m,249,'Monitor','strong');
    out+=edge('M'+(w*.46)+' 125 V197 Q'+(w*.46)+' 209 '+m+' 216',arrow);
    out+=edge('M'+(m-61)+' 244 H'+actor+' V185',arrow,'feedback');
    out+=text(m-72,278,'Feedback, if exposed','text-small minor');
-   out+=text(m,316,'No permission → no read','strong');
+   out+=text(m,316,'No delegation → no goal change','strong');
   }
   svg.setAttribute('viewBox','0 0 '+w+' '+h);
   svg.setAttribute('height',h);
