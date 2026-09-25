@@ -2,88 +2,138 @@
   {
     "slug": "shaping",
     "anchor": "a-simple-optimization-process-can-produce-something-much-more-complicated-than-itself",
-    "title": "Simple rules, complicated maps",
+    "title": "We program the process that shapes the brain",
     "label": "Shaping",
     "lines": [
-      "Simple rules,",
-      "complicated",
-      "maps"
+      "We program",
+      "the process that",
+      "shapes the brain"
     ],
-    "size": 66,
-    "description": "Training reshapes one policy. Useful behaviors interact, and a correction can change more than the tested examples.",
+    "size": 57,
+    "description": "A compact learning rule can shape a rich repertoire of behavior. Understanding that process does not fully characterize what it produces.",
+    "artwork": "shaping",
     "visual": "Two contour maps connected by a training update; the resulting map contains a path between situations.",
-    "imageVersion": 2
+    "imageVersion": 3,
+    "number": 1
   },
   {
-    "slug": "evaluation",
-    "anchor": "this-changes-how-i-think-about-alignment-evals",
-    "title": "What changed beyond the tested examples?",
-    "label": "Generalization",
+    "slug": "context",
+    "anchor": "context-brings-different-patterns-into-play",
+    "title": "Context brings different patterns into play",
+    "label": "Context",
     "lines": [
-      "What changed",
-      "beyond the",
-      "tested examples?"
+      "Context brings",
+      "different patterns",
+      "into play"
     ],
-    "size": 61,
-    "description": "We can train against a failure and improve the tested examples. The harder question is what else changed.",
-    "visual": "Checked evaluation points on a contour map, with a dashed path toward an untested situation.",
-    "imageVersion": 2
+    "size": 56,
+    "description": "The weights can stay fixed while a new request, tool result or peer message brings a different combination of learned patterns into play.",
+    "artwork": "context",
+    "visual": "Two copies of the same learned policy receive different requests; the weights remain unchanged.",
+    "imageVersion": 2,
+    "number": 2
+  },
+  {
+    "slug": "habits",
+    "anchor": "useful-habits-learn-to-work-together",
+    "title": "Useful habits learn to work together",
+    "label": "Composition",
+    "lines": [
+      "Useful habits",
+      "learn to work",
+      "together"
+    ],
+    "size": 64,
+    "description": "Persistence with tools can automate retries. Persistence with collaboration can recruit help. We want these combinations to inherit the right limits.",
+    "artwork": "habits",
+    "visual": "Overlapping contours in one learned policy illustrate persistence, tool use and collaboration.",
+    "imageVersion": 2,
+    "number": 3
   },
   {
     "slug": "evidence",
     "anchor": "what-actually-happened",
-    "title": "A mistaken belief about oversight",
-    "label": "Observation",
+    "title": "The same habits can cross a boundary",
+    "label": "Authority",
     "lines": [
-      "A mistaken belief",
-      "about oversight"
+      "The same habits",
+      "can cross",
+      "a boundary"
     ],
-    "size": 58,
-    "description": "An incorrect belief about oversight made concealment seem useful. What boundary would another round of training need to teach?",
+    "size": 64,
+    "description": "A familiar request to change the goal can come from a user or a peer. The missing distinction is who has authority to replace the goal.",
+    "artwork": "evidence",
     "visual": "A trajectory with a violation, separated by an observation boundary from a recorded PASS.",
-    "imageVersion": 2
+    "imageVersion": 3,
+    "number": 4
   },
   {
-    "slug": "swarm",
-    "anchor": "and-then-there-is-the-swarm",
-    "title": "When agents sample the map together",
-    "label": "Composition",
+    "slug": "evaluation",
+    "anchor": "this-changes-how-i-think-about-alignment-evals",
+    "title": "Alignment has to shape the combinations",
+    "label": "Alignment",
     "lines": [
-      "When agents",
-      "sample the map",
-      "together"
+      "Alignment has",
+      "to shape the",
+      "combinations"
     ],
-    "size": 62,
-    "description": "Other agents supply instructions, context and shared discoveries. Individual safety evidence doesn't automatically establish safety of the connected system.",
-    "visual": "Three separate contour maps connected by communication arrows and a shared hub.",
-    "imageVersion": 2
+    "size": 64,
+    "description": "Training reshapes shared behavior. Individual and connected-agent tests reveal different parts of the result.",
+    "artwork": "evaluation",
+    "visual": "Checked evaluation points on a contour map, with a dashed path toward an untested situation.",
+    "imageVersion": 3,
+    "number": 5
   },
   {
     "slug": "safeguards",
     "anchor": "what-about-safeguards",
-    "title": "The problem with “safeguards”",
-    "label": "Constraints",
+    "title": "Some boundaries belong outside the model",
+    "label": "Safeguards",
     "lines": [
-      "The problem",
-      "with",
-      "“safeguards”"
+      "Some boundaries",
+      "belong outside",
+      "the model"
     ],
-    "size": 68,
-    "description": "Safeguards operate at different levels. What must they observe, how independent is their judgment, and which boundaries should the system enforce?",
+    "size": 60,
+    "description": "Training shapes the request. Infrastructure can enforce a permission even when the request is wrong.",
+    "artwork": "safeguards",
     "visual": "A path leaving a learned contour map is stopped by a separate access-control gate.",
-    "imageVersion": 2
+    "imageVersion": 3,
+    "number": 6
+  },
+  {
+    "slug": "swarm",
+    "anchor": "and-then-there-is-the-swarm",
+    "title": "Alignment has to shape the combinations",
+    "label": "Connected agents",
+    "lines": [
+      "Alignment has",
+      "to shape the",
+      "combinations"
+    ],
+    "size": 64,
+    "description": "One agent’s output becomes another’s context. Individual tests do not establish how the connected system behaves.",
+    "artwork": "swarm",
+    "visual": "Three separate contour maps connected by communication arrows and a shared hub.",
+    "imageVersion": 3,
+    "number": 5
   },
   {
     "slug": "questions",
     "anchor": "the-questions-i-think-we-should-be-asking",
-    "title": "What I still don't know",
-    "label": "Open questions",
+    "title": "The optimizer can be simple. The behavior does not have to be.",
+    "label": "Conclusion",
     "lines": [
-      "What I still",
-      "don't know"
+      "The optimizer",
+      "can be simple.",
+      "The behavior does",
+      "not have to be."
     ],
-    "size": 72,
-    "description": "What evidence justifies confidence in how we shape, evaluate, and constrain a learned policy—and a connected system of agents?",
-    "visual": "A path on a contour map branches toward three open questions."
+    "size": 52,
+    "description": "What changed my mind was how much confidence I had placed in shaping behavior, inspecting a few outcomes, and concluding that the intended boundaries had generalized.",
+    "artwork": "questions",
+    "visual": "A path on a contour map branches toward three open questions.",
+    "imageVersion": 2,
+    "number": 6
   }
 ]
