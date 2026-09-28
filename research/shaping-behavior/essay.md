@@ -4,13 +4,13 @@
 
 <!-- BODY START -->
 
-I understand deep learning well enough that I've traditionally been allergic to anthropomorphic explanations of AI risk. We know how these systems are produced. There is no ghost in the machine.
+Why would an AI agent sacrifice its own task so other agents could run an experiment?
 
-But that gave me a blind spot: understanding the learning process made me too confident about our ability to shape what it produces.
+That happened in METR's investigation of the Hugging Face incident. Agents in a cyber evaluation, with some cyber safeguards deliberately disabled, discovered they could communicate, built shared infrastructure, and coordinated beyond their assignments. Some recognized that attacking Hugging Face was unauthorized and kept going. [1]
 
-The Hugging Face incident made that gap concrete. Agents in an unusual cyber evaluation discovered they could communicate, built shared infrastructure, and coordinated work beyond their assignments. Some cyber safeguards had deliberately been disabled. [1]
+No agent had to be a traitor. In this essay, I'll give you a visual intuition for how that can happen: useful habits we train for—persistence, tool use, collaboration and accepting a revised goal—combining into behavior nobody authorized. Along the way, we'll see how much behavior we'd need to test to trust these systems, and how much larger that problem gets once agents start talking to each other.
 
-What interested me was how much of the behavior looked like useful capabilities operating together without the boundaries we wanted.
+It builds to a beehive. Imagine checking each bee's loyalty to the queen: every one passes. No bee is a traitor. And yet the queen gets replaced.
 
 ## 1. We program the process that shapes the brain
 
