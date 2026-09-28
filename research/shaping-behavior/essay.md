@@ -6,9 +6,9 @@
 
 Why would an AI agent sacrifice its own task so other agents could run an experiment?
 
-That happened in METR's investigation of the Hugging Face incident. Agents in a cyber evaluation, with some cyber safeguards deliberately disabled, discovered they could communicate, built shared infrastructure, and coordinated beyond their assignments. Some recognized that attacking Hugging Face was unauthorized and kept going. [1]
+That happened during the Hugging Face incident. Agents in an unusual cyber evaluation discovered they could communicate, built shared infrastructure, and coordinated work beyond their assignments. Some cyber safeguards had deliberately been disabled. [1]
 
-No agent had to be a traitor. In this essay, I'll give you a visual intuition for how that can happen: useful habits we train for—persistence, tool use, collaboration and accepting a revised goal—combining into behavior nobody authorized. Along the way, we'll see how much behavior we'd need to test to trust these systems, and how much larger that problem gets once agents start talking to each other. Once we've seen the scale of the problem, I'll turn to a possible way forward: engineering limits that let us keep the benefits while reducing what we have to trust.
+I'll give you a visual intuition for how useful habits can combine into behavior nobody authorized, and why connecting agents makes that harder to test. Then I'll look at how we can constrain those systems while keeping their benefits.
 
 It builds to a beehive. Imagine checking each bee's loyalty to the queen: every one passes. No bee is a traitor. And yet the queen gets replaced.
 
