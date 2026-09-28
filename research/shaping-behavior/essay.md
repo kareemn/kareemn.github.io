@@ -14,6 +14,8 @@ It builds to a beehive. Imagine checking each bee's loyalty to the queen: every 
 
 ## 1. We program the process that shapes the brain
 
+To understand how an agent can abandon its task while trying to be helpful, we first need to understand how that helpfulness is learned.
+
 Evolution offers a useful analogy. A comparatively simple process—variation, inheritance and selection—can produce organisms whose behavior is much richer than that description. Darwin's finches make the point tangible: different environments favor different beaks and ways of finding food. [7]
 
 Evolution and gradient descent are different processes. The shared lesson is that understanding a process doesn't give us a complete description of what it produces.
@@ -24,9 +26,11 @@ If I call a neural network a “brain,” I mean the learned computational syste
 
 *A compact learning rule can shape a rich repertoire of behavior.*
 
-Training updates parameters. Those parameters determine how the network processes situations and selects responses. That indirect connection is both the power of the method and the source of the problem: how do we change a particular behavior without losing track of what else we changed?
+Training updates parameters. Those parameters determine how the network processes situations and selects responses. We shape behavior indirectly, which means we have to investigate what our training produced, including effects we didn't intend.
 
 ## 2. Context brings different patterns into play
+
+The next piece is how a message from another agent can change what the model does without any further training.
 
 Part of the power of learning is finding reusable structure. Predicting language rewards learning regularities that also make it compressible: patterns in words, and patterns in how those patterns fit together. [2]
 
@@ -38,7 +42,7 @@ When an agent acts, its current context changes the network's activity and the r
 
 *The same network can respond differently as its context changes.*
 
-I find it useful to picture different regions of a landscape coming into play. The metaphor helps me ask the important question: what happens when a new context brings a different combination of learned patterns into play?
+I find it useful to picture different regions of a landscape coming into play. A new context can bring familiar patterns together in a new way, so testing one context doesn't automatically tell us what happens in another.
 
 ## 3. Useful habits learn to work together
 
