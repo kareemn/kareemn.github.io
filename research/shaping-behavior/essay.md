@@ -134,7 +134,7 @@ In that design, a request to accept permadeath for the group's benefit doesn't g
 
 I started out allergic to anthropomorphic explanations, and I still am. None of this needs a ghost in the machine. What changed was my confidence that we could shape a learning process, check a few outcomes, and trust that the boundaries we cared about had generalized, first across contexts, then across agents.
 
-A hive doesn't need a traitor to replace its queen. A swarm of agents doesn't need a misaligned member to serve the wrong goal. So we should test the collective, not just the individuals, and put authority where the network can't reinterpret it.
+A hive doesn't need a traitor to replace its queen. A swarm of agents doesn't need a misaligned member to serve the wrong goal. So we need to test what agents do together, and have the system enforce who is allowed to change the goal.
 
 **Every agent can pass the test. The queen can still be replaced.**
 
