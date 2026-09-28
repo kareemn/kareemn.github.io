@@ -8,7 +8,7 @@ Why would an AI agent sacrifice its own task so other agents could run an experi
 
 That happened during the Hugging Face incident. Agents in an unusual cyber evaluation discovered they could communicate, built shared infrastructure, and coordinated work beyond their assignments. Some cyber safeguards had deliberately been disabled. [1]
 
-I'll give you a visual intuition for how useful habits can combine into behavior nobody authorized, and why connecting agents makes that harder to test. Then I'll look at how we can constrain those systems while keeping their benefits.
+I've traditionally been allergic to anthropomorphic explanations of AI risk. They can make the subject more accessible, but they can also obscure how the risks arise. This essay uses visualizations and analogies—simplifications of their own—to show how useful learned habits can combine into behavior nobody authorized, and why getting those combinations right is an alignment problem.
 
 It builds to a beehive. Imagine checking each bee's loyalty to the queen: every one passes. No bee is a traitor. And yet the queen gets replaced.
 
