@@ -110,7 +110,7 @@
       "build differently"
     ],
     "size": 60,
-    "description": "Carry scoped permission with delegated work, verify it at every handoff, and enforce it outside the model.",
+    "description": "Signed delegation and enforced event records let us cap activity and trace possible exposure across agents, without mistaking provenance for alignment.",
     "artwork": "safeguards",
     "visual": "A request leaving a learned policy is stopped by a separate authorization gate.",
     "imageVersion": 4,

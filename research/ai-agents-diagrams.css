@@ -27,6 +27,9 @@
 #essay-six-step-storyboard .point { fill:var(--background); stroke:var(--foreground); stroke-width:1.3; }
 #essay-six-step-storyboard .risk { fill:var(--destructive); }
 #essay-six-step-storyboard .gate { fill:none; stroke:var(--foreground); stroke-width:3; }
+#essay-six-step-storyboard .solution-gate { fill:var(--background); stroke:var(--foreground); stroke-width:2; }
+#essay-six-step-storyboard .solution-panel { fill:none; stroke:var(--border); stroke-width:1; }
+#essay-six-step-storyboard .solution-stop { fill:var(--background); stroke:var(--viz-series-2); stroke-width:2; stroke-dasharray:5 3; }
 @media(max-width:680px) {
  #essay-six-step-storyboard .story-grid { grid-template-columns:1fr; gap:1.6rem; }
  #essay-six-step-storyboard h3 { min-height:0; }
@@ -38,6 +41,7 @@
 #essay-six-step-storyboard .story-figure h3 { min-height:0; margin:0; }
 #essay-six-step-storyboard .story-scene { max-width:420px; margin:0 auto; font-size:14px; }
 #essay-six-step-storyboard .story-scene[data-scene="boundary"] { max-width:640px; }
+#essay-six-step-storyboard .story-scene[data-scene="safeguards"] { max-width:640px; }
 #essay-six-step-storyboard .story-scene .text-small { font-size:12px; }
 #essay-six-step-storyboard .story-motion { display:block; }
 #essay-six-step-storyboard .story-gif { display:block; width:100%; max-width:640px; height:auto; margin:0 auto; }

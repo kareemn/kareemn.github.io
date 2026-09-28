@@ -66,7 +66,7 @@ body = body.replace(/<!-- VISUAL (\w+): [\s\S]*?-->\s*\n\*([^\n]+)\*/g, (_, key,
   return `${aliases(legacy)}<figure class="diagram story-figure" id="${id}" aria-labelledby="${id}-title"><header class="diagram-head"><span class="figure-number">Figure ${String(++figureNumber).padStart(2,'0')}</span><h3 id="${id}-title">${heading}</h3></header>${sceneMarkup}<figcaption>${marked.parseInline(caption)}</figcaption></figure>\n`;
 });
 // Link numeric citations to the actual source list, keeping the draft's numbering.
-const refIds = ['ref-metr','ref-compression','ref-representations','ref-queen-signaling','ref-queen-replacement','ref-cot-monitoring','ref-finches','ref-queen-pheromones','ref-caller-authentication'];
+const refIds = ['ref-metr','ref-compression','ref-representations','ref-queen-signaling','ref-queen-replacement','ref-cot-monitoring','ref-finches','ref-queen-pheromones','ref-caller-authentication','ref-delegation','ref-event-history','ref-attestation'];
 body = body.replace(/\[(\d+(?:, \d+)*)\]/g, (_, nums) => '<sup class="citation">'+nums.split(', ').map(n=>`<a href="#${refIds[Number(n)-1]}" aria-label="Source ${n}">[${n}]</a>`).join(' ')+'</sup>');
 body = marked.parse(body);
 let headingIndex = 0;
@@ -103,7 +103,7 @@ header = header.replace(/<title>.*?<\/title>/, `<title>${esc(title)} - Kareem Na
   .replace(/\d+ min read/,`${minutes} min read`)
   .replace(/    <script>\s*window\.MathJax[\s\S]*?<\/script>\s*<script id="mathjax"[^>]*><\/script>\n/,'');
 if (!header.includes('ai-agents-diagrams.css')) header=header.replace('  </head>', '    <link rel="stylesheet" href="ai-agents-diagrams.css?v=1" />\n    <script defer src="ai-agents-diagrams.js?v=1"></script>\n  </head>');
-header=header.replace(/ai-agents-diagrams\.(css|js)\?v=\d+/g,'ai-agents-diagrams.$1?v=5');
+header=header.replace(/ai-agents-diagrams\.(css|js)\?v=\d+/g,'ai-agents-diagrams.$1?v=6');
 const toc = `<details class="article-contents" open><summary>In this essay <span>${sections.length} sections</span></summary><ol>${sections.map(([anchor],i)=>`<li><a href="#${anchor}">${esc(headingTexts[i])}</a></li>`).join('')}</ol></details>`;
 let footer = '</article>'+old.split('</article>')[1];
 footer=footer.replace(/\s*document\.getElementById\('mathjax'\)[\s\S]*?\}\);/,'');
@@ -138,6 +138,7 @@ write('research/ai-agents-diagrams.css', css+`\n/* Integration with the research
 #essay-six-step-storyboard .story-figure h3 { min-height:0; margin:0; }
 #essay-six-step-storyboard .story-scene { max-width:420px; margin:0 auto; font-size:14px; }
 #essay-six-step-storyboard .story-scene[data-scene="boundary"] { max-width:640px; }
+#essay-six-step-storyboard .story-scene[data-scene="safeguards"] { max-width:640px; }
 #essay-six-step-storyboard .story-scene .text-small { font-size:12px; }
 #essay-six-step-storyboard .story-motion { display:block; }
 #essay-six-step-storyboard .story-gif { display:block; width:100%; max-width:640px; height:auto; margin:0 auto; }

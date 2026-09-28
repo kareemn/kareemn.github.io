@@ -91,6 +91,72 @@
   if(joint)out+=text(pw/2,406,'Hypothetical new interaction','text-small minor');
   return out+'</g>';
  }
+ function solutions(w,arrow) {
+  const m=w/2, xs=[w*.17,m,w*.83], cw=Math.min(138,w*.255);
+  const rect=(x,y,width,height,cls='node')=>'<rect class="'+cls+'" x="'+x+'" y="'+y+'" width="'+width+'" height="'+height+'" rx="4"/>';
+  const lines=(x,y,values,cls='text-small')=>values.map((value,i)=>text(x,y+i*19,value,cls)).join('');
+  let out=text(m,19,'1 · Signed, scoped delegation','strong');
+  [['User','authorizes'],['Agent A','delegates'],['Subagent B','requests']].forEach((labels,i)=>{
+   out+=rect(xs[i]-cw/2,43,cw,64);
+   out+=text(xs[i],68,labels[0],'text-small strong')+text(xs[i],90,labels[1],'text-small minor');
+   if(i)out+=edge('M'+(xs[i-1]+cw/2+3)+' 76 H'+(xs[i]-cw/2-3),arrow);
+  });
+  out+=lines(m,132,['Each handoff is signed.','Delegated permissions can only narrow.']);
+  out+=edge('M'+m+' 166 V191',arrow);
+  out+=text(m,216,'2 · Verify, record, then execute','strong');
+  out+=rect(7,238,w-14,127,'solution-gate')+rect(12,243,w-24,117,'solution-gate');
+  out+=text(m,265,'Enforced runtime + receiving service','text-small strong');
+  out+=lines(m,288,['Chain · scope · expiry · revocation','Reserve shared budget + sign event']);
+  out+=text(m,339,'Missing or failed check → deny','text-small strong');
+  out+=edge('M'+m+' 366 V392',arrow);
+  out+=rect(15,398,w-30,57);
+  out+=lines(m,420,['Execute the counted turn or action','Record the outcome'], 'text-small strong');
+  out+=text(m,483,'Trust beneath the runtime','text-small strong');
+  [['Hardware','root'],['Verified','boot / OS'],['Attested','runtime']].forEach((labels,i)=>{
+   out+=rect(xs[i]-cw/2,499,cw,54);
+   out+=lines(xs[i],520,labels,'text-small');
+   if(i)out+=edge('M'+(xs[i-1]+cw/2+3)+' 526 H'+(xs[i]-cw/2-3),arrow);
+  });
+  out+=lines(m,579,['Protected keys + counters; no bypass path.','Trust in this stack is an assumption.'],'text-small minor');
+  out+=text(m,640,'3 · Use the verified history','strong');
+  const side=w>=560,pw=side?(w-24)/2:w,top=662;
+  function budgetPanel(x,y) {
+   let s='<g transform="translate('+x+' '+y+')">'+rect(1,1,pw-2,288,'solution-panel');
+   s+=text(pw/2,29,'Enforce shared budgets','strong');
+   const centers=[pw*.19,pw*.5,pw*.81];
+   ['998','999','1,000'].forEach((v,i)=>{
+    s+='<circle class="point" cx="'+centers[i]+'" cy="69" r="23"/>'+text(centers[i],73,v,'text-small');
+    if(i)s+=edge('M'+(centers[i-1]+25)+' 69 H'+(centers[i]-25),arrow);
+   });
+   s+=text(pw/2,113,'1,000 / 1,000 turns used','text-small');
+   s+=rect(20,137,pw-40,43,'solution-stop');
+   s+=text(pw/2,163,'Turn 1,001: BLOCKED','strong');
+   s+=lines(pw/2,208,['Illustrative cap, not a safety threshold.','Budget shared across descendants.','Spawning or restarting cannot reset it.'],'text-small');
+   return s+'</g>';
+  }
+  function watchdogPanel(x,y) {
+   let s='<g transform="translate('+x+' '+y+')">'+rect(1,1,pw-2,288,'solution-panel');
+   s+=text(pw/2,29,'Trace possible exposure','strong');
+   const a=pw*.17,b=pw*.49,c=pw*.81;
+   s+=edge('M'+(a+17)+' 103 H'+(b-21),arrow);
+   s+=edge('M'+(b+20)+' 96 Q'+(b+39)+' 70 '+(c-17)+' 70',arrow);
+   s+=edge('M'+(b+20)+' 111 Q'+(b+39)+' 139 '+(c-17)+' 139',arrow);
+   [[a,103,'A'],[b,103,'B'],[c,70,'C'],[c,139,'D']].forEach(([x0,y0,label])=>{
+    s+='<circle class="'+(label==='B'?'solution-stop':'point')+'" cx="'+x0+'" cy="'+y0+'" r="16"/>'+text(x0,y0+5,label,'strong');
+   });
+   s+=text(pw/2,183,'Watchdog flags B','text-small strong');
+   s+=lines(pw/2,208,['Follow messages and shared artifacts.','Review C and D; pause or revoke.','Exposure does not prove corruption.'],'text-small');
+   return s+'</g>';
+  }
+  out+=budgetPanel(0,top)+watchdogPanel(side?pw+24:0,side?top:top+310);
+  const webY=top+(side?288:598)+43;
+  out+=text(m,webY,'4 · Extend the checks to the web','strong');
+  out+=rect(7,webY+22,w-14,86);
+  out+=lines(m,webY+47,['Participating websites and APIs','require the same verified request path.','No valid chain → no agent operation.']);
+  out+=text(m,webY+140,'Authenticated history ≠ aligned behavior','text-small strong');
+  out+=text(m,webY+163,'Constrain the paths we still need to test.','text-small');
+  return {out,h:webY+180};
+ }
  const point=(x,y,value,cls='')=>'<circle class="point" cx="'+x+'" cy="'+y+'" r="12"/>'+text(x,y+5,value,'strong '+cls);
  function render(svg) {
   const w=Math.round(svg.getBoundingClientRect().width), m=w/2, type=svg.dataset.scene, arrow='six-arrow-'+type;
@@ -196,20 +262,8 @@
    out+=text(m,labelY+199,'Illustrative scenario, not a single-cue rule','text-small minor');
    h=labelY+217;
   } else {
-   const actor=w*.19,gate=w*.65,file=w*.89;
-   out+=text(m,20,'Peer: replace the user’s goal','strong');
-   out+=field(actor,98,84,'six-safeguard-actor');
-   out+=text(actor,175,'Peer','text-small');
-   out+=text(gate,62,'Delegation','text-small')+text(gate,78,'check','text-small');
-   out+=edge('M'+(actor+46)+' 124 H'+(gate-9),arrow);
-   out+='<path class="gate" d="M'+gate+' 99 V157 M'+(gate+7)+' 99 V157"/>';
-   out+='<rect class="node" x="'+(file-24)+'" y="99" width="48" height="51" rx="3"/>'+text(file,119,'Goal','text-small')+text(file,138,'change','text-small');
-   out+=text(gate+3,177,'Rejected','strong');
-   out+='<rect class="node" x="'+(m-53)+'" y="223" width="106" height="42" rx="3"/>'+text(m,249,'Monitor','strong');
-   out+=edge('M'+(w*.46)+' 125 V197 Q'+(w*.46)+' 209 '+m+' 216',arrow);
-   out+=edge('M'+(m-61)+' 244 H'+actor+' V185',arrow,'feedback');
-   out+=text(m-72,278,'Feedback, if exposed','text-small minor');
-   out+=text(m,316,'No delegation → no goal change','strong');
+   const solution=solutions(w,arrow);
+   out+=solution.out;h=solution.h;
   }
   svg.setAttribute('viewBox','0 0 '+w+' '+h);
   svg.setAttribute('height',h);
