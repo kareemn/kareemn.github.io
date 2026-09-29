@@ -42,9 +42,13 @@
 #essay-six-step-storyboard .story-scene { max-width:420px; margin:0 auto; font-size:14px; }
 #essay-six-step-storyboard .story-scene[data-scene="boundary"] { max-width:640px; }
 #essay-six-step-storyboard .story-scene[data-scene="safeguards"] { max-width:640px; }
+#essay-six-step-storyboard .story-scene[data-scene="foundation"] { max-width:760px; }
+#essay-six-step-storyboard .story-scene[data-scene="alignment"] { max-width:640px; }
+#essay-six-step-storyboard .story-scene[data-scene="connected"] { max-width:420px; }
 #essay-six-step-storyboard .story-scene .text-small { font-size:12px; }
 #essay-six-step-storyboard .story-motion { display:block; }
 #essay-six-step-storyboard .story-gif { display:block; width:100%; max-width:640px; height:auto; margin:0 auto; }
+#connected-agent-tests .story-gif { max-width:420px; }
 #essay-six-step-storyboard .anchor-alias { display:block; scroll-margin-top:1.5rem; }
 #essay-six-step-storyboard .citation { white-space:nowrap; font-size:.72em; }
 @media(max-width:679px) { #essay-six-step-storyboard .story-gif { max-width:420px; } }

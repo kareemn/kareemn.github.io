@@ -18,9 +18,7 @@ const old = read(articlePath);
 const previousTitle = old.match(/<h1>(.*?)<\/h1>/)[1];
 const previousSubtitle = old.match(/<p class="dek"><em>(.*?)<\/em><\/p>/)[1];
 const sections = [
-  ['a-simple-optimization-process-can-produce-something-much-more-complicated-than-itself', 'shaping'],
-  ['context-brings-different-patterns-into-play', 'context'],
-  ['useful-habits-learn-to-work-together', 'habits'],
+  ['a-simple-optimization-process-can-produce-something-much-more-complicated-than-itself', 'shaping', ['context-brings-different-patterns-into-play', 'useful-habits-learn-to-work-together']],
   ['what-actually-happened', 'evidence'],
   ['this-changes-how-i-think-about-alignment-evals', 'evaluation'],
   ['and-then-there-is-the-swarm', 'swarm'],
@@ -29,16 +27,15 @@ const sections = [
 const headingTexts = [...draft.matchAll(/^## \d\. (.+)$/gm)].map(m => m[1]);
 const aliases = ids => ids.map(id => `<div class="anchor-alias" id="${id}" aria-hidden="true"></div>`).join('');
 const figureSpecs = {
-  '1': ['training', 'visual-1', []],
-  '2': ['context', 'context-patterns', []],
-  '3': ['habits', 'training-pressures', ['policy-composition','we-don-t-train-one-objective-anymore']],
+  '1': ['foundation', 'visual-1', ['context-patterns','training-pressures','policy-composition','we-don-t-train-one-objective-anymore']],
   '4': ['boundary', 'oversight-boundary', []],
   '5': ['alignment', 'visual-4', ['visual-5','correcting-oversight-behavior','1-behavioral-generalization']],
   '6': ['bees', 'bee-and-colony', ['visual-6','3-swarm-alignment']],
-  '7': ['safeguards', 'safety-layers', ['4-safety-outside-the-model']]
+  '7': ['safeguards', 'safety-layers', ['4-safety-outside-the-model']],
+  '8': ['connected', 'connected-agent-tests', []]
 };
 function picture(scene, alt) {
-  const stem = scene === 'alignment' ? 'evaluation-v4' : 'bee-colony-v2';
+  const stem = {alignment:'evaluation-individual-v1', connected:'evaluation-connected-v1', bees:'bee-colony-v2'}[scene];
   const sizes = {};
   for (const layout of ['mobile', 'desktop']) {
     const gif = fs.readFileSync(path.join(root, 'images/ai-agents-v1', `${stem}-${layout}-light.gif`));
@@ -62,21 +59,21 @@ body = body.replace(/<!-- VISUAL (\w+): [\s\S]*?-->\s*\n\*([^\n]+)\*/g, (_, key,
   const heading = block.match(/<h3[^>]*>(.*?)<\/h3>/)[1].replace(/^\d[a-z]?\. /,'');
   const svg = block.match(/<svg[\s\S]*?<\/svg>/)[0];
   const alt = svg.match(/aria-label="([^"]+)"/)[1];
-  const sceneMarkup = ['alignment','bees'].includes(scene) ? picture(scene,alt) : svg;
+  const sceneMarkup = ['alignment','bees','connected'].includes(scene) ? picture(scene,alt) : svg;
   return `${aliases(legacy)}<figure class="diagram story-figure" id="${id}" aria-labelledby="${id}-title"><header class="diagram-head"><span class="figure-number">Figure ${String(++figureNumber).padStart(2,'0')}</span><h3 id="${id}-title">${heading}</h3></header>${sceneMarkup}<figcaption>${marked.parseInline(caption)}</figcaption></figure>\n`;
 });
 // Link numeric citations to the actual source list, keeping the draft's numbering.
-const refIds = ['ref-metr','ref-compression','ref-representations','ref-queen-signaling','ref-queen-replacement','ref-cot-monitoring','ref-finches','ref-queen-pheromones','ref-caller-authentication','ref-delegation','ref-event-history','ref-attestation','ref-nvidia-agent-safety'];
+const refIds = ['ref-metr','ref-compression','ref-representations','ref-queen-signaling','ref-queen-replacement','ref-cot-monitoring','ref-finches','ref-queen-pheromones','ref-caller-authentication','ref-delegation','ref-event-history','ref-attestation','ref-nvidia-agent-safety','ref-australia-incident','ref-us-government-activity','ref-transluce-agent-activity'];
 body = body.replace(/\[(\d+(?:, \d+)*)\]/g, (_, nums) => '<sup class="citation">'+nums.split(', ').map(n=>`<a href="#${refIds[Number(n)-1]}" aria-label="Source ${n}">[${n}]</a>`).join(' ')+'</sup>');
 body = marked.parse(body);
 let headingIndex = 0;
 body = body.replace(/<h2>\d\. (.*?)<\/h2>/g, (_, text) => {
-  const [anchor,slug] = sections[headingIndex++];
-  return `<h2 id="${anchor}">${text}</h2>\n<div class="section-share-row"><a class="section-share" data-section-share href="shaping-behavior/${slug}.html" aria-label="Copy section link: ${esc(text)}"><span>Copy section link</span></a></div>`;
+  const [anchor,slug,legacy=[]] = sections[headingIndex++];
+  return `${aliases(legacy)}<h2 id="${anchor}">${text}</h2>\n<div class="section-share-row"><a class="section-share" data-section-share href="shaping-behavior/${slug}.html" aria-label="Copy section link: ${esc(text)}"><span>Copy section link</span></a></div>`;
 });
 for (const [needle, ids] of [
   ['The scorer story adds', ['visual-2','visual-3','2-evaluator-aware-systems']],
-  ['Connecting agents changes', ['shared-discovery']],
+  ['For agents, one agent', ['shared-discovery']],
   ['Monitoring needs enough', ['safeguard-observation-scope']],
   ['There is also a feedback', ['safeguard-optimization-environment']],
   ['I started out allergic', ['the-questions-i-think-we-should-be-asking','why-i-don-t-think-this-requires-anthropomorphizing-ai']]
@@ -103,7 +100,7 @@ header = header.replace(/<title>.*?<\/title>/, `<title>${esc(title)} - Kareem Na
   .replace(/\d+ min read/,`${minutes} min read`)
   .replace(/    <script>\s*window\.MathJax[\s\S]*?<\/script>\s*<script id="mathjax"[^>]*><\/script>\n/,'');
 if (!header.includes('ai-agents-diagrams.css')) header=header.replace('  </head>', '    <link rel="stylesheet" href="ai-agents-diagrams.css?v=1" />\n    <script defer src="ai-agents-diagrams.js?v=1"></script>\n  </head>');
-header=header.replace(/ai-agents-diagrams\.(css|js)\?v=\d+/g,'ai-agents-diagrams.$1?v=6');
+header=header.replace(/ai-agents-diagrams\.(css|js)\?v=\d+/g,'ai-agents-diagrams.$1?v=7');
 const toc = `<details class="article-contents" open><summary>In this essay <span>${sections.length} sections</span></summary><ol>${sections.map(([anchor],i)=>`<li><a href="#${anchor}">${esc(headingTexts[i])}</a></li>`).join('')}</ol></details>`;
 let footer = '</article>'+old.split('</article>')[1];
 footer=footer.replace(/\s*document\.getElementById\('mathjax'\)[\s\S]*?\}\);/,'');
@@ -139,9 +136,13 @@ write('research/ai-agents-diagrams.css', css+`\n/* Integration with the research
 #essay-six-step-storyboard .story-scene { max-width:420px; margin:0 auto; font-size:14px; }
 #essay-six-step-storyboard .story-scene[data-scene="boundary"] { max-width:640px; }
 #essay-six-step-storyboard .story-scene[data-scene="safeguards"] { max-width:640px; }
+#essay-six-step-storyboard .story-scene[data-scene="foundation"] { max-width:760px; }
+#essay-six-step-storyboard .story-scene[data-scene="alignment"] { max-width:640px; }
+#essay-six-step-storyboard .story-scene[data-scene="connected"] { max-width:420px; }
 #essay-six-step-storyboard .story-scene .text-small { font-size:12px; }
 #essay-six-step-storyboard .story-motion { display:block; }
 #essay-six-step-storyboard .story-gif { display:block; width:100%; max-width:640px; height:auto; margin:0 auto; }
+#connected-agent-tests .story-gif { max-width:420px; }
 #essay-six-step-storyboard .anchor-alias { display:block; scroll-margin-top:1.5rem; }
 #essay-six-step-storyboard .citation { white-space:nowrap; font-size:.72em; }
 @media(max-width:679px) { #essay-six-step-storyboard .story-gif { max-width:420px; } }

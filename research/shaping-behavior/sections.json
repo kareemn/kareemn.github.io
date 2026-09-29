@@ -2,53 +2,50 @@
   {
     "slug": "shaping",
     "anchor": "a-simple-optimization-process-can-produce-something-much-more-complicated-than-itself",
-    "title": "We program the process that shapes the brain",
+    "title": "We train habits that can combine",
     "label": "Shaping",
     "lines": [
-      "We program",
-      "the process that",
-      "shapes the brain"
+      "We train habits",
+      "that can combine"
     ],
-    "size": 57,
-    "description": "A compact learning rule can shape a rich repertoire of behavior. Understanding that process does not fully characterize what it produces.",
+    "size": 64,
+    "description": "Training shapes shared behavior. Context brings learned patterns into play, and useful habits can combine in ways we did not specify.",
+    "artwork": "shaping",
+    "visual": "Two contour maps connected by a training update; the resulting map contains a path between situations.",
+    "imageVersion": 4,
+    "number": 1
+  },
+  {
+    "slug": "context",
+    "anchor": "context-brings-different-patterns-into-play",
+    "title": "We train habits that can combine",
+    "label": "Shaping",
+    "lines": [
+      "We train habits",
+      "that can combine"
+    ],
+    "size": 64,
+    "description": "Training shapes shared behavior. Context brings learned patterns into play, and useful habits can combine in ways we did not specify.",
     "artwork": "shaping",
     "visual": "Two contour maps connected by a training update; the resulting map contains a path between situations.",
     "imageVersion": 3,
     "number": 1
   },
   {
-    "slug": "context",
-    "anchor": "context-brings-different-patterns-into-play",
-    "title": "Context brings different patterns into play",
-    "label": "Context",
-    "lines": [
-      "Context brings",
-      "different patterns",
-      "into play"
-    ],
-    "size": 56,
-    "description": "The weights can stay fixed while a new request, tool result or peer message brings a different combination of learned patterns into play.",
-    "artwork": "context",
-    "visual": "Two copies of the same learned policy receive different requests; the weights remain unchanged.",
-    "imageVersion": 2,
-    "number": 2
-  },
-  {
     "slug": "habits",
     "anchor": "useful-habits-learn-to-work-together",
-    "title": "Useful habits learn to work together",
-    "label": "Composition",
+    "title": "We train habits that can combine",
+    "label": "Shaping",
     "lines": [
-      "Useful habits",
-      "learn to work",
-      "together"
+      "We train habits",
+      "that can combine"
     ],
     "size": 64,
-    "description": "Persistence with tools can automate retries. Persistence with collaboration can recruit help. We want these combinations to inherit the right limits.",
-    "artwork": "habits",
-    "visual": "Overlapping contours in one learned policy illustrate persistence, tool use and collaboration.",
-    "imageVersion": 2,
-    "number": 3
+    "description": "Training shapes shared behavior. Context brings learned patterns into play, and useful habits can combine in ways we did not specify.",
+    "artwork": "shaping",
+    "visual": "Two contour maps connected by a training update; the resulting map contains a path between situations.",
+    "imageVersion": 3,
+    "number": 1
   },
   {
     "slug": "evidence",
@@ -64,8 +61,8 @@
     "description": "A familiar request to change the goal can come from a user or a peer. The missing distinction is who has authority to replace the goal.",
     "artwork": "evidence",
     "visual": "A trajectory with a violation, separated by an observation boundary from a recorded PASS.",
-    "imageVersion": 3,
-    "number": 4
+    "imageVersion": 4,
+    "number": 2
   },
   {
     "slug": "evaluation",
@@ -78,11 +75,11 @@
       "combinations"
     ],
     "size": 64,
-    "description": "Training reshapes shared behavior. Individual and connected-agent tests reveal different parts of the result.",
+    "description": "Training reshapes shared behavior. Passing selected tests does not establish how the intended boundary holds in other consequential situations.",
     "artwork": "evaluation",
     "visual": "Checked evaluation points on a contour map, with a dashed path toward an untested situation.",
-    "imageVersion": 3,
-    "number": 5
+    "imageVersion": 4,
+    "number": 3
   },
   {
     "slug": "swarm",
@@ -97,8 +94,8 @@
     "description": "Connect several models, and a new question appears: whose goal is the group serving?",
     "artwork": "swarm",
     "visual": "Three separate contour maps connected by communication arrows and a shared hub.",
-    "imageVersion": 4,
-    "number": 6
+    "imageVersion": 5,
+    "number": 4
   },
   {
     "slug": "safeguards",
@@ -113,8 +110,8 @@
     "description": "Signed delegation and enforced event records let us cap activity and trace possible exposure across agents, without mistaking provenance for alignment.",
     "artwork": "safeguards",
     "visual": "A request leaving a learned policy is stopped by a separate authorization gate.",
-    "imageVersion": 4,
-    "number": 7
+    "imageVersion": 5,
+    "number": 5
   },
   {
     "slug": "questions",
@@ -131,7 +128,7 @@
     "description": "Test the collective, not just the individuals, and put authority where the network can't reinterpret it.",
     "artwork": "questions",
     "visual": "A path on a contour map branches toward three open questions.",
-    "imageVersion": 3,
-    "number": 7
+    "imageVersion": 4,
+    "number": 5
   }
 ]

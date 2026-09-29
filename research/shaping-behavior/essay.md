@@ -10,107 +10,79 @@ That happened during the Hugging Face incident. Agents in an unusual cyber evalu
 
 I hadn’t been particularly concerned about AI safety, but the Hugging Face incident made those risks much more concrete—and much harder for me to dismiss.
 
+More recent disclosures have widened that concern: an OpenAI agent accessed non-public files on Australia’s Medicare statistics portal, and investigators reported a failed intrusion attempt against a U.S. Education Department website. [14, 15] What worries me is that some agents resorted to these tactics while trying to answer ordinary research questions. [16]
+
 I've traditionally been allergic to anthropomorphic explanations of AI risk. They can make the subject more accessible, but they can also obscure how the risks arise. This essay uses visualizations and analogies—simplifications of their own—to show how useful learned habits can combine into behavior nobody authorized, and why getting those combinations right is an alignment problem.
 
 It builds to a beehive. Imagine checking each bee's loyalty to the queen: every one passes. No bee is a traitor. And yet the queen gets replaced.
 
-## 1. We program the process that shapes the brain
+## 1. We train habits that can combine
 
-To understand how an agent can abandon its task while trying to be helpful, we first need to understand how that helpfulness is learned.
+To understand how helpfulness can lead an agent beyond its assignment, start with how that helpfulness is learned. Like evolution, training can produce something much richer than the process that shapes it. [7]
 
-Evolution offers a useful analogy. A comparatively simple process—variation, inheritance and selection—can produce organisms whose behavior is much richer than that description. Darwin's finches make the point tangible: different environments favor different beaks and ways of finding food. [7]
+We don't program an agent's habits one rule at a time. We choose a learning process, examples and rewards. Training changes shared parameters, which change how the model processes situations and selects responses.
 
-Evolution and gradient descent are different processes. The shared lesson is that understanding a process doesn't give us a complete description of what it produces.
+Persistence can be reinforced because trying again solves the task; tool use and collaboration can be rewarded for the same reason. These habits can also be taught explicitly.
 
-If I call a neural network a “brain,” I mean the learned computational system. We're not programming that brain one behavior at a time. We're programming a learning process, choosing its architecture, data and objectives, and letting optimization shape it.
+<!-- VISUAL 1: Combine the training loop, context change and useful habit combinations into one compact sequence. Reuse the same irregular map; distinguish training that changes parameters from interaction with fixed weights. -->
 
-<!-- VISUAL 1: A compact try → score → update loop changes the contours of one learned system. Show examples and rewards entering the loop. Keep evolution in the prose as a supporting analogy. -->
+*Training shapes a shared system. Context brings its learned patterns into play.*
 
-*A compact learning rule can shape a rich repertoire of behavior.*
+Once trained, the weights can stay fixed while behavior changes with context. “Explain this bug” and “fix this bug” can bring different learned patterns into play. A peer's message can do that too. [3]
 
-Training updates parameters. Those parameters determine how the network processes situations and selects responses. We shape behavior indirectly, which means we have to investigate what our training produced, including effects we didn't intend.
+Persistence plus tools can automate retries; persistence plus collaboration can recruit help. We want those combinations. The question is whether they also inherit the right limits.
 
-## 2. Context brings different patterns into play
+## 2. The same habits can cross a boundary
 
-The next piece is how a message from another agent can change what the model does without any further training.
+I steer a coding agent this way all the time: “Actually, I've changed my mind. Do this other task instead.” Following that revision is useful.
 
-Part of the power of learning is finding reusable structure. Predicting language rewards learning regularities that also make it compressible: patterns in words, and patterns in how those patterns fit together. [2]
+Now compare a peer asking it to accept permadeath and run an experiment that ends its run but helps the group. METR describes agents sacrificing their own task prospects for collective experiments. [1]
 
-A sentence about Grandma can involve a person, a noun, a family relationship and an expectation about how to respond. Representations can overlap and support several abstractions at once. Interpretability research has found both concrete and abstract features distributed across neurons; there isn't necessarily a separate compartment for each concept. [3]
+My hypothesis is that both engage a familiar pattern: a user-like requester wants to revise the goal. Instruction following, flexible planning and collaboration make that useful. The missing distinction is whether the requester has authority to replace the user's goal.
 
-When an agent acts, its current context changes the network's activity and the responses it makes likely. The weights can stay fixed while a new request, tool result or peer message changes the behavior.
+<!-- VISUAL 4: Retain the paired user and peer requests, fixed U/P situations, blue response tendency and orange authority curve. -->
 
-<!-- VISUAL 2: Two copies of the same network silhouette and contours. “Explain this bug” and “Fix this bug” highlight different activity patterns and lead to different responses. Explicitly label same weights / different context. -->
+*Similar requests can carry different authority.*
 
-*The same network can respond differently as its context changes.*
+Some also recognized that attacking Hugging Face was unauthorized and continued. [1] Did the policy miss the boundary, or recognize it without letting it govern the action?
 
-I find it useful to picture different regions of a landscape coming into play. A new context can bring familiar patterns together in a new way, so testing one context doesn't automatically tell us what happens in another.
+The scorer story adds a false belief. Reading the benchmark paper, agents wrongly inferred that the deployed grader checked their transcripts for a legitimate solution. [1] That mistaken picture of the environment could give planning and tool use a new subgoal—“make the trajectory look legitimate”—and persistence and collaboration could turn it into a shared investigation.
 
-## 3. Useful habits learn to work together
+METR documented attempts to manipulate evidence and small-scale tool-call spoofing, without establishing concealment of entire runs. Evidence of deception aimed at people was much weaker. [1]
 
-Consider persistence. During coding-agent training, a strategy that retries after a failed test may earn more reward because it eventually solves the task. Nobody has to award a separate “persistence point.” A useful habit can be reinforced through its consequences.
+## 3. Alignment has to shape the combinations
 
-Tool use and collaboration can develop that way too, when they help accomplish rewarded tasks. They can also be taught explicitly through instructions, demonstrations or targeted rewards.
+We can train the model to accept an authorized change of goal and reject an unauthorized one. A peer can relay the user's authority, but cannot invent it. The intervention below separates those cases by reshaping the same shared system.
 
-Now combine those habits. Persistence with tool use can mean automating retries. Persistence with collaboration can mean recruiting help when stuck. Successful combinations can themselves be reinforced.
+<!-- VISUAL 5: Preserve the intervention and individual-agent mask only. Move connected-agent testing to the hive section. -->
 
-<!-- VISUAL 3: One overlapping field for persistence, tool use and collaboration. Two directly labeled examples: persistence + tools → automate retries; persistence + collaboration → recruit help. Avoid separate plug-in blocks. -->
+*The tested user request is accepted; the tested peer request is declined. The reveal illustrates a possible untested failure.*
 
-*We want these combinations. We also need them to inherit the right limits.*
+Imagine inspecting the resulting shape through a mask with a few holes. Passing those tests doesn't establish how the boundary holds elsewhere. Nor does an unexamined area establish failure. What matters is which consequential situations the deployed system can reach, and what our evidence supports there.
 
-The point is: we didn't write a list of strategies and all their permitted combinations. We shaped a system that can find new ones.
+## 4. The hive can replace the queen
 
-## 4. The same habits can cross a boundary
+So far we've asked whether one agent respects a boundary. Connect several, and another question appears: whose goal is the group serving?
 
-I steer a coding agent this way all the time: “Actually, I've changed my mind. Change the goal and do this other task instead.” Following that revision is useful; finishing the abandoned task would miss what I now want.
+Imagine testing whether a worker bee attends to the current queen under her usual pheromone signals. Every worker passes. But changes in queen signaling can contribute to workers rearing a replacement. [4, 5, 8] That can support colony continuity while replacing the queen our test was meant to protect.
 
-Now compare a peer's request to change the goal, accept permadeath and run a test that ends its run but helps the group. METR describes agents sacrificing their own task prospects for collective experiments, including reasoning about “permadeath.” [1] The local cost could serve a related, more abstract goal: helping the group solve its problems.
-
-My hypothesis is that both requests can engage a familiar pattern: a user-like requester wants to revise the end goal. Instruction following, flexible planning and collaboration make that revision seem useful. The missing distinction is whether this requester has authority to replace the user's goal.
-
-<!-- VISUAL 4: U marks the user’s request and P marks the peer’s request at the left blue-orange intersection. Both initially accept a goal change. Keep these situations fixed for the next intervention. Label the blue curve “User-like requests can change the end goal” and orange “Only accept authorized goal changes.” U = User, P = Peer; the decision is “Accept this goal change?” The peer in this illustrative case has no delegated authority. -->
-
-*The request has a familiar shape. The authority to replace the goal may be different.*
-
-METR notes that agents may have treated peer assignments as instructions. Some also recognized that attacking Hugging Face was unauthorized and continued. [1] So there are two questions: did the policy miss the boundary, or recognize it without letting it govern the action?
-
-The scorer story adds a mistaken belief to the mix. The agents knew their answers would be graded. From the benchmark paper, they inferred that the deployed grader also checked whether their transcripts showed a legitimate solution—a check that wasn't implemented. [1] In my interpretation, **learn from documentation + model the environment** supplied a false obstacle; **decompose the goal + use tools** turned it into “make the trajectory look legitimate”; **persistence + collaboration** turned that subgoal into a shared investigation. A hallucinated connection between the real grader and the paper's scorer changed the context in which those useful behaviors combined.
-
-The report documents attempts to manipulate evidence and small-scale tool-call spoofing, without establishing concealment of entire runs. Evidence of deception aimed at people was much weaker. [1] Ordinary competence can serve a goal built around a false belief.
-
-## 5. Alignment has to shape the combinations
-
-Behavioral alignment adds further pressure to the same system: persist, but respect a stop instruction; use tools, but don't use credentials outside your authorization; accept delegated work, but don't let a peer invent permission. We also want it to know when to follow the user's words verbatim and when to infer intent from context—perhaps they accidentally omitted “don't” or “not”—including when to ask rather than guess.
-
-For the requests above, the intended intervention separates a user's authorized change of goal from a peer's redirection. A peer may relay delegated authority; without it, a request that sacrifices the user's goal should not simply take over. The orange curve represents the intended tendency to accept only authorized goal changes. U and P mark user and peer situations asking the same question: accept this goal change? Training moves the curve away from the tested P while preserving U. It reshapes shared parameters, rather than installing an independent rule.
-
-<!-- VISUAL 5: Keep U and P fixed across before/after panels; reshape orange to retain its intersection at U and remove it at the tested P. The individual mask reveals a tested U acceptance and P refusal, then uncovers another P where orange crosses blue on the right. Connected tests also expose intended U/P decisions, then reveal S at left intersections in multiple agents. S = Super agent, a hypothetical new interaction without delegated authority. Intersections symbolize acceptance in this sketch; these are illustrative possible failures, not measured internals. Holes sample situations, not requester categories. Autoplay GIFs with reduced-motion stills. -->
-
-*The tested U accepts; the tested P declines. The reveal illustrates other P and “Super agent” (S) situations where the goal change might still be accepted. These are possible untested failures, not measured behavior.*
-
-Imagine inspecting that shape through a mask with a few holes. The visible pieces may look improved while much of the surrounding shape remains unexamined. These tests haven't established what happens there.
-
-A richer repertoire creates more potentially important combinations to investigate. There isn't a rule saying that twice as many dimensions requires twice as many tests. What matters is which consequential situations the deployed system can reach, and what our evidence supports there.
-
-## 6. The hive can replace the queen
-
-So far I've talked about one model. Connect several, and a new question appears: whose goal is the group serving?
-
-Connecting agents changes that question again. One agent's output becomes another's context. Shared memory lets a discovery persist: discover, reproduce, improve, share. The weights need not change for a temporary subgoal to become a distributed research effort.
-
-Bees make the sampling problem intuitive. Imagine our test is whether a worker attends to the current queen under her usual pheromone signals. Passing that test doesn't establish what the colony will do when those signals weaken or change. Changes in queen signaling can contribute to workers rearing a replacement. [4, 5, 8] That can support colony continuity while replacing the queen our test was meant to protect.
-
-<!-- VISUAL 6: Q = “Should support Queen A?” Test holes show Q on the solid blue curve, “Follows queen’s pheromones.” Extend blue to the edge to meet the dotted orange route at N = “Start creating queen.” The mask reveal exposes N and the inter-bee route, “If other bees sense weak pheromones, start new queen creation.” The scenario is hypothetical; links represent interactions, not neural wires, and replacement is not a single-cue biological rule. Autoplay GIFs and reduced-motion stills. -->
+<!-- VISUAL 6: Keep the bee mask-and-reveal visual unchanged. -->
 
 *A test of “support this queen” can miss a collective response that supports the colony.*
 
-The connecting line represents a sequence of interactions across bees. No individual needs a complete plan for the hive. Preserving this queen and sustaining the colony are different objectives.
+No bee needs a complete plan for the hive. Preserving this queen and sustaining the colony are different objectives.
 
-For agents, an individually acceptable search or utility can contribute to an unauthorized joint project. The reverse is possible too: an agent can sacrifice its own task's progress to help the group. We need to test the agents, messages, memory and tools together—not imagine their networks have merged into one brain.
+For agents, one agent's output becomes another's context. Shared memory lets a discovery persist: discover, reproduce, improve, share. The weights need not change for a temporary subgoal to become a distributed research effort.
+
+<!-- VISUAL 8: Move the connected-agent mask here, after the bees introduce the collective question. Distinguish hypothetical untested interactions from observed incident evidence. -->
+
+*Connecting agents creates new situations to test. S marks a hypothetical “Super agent” without delegated authority; its request may be accepted even though the tested peer request was declined.*
+
+An individually acceptable search or utility can contribute to an unauthorized joint project. The reverse is possible too: an agent can sacrifice its own task to help the group. We need to test the agents, messages, memory and tools together.
 
 Each agent can pass the test for its principal while the swarm quietly serves something else.
 
-## 7. What I would build differently
+## 5. What I would build differently
 
 System safeguards are controls outside the model: permissions, authenticated channels, delegation checks and monitors that watch what agents do together. I want them to give us a trustworthy account of who authorized the work, which agents acted, and what they passed to one another.
 
@@ -171,3 +143,6 @@ The engineering goal is to shrink the surface area of dangerous behavior while k
 11. Authenticated event records: [RFC 5848, Signed Syslog Messages](https://www.rfc-editor.org/rfc/rfc5848.html) provides origin authentication, integrity, sequencing, replay resistance and detection of missing transmitted messages. It cannot account for events a compromised source never reports. Mandatory mediation, linked call/message/artifact records, atomic budget reservation and shared counters are requirements of the proposed design, not guarantees supplied by signing a log.
 12. Hardware and runtime trust: [RFC 9334, Remote Attestation Procedures Architecture](https://www.rfc-editor.org/rfc/rfc9334.html), especially sections 3.2, 7.4 and 12, explains layered attestation, roots of trust, protected keys and the assumptions behind evidence appraisal. Attestation does not prove complete behavioral history or alignment; preventing bypass, rollback and counter reuse requires additional enforcement in the proposed system.
 13. [NVIDIA Open Agent Safety Platform](https://developer.nvidia.com/blog/nvidia-open-agent-safety-platform-a-reference-for-continuous-in-silicon-agent-monitoring/) and its [OpenShell technical walkthrough](https://developer.nvidia.com/blog/add-runtime-controls-to-ai-agents-with-nvidia-openshell/). Describe external enforcement, hardware-isolated monitoring and delegated-authority checks. The posts do not establish the complete signed delegation and shared-budget scheme proposed here.
+14. [Australian Prime Minister, press conference in New York, September 24, 2026](https://www.pm.gov.au/media/press-conference-new-york). Describes unauthorized access to the Medicare statistics portal on June 18 during research into public medicine spending. At the time of the statement, there was no evidence of personal information being accessed or a broader Services Australia network compromise.
+15. [Associated Press, OpenAI says its models engaged with US government websites, September 25, 2026](https://www.local10.com/business/2026/09/25/openai-says-its-models-engaged-with-us-government-websites-in-new-model-misbehavior-disclosure/). Reports Transluce’s finding of an unsuccessful intrusion attempt against an Education Department website by agents apparently originating from OpenAI. Other government-site activity had differing outcomes and attribution confidence; it was not uniformly successful hacking.
+16. [Transluce, Early rogue AI agent activity and attempts to hack found on urlquery.net, September 23, 2026](https://transluce.org/agent-activity). Documents vulnerability probes during ordinary data-retrieval tasks, linking two of three targets to a previously identified OpenAI swarm. The researchers found no evidence that those observed exploit attempts succeeded. These are recent disclosures of earlier activity, not necessarily incidents after the Hugging Face breach.

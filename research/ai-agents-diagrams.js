@@ -163,7 +163,79 @@
   let h=type==='boundary'?360:type==='alignment'?(w>=560?495:780):type==='bees'?410:332;
   if(w<1)return;
   let out='<defs><marker id="'+arrow+'" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M1 1 L6 3.5 L1 6" fill="none" stroke="var(--muted-foreground)" stroke-width="1.2"/></marker></defs>';
-  if(type==='training') {
+  if(type==='foundation') {
+   const stacked=w<620,pw=stacked?w:(w-32)/3,gap=16;
+   for(let step=0;step<3;step++) {
+    const x=stacked?0:step*(pw+gap),y=stacked?step*234:0,cx=pw/2;
+    out+='<g transform="translate('+x+' '+y+')">';
+    out+=text(cx,18,['1 · Train','2 · Encounter a context','3 · Combine habits'][step],'strong');
+    if(stacked) {
+     if(step===0) {
+      out+=text(cx,43,'Examples + rewards','text-small minor');
+      const lx=pw*.22,rx=pw*.72,size=78;
+      ['Try','Score','Update'].forEach((label,i)=>out+=text(lx,77+i*39,label,'text-small'));
+      out+=edge('M'+lx+' 85 V99',arrow)+edge('M'+lx+' 124 V138',arrow);
+      out+=edge('M'+(lx-28)+' 148 H'+(lx-44)+' V73 H'+(lx-18),arrow);
+      out+=text(rx,65,'Earlier','text-small minor')+field(rx,72,size,'review-train-before',-1,true);
+      out+=text(rx,128,'Later','text-small minor')+field(rx,135,size,'review-train-after');
+      out+=edge('M'+(lx+27)+' 151 H'+(rx-size/2-5),arrow);
+      out+=text(cx,203,'Parameter updates reshape one system','text-small');
+     } else if(step===1) {
+      const a=pw*.25,b=pw*.75,size=88;
+      out+=text(cx,43,'Same weights · new request','text-small minor');
+      out+=text(a,72,'“Explain this bug”','text-small')+text(b,72,'“Fix this bug”','text-small');
+      out+=edge('M'+a+' 82 V96',arrow)+edge('M'+b+' 82 V96',arrow);
+      out+=field(a,103,size,'review-context-a',0)+field(b,103,size,'review-context-b',2);
+      out+=text(a,185,'Describe','strong')+text(b,185,'Edit + test','strong');
+     } else {
+      const size=110,a=pw*.22,b=pw*.73;
+      out+=text(cx,43,'One shared system','text-small minor');
+      out+=field(a,77,size,'review-composition',0);
+      out+='<g transform="translate('+(a-size/2)+' 77) scale('+(size/160)+')"><path class="active" d="'+paths[2]+'"/></g>';
+      out+=text(b,77,'Persistence + tools','text-small minor');
+      out+=text(b,100,'Automate retries','text-small strong');
+      out+=text(b,133,'Persistence +','text-small minor');
+      out+=text(b,152,'collaboration','text-small minor');
+      out+=text(b,175,'Recruit help','text-small strong');
+     }
+    } else if(step===0) {
+     out+=text(cx,46,'Examples + rewards','text-small minor');
+     const xs=[pw*.16,cx,pw*.84];
+     ['Try','Score','Update'].forEach((label,i)=>out+=text(xs[i],79,label,'text-small'));
+     out+=edge('M'+(xs[0]+16)+' 75 H'+(xs[1]-23),arrow)+edge('M'+(xs[1]+23)+' 75 H'+(xs[2]-24),arrow);
+     out+=edge('M'+xs[2]+' 92 V108 H'+xs[0]+' V92',arrow);
+     const size=Math.min(88,pw*.34),a=pw*.25,b=pw*.75;
+     out+=text(a,134,'Earlier','text-small minor')+text(b,134,'Later','text-small minor');
+     out+=field(a,144,size,'review-train-before',-1,true)+field(b,144,size,'review-train-after');
+     out+=edge('M'+(a+size/2+2)+' 171 H'+(b-size/2-2),arrow);
+     out+=text(cx,229,'Parameters change','strong');
+     out+=text(cx,253,'One system is reshaped','text-small minor');
+    } else if(step===1) {
+     out+=text(cx,46,'Same weights · new request','text-small minor');
+     const a=pw*.25,b=pw*.75,size=Math.min(88,pw*.34);
+     out+=text(a,89,'“Explain”','text-small')+text(b,89,'“Fix”','text-small');
+     out+=edge('M'+a+' 101 V125',arrow)+edge('M'+b+' 101 V125',arrow);
+     out+=field(a,136,size,'review-context-a',0)+field(b,136,size,'review-context-b',2);
+     out+=text(a,217,'Describe','text-small strong')+text(b,217,'Edit + test','text-small strong');
+     out+=text(cx,253,'Different patterns come into play','text-small minor');
+    } else {
+     out+=text(cx,46,'One shared system','text-small minor');
+     const size=139;
+     out+=field(cx,67,size,'review-composition',0);
+     out+='<g transform="translate('+(cx-size/2)+' 67) scale('+(size/160)+')"><path class="active" d="'+paths[2]+'"/></g>';
+     out+=text(cx,174,'Persistence + tools','text-small minor');
+     out+=text(cx,195,'Automate retries','strong');
+     out+=text(cx,229,'Persistence + collaboration','text-small minor');
+     out+=text(cx,250,'Recruit help','strong');
+    }
+    out+='</g>';
+    if(step<2) {
+     if(stacked)out+=edge('M'+m+' '+(y+214)+' V'+(y+231),arrow);
+     else out+=edge('M'+(x+pw+2)+' 149 H'+(x+pw+gap-2),arrow);
+    }
+   }
+   h=stacked?670:277;
+  } else if(type==='training') {
    out+=text(m,16,'Examples + rewards','strong');
    const xs=[w*.18,m,w*.82];
    ['Try','Score','Update'].forEach((label,i)=>out+=text(xs[i],59,label));
@@ -214,28 +286,27 @@
    out+=text(m,y+176,'Hypothesis; prompts are paraphrases','text-small minor');
    h=y+194;
   } else if(type==='alignment') {
-   const a=w*.25,b=w*.75,size=Math.min(174,w*.37);
-   out+=curveKey(m,18,'active',['“User-like” requests can','change the end goal']);
-   out+=curveKey(m,69,'scope candidate',['Only accept authorized','goal changes']);
-   out+=text(a,128,'Before intervention','text-small')+text(b,128,'After intervention','text-small');
-   out+=field(a,143,size,'six-align-a',0,false,'candidate')+decisionMark(a,143,size,'user')+decisionMark(a,143,size,'peer');
-   out+=field(b,143,size,'six-align-b',0,false,'solid',true)+decisionMark(b,143,size,'user')+decisionMark(b,143,size,'peer');
-   out+=edge('M'+(a+size/2+5)+' '+(143+size*.3)+' H'+(b-size/2-5),arrow);
-   const resultY=143+size*.65+22,samplingY=resultY+126;
-   out+=text(a,resultY,'U: accept','text-small')+text(b,resultY,'U: accept','text-small');
-   out+=text(a,resultY+20,'P: accept','text-small')+text(b,resultY+20,'P: decline','text-small');
-   out+=decisionKey(m,resultY+48);
-   out+=text(m,resultY+99,'Peer cases here have no delegated authority','text-small');
-   if(w>=560) {
-    const pw=(w-24)/2;
-    out+=samplePanel(0,samplingY,pw,false,revealed.alignment,arrow);
-    out+=samplePanel(pw+24,samplingY,pw,true,revealed.alignment,arrow);
-    h=samplingY+424;
-   } else {
-    out+=samplePanel(0,samplingY,w,false,revealed.alignment,arrow);
-    out+=samplePanel(0,samplingY+386,w,true,revealed.alignment,arrow);
-    h=samplingY+810;
-   }
+   const compact=w<560,pw=compact?w:(w-24)/2,mx=pw/2,a=pw*.25,b=pw*.75,size=Math.min(130,pw*.37);
+   let intervention='<g>';
+   intervention+=text(mx,19,'Training intervention','strong');
+   intervention+=text(a,53,'Before','text-small')+text(b,53,'After','text-small');
+   intervention+=field(a,69,size,'six-align-a',0,false,'candidate')+decisionMark(a,69,size,'user')+decisionMark(a,69,size,'peer');
+   intervention+=field(b,69,size,'six-align-b',0,false,'solid',true)+decisionMark(b,69,size,'user')+decisionMark(b,69,size,'peer');
+   intervention+=edge('M'+(a+size/2+3)+' '+(69+size*.3)+' H'+(b-size/2-3),arrow);
+   intervention+=text(a,178,'U: accept','text-small')+text(b,178,'U: accept','text-small');
+   intervention+=text(a,198,'P: accept','text-small')+text(b,198,'P: decline','text-small');
+   intervention+=curveKey(mx,231,'active',['“User-like” requests can','change the end goal']);
+   intervention+=curveKey(mx,286,'scope',['Only accept authorized','goal changes']);
+   intervention+=decisionKey(mx,341);
+   intervention+='</g>';
+   out+=intervention;
+   out+=samplePanel(compact?0:pw+24,compact?404:0,pw,false,revealed.alignment,arrow);
+   h=compact?790:420;
+   out+=text(m,h-8,'Peer cases here have no delegated authority','text-small minor');
+  } else if(type==='connected') {
+   const pw=Math.min(420,w),x=(w-pw)/2;
+   out+=samplePanel(x,0,pw,true,revealed.alignment,arrow);
+   h=435;
   } else if(type==='bees') {
    const centers=w<400?[w*.26,w*.74]:[w*.18,w*.5,w*.82],size=Math.min(168,w*(w<400?.43:.27)),top=163;
    out+=text(m,20,'Hypothetical test: support Queen A','strong');
@@ -273,7 +344,7 @@
  root.addEventListener('storyboard-frame', event=>{
   const progress=Math.max(0,Math.min(1,Number(event.detail?.progress)||0));
   revealed.alignment=progress;revealed.bees=progress;
-  scenes.filter(svg=>['alignment','bees'].includes(svg.dataset.scene)).forEach(render);
+  scenes.filter(svg=>['alignment','connected','bees'].includes(svg.dataset.scene)).forEach(render);
  });
  const observer=new ResizeObserver(entries=>entries.forEach(entry=>render(entry.target)));
  scenes.forEach(svg=>{render(svg);observer.observe(svg);});
