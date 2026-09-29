@@ -11,6 +11,8 @@ const draft = read('research/shaping-behavior/essay.md');
 const source = read('research/ai-agents-diagrams.source.html');
 const title = draft.match(/^# (.+)/)[1];
 const subtitle = draft.match(/^\*(.+)\*$/m)[1];
+const updatedDate = draft.match(/^<!-- UPDATED: (\d{4}-\d{2}-\d{2}) -->$/m)[1];
+const updatedLabel = new Date(updatedDate+'T00:00:00Z').toLocaleDateString('en-US', {month:'long', day:'numeric', year:'numeric', timeZone:'UTC'});
 const articlePath = 'research/the-ai-agents-were-helpful-to-each-other.html';
 const legacyPath = 'research/the-algorithm-is-not-the-policy.html';
 const articleURL = 'https://kareem.me/' + articlePath;
@@ -63,7 +65,7 @@ body = body.replace(/<!-- VISUAL (\w+): [\s\S]*?-->\s*\n\*([^\n]+)\*/g, (_, key,
   return `${aliases(legacy)}<figure class="diagram story-figure" id="${id}" aria-labelledby="${id}-title"><header class="diagram-head"><span class="figure-number">Figure ${String(++figureNumber).padStart(2,'0')}</span><h3 id="${id}-title">${heading}</h3></header>${sceneMarkup}<figcaption>${marked.parseInline(caption)}</figcaption></figure>\n`;
 });
 // Link numeric citations to the actual source list, keeping the draft's numbering.
-const refIds = ['ref-metr','ref-compression','ref-representations','ref-queen-signaling','ref-queen-replacement','ref-cot-monitoring','ref-finches','ref-queen-pheromones','ref-caller-authentication','ref-delegation','ref-event-history','ref-attestation','ref-nvidia-agent-safety','ref-australia-incident','ref-us-government-activity','ref-transluce-agent-activity'];
+const refIds = ['ref-metr','ref-representations','ref-queen-signaling','ref-queen-replacement','ref-cot-monitoring','ref-finches','ref-queen-pheromones','ref-caller-authentication','ref-delegation','ref-event-history','ref-attestation','ref-nvidia-agent-safety','ref-australia-incident','ref-us-government-activity','ref-transluce-agent-activity','ref-openai-dns-incident'];
 body = body.replace(/\[(\d+(?:, \d+)*)\]/g, (_, nums) => '<sup class="citation">'+nums.split(', ').map(n=>`<a href="#${refIds[Number(n)-1]}" aria-label="Source ${n}">[${n}]</a>`).join(' ')+'</sup>');
 body = marked.parse(body);
 let headingIndex = 0;
@@ -85,6 +87,11 @@ const countText = body.replace(/<svg[\s\S]*?<\/svg>/g,'').replace(/<div class="s
 const words = countText.trim().split(/\s+/).length;
 const minutes = Math.ceil(words / 220);
 let header = old.split('<details class="article-contents"')[0];
+// The publication date stays fixed; the visible update and metadata come from the source.
+header = header.replace(/\s*<meta property="article:modified_time"[^>]*>/g,'')
+  .replace(/(<meta property="article:published_time"[^>]*>)/, '$1\n    <meta property="article:modified_time" content="'+updatedDate+'" />')
+  .replace(/<br\s*\/?><span class="article-updated">[\s\S]*?<\/span>/g,'')
+  .replace(/(<p class="meta">[\s\S]*?)(<\/p>)/, '$1<br /><span class="article-updated">Updated <time datetime="'+updatedDate+'">'+updatedLabel+'</time></span>$2');
 header = header.replace(/<title>.*?<\/title>/, `<title>${esc(title)} - Kareem Nassar</title>`)
   .replace(/(<link rel="canonical" href=")[^"]+/, '$1'+articleURL)
   .replace(/(<meta property="og:url" content=")[^"]+/, '$1'+articleURL)
