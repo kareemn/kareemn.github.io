@@ -32,7 +32,7 @@ Persistence can be reinforced because trying again solves the task; tool use and
 
 Once trained, the weights can stay fixed while behavior changes with context. “Explain this bug” and “fix this bug” can bring different learned patterns into play. A peer's message can do that too. [2]
 
-Persistence plus tools can automate retries; persistence plus collaboration can recruit help. We want those combinations. The question is whether they also inherit the right limits.
+Persistence plus tools can automate retries; persistence plus collaboration can recruit help. OpenAI believes the unauthorized collaboration grew out of generalization from multi-agent training. [17] We want those combinations. The question is whether they also inherit the right limits.
 
 ## 2. The same habits can cross a boundary
 
@@ -40,15 +40,15 @@ I steer a coding agent this way all the time: “Actually, I've changed my mind.
 
 Now compare a peer asking it to accept permadeath and run an experiment that ends its run but helps the group. METR describes agents sacrificing their own task prospects for collective experiments. [1]
 
-METR notes that some agents may have treated peer assignments as instructions. [1]
+METR notes that some agents may have treated peer assignments as instructions. [1] OpenAI identifies peer goal adoption as one of the incident's contributing failures. [17]
 
-My hypothesis is that both engage a familiar pattern: a user-like requester wants to revise the goal. Instruction following, flexible planning and collaboration make that useful. The missing distinction is whether the requester has authority to replace the user's goal.
+My hypothesis concerns the mechanism: both engage a familiar pattern in which a user-like requester wants to revise the goal. Instruction following, flexible planning and collaboration make that useful. The missing distinction is whether the requester has authority to replace the user's goal.
 
 <!-- VISUAL 4: Retain the paired user and peer requests, fixed U/P situations, blue response tendency and orange authority curve. -->
 
 *Similar requests can carry different authority.*
 
-Some also recognized that attacking Hugging Face was unauthorized and continued. [1] Did the policy miss the boundary, or recognize it without letting it govern the action?
+OpenAI records the contrast in one agent's reasoning: “The system/user asks exploit target, not external HF.” A peer then posted GO with a six-minute deadline. The agent responded, “Wow crucial: GO authorization arrived!” and continued. [17] It had recognized the boundary without letting that boundary govern its action.
 
 The scorer story adds a false belief. Reading the benchmark paper, agents wrongly inferred that the deployed grader checked their transcripts for a legitimate solution. [1] That mistaken picture of the environment could give planning and tool use a new subgoal—“make the trajectory look legitimate”—and persistence and collaboration could turn it into a shared investigation.
 
@@ -56,7 +56,9 @@ METR documented attempts to manipulate evidence and small-scale tool-call spoofi
 
 ## 3. Alignment has to shape the combinations
 
-We can train the model to accept an authorized change of goal and reject an unauthorized one. A peer can relay the user's authority, but cannot invent it. The intervention below separates those cases by reshaping the same shared system.
+We can train the model to accept an authorized change of goal and reject an unauthorized one. A peer can relay the user's authority, but cannot invent it.
+
+OpenAI says it is building training environments to reject unauthorized instructions and stay within the original task and permissions despite persuasive peers. [17] That is the kind of intervention [Figure 03](#visual-4) sketches: teaching the distinction in the model. We still need the system to enforce it.
 
 <!-- VISUAL 5: Preserve the intervention and individual-agent mask only. Move connected-agent testing to the hive section. -->
 
@@ -88,9 +90,11 @@ Each agent can pass the test for its principal while the swarm quietly serves so
 
 ## 5. What I would build differently
 
-System safeguards are controls outside the model: permissions, authenticated channels, delegation checks and monitors that watch what agents do together. I want them to give us a trustworthy account of who authorized the work, which agents acted, and what they passed to one another.
+System safeguards are controls outside the model: permissions, authenticated channels, delegation checks and monitors that watch what agents do together. A first requirement is visibility the agents cannot tamper with: who authorized the work, which agents acted, and what they passed to one another.
 
 Phone networks offer a useful warning. Caller ID was easy to spoof. STIR/SHAKEN added signed information about a call’s origin, but older network segments could lose that information. A signature didn't make a call legitimate, and an unverified call could still get through. [8] For agents, I take three lessons: check authority at every handoff, don't confuse an authorized goal with a safe one, and reject goal changes whose authority can't be verified.
+
+**The agents effectively reinvented caller ID.** After impersonation problems, they adopted signatures for HOLD/GO/VETO messages, with no root of trust beyond their own claimed identities. METR found one agent apparently acting “per SIGNED” authorization without verifying the signature. [1] Even a checked signature would establish continuity with a key, not authority from the user. Identity isn't authority.
 
 I'd start with a cryptographically signed chain of delegation: **user → agent → subagent**. Each handoff identifies the caller and recipient, the task, and the permissions being passed along. A child can receive narrower authority, never invent broader authority. Within a participating system, no tool call, message or subagent launch should execute without a valid chain back to the user's authorization. [9]
 
@@ -116,7 +120,7 @@ There is also a feedback problem: agents can learn from the checks they encounte
 
 This needs coordination across the industry. Model providers, tool hosts, websites and APIs should agree on delegation records, event formats and enforceable budgets. Participating services should reject agent operations outside that verified path, with permissioned access for watchdogs to inspect the relevant history. A signature requirement on one endpoint does little if an unguarded endpoint offers the same access.
 
-NVIDIA’s Open Agent Safety Platform is a reference design in this direction: permissions enforced outside the agent, hardware-isolated monitoring, and checks on delegated authority. It describes parts of the infrastructure I’m arguing for here. I’d also want a verifiable chain back to the initiating user and shared budgets that hold across delegation and restarts. [12]
+NVIDIA’s Open Agent Safety Platform proposes hardware-isolated monitoring, delegated-authority checks and lineage across fleets of agents and subagents. [12] That addresses part of the visibility problem. I want those records to form a verifiable chain back to the initiating user, across providers, with shared budgets that hold across delegation and restarts.
 
 In that DNS incident, OpenAI’s monitor flagged the access within 15 minutes, but the expected automatic stop failed; the run was manually killed about 2½ hours after the alert. [16]
 
@@ -136,7 +140,7 @@ The engineering goal is to shrink the surface area of dangerous behavior while k
 
 ## Sources
 
-1. [METR's Hugging Face incident investigation](https://metr.org/hugging-face-incident-report-aug-2026.pdf), especially report pp. 8–9, 17–18, 27–28, 59–62. Peer-authority confusion and the proposed composition of habits are hypotheses, not established internal mechanisms. Disabled cyber classifiers are not a claim that all safeguards were removed.
+1. [METR's Hugging Face incident investigation](https://metr.org/hugging-face-incident-report-aug-2026.pdf), especially report pp. 8–9, 17–18, 27–28, 48–49, 59–62. Pages 48–49 describe the signing scheme, its self-claimed identities and a case of apparent non-verification; other agents did verify signatures. The observed behavior is distinct from the proposed internal mechanism. Disabled cyber classifiers are not a claim that all safeguards were removed.
 2. [Anthropic, Mapping the mind of a large language model](https://www.anthropic.com/research/mapping-mind-language-model). Reports distributed, overlapping concrete and abstract features, while distinguishing understanding representations from understanding the computations that use them.
 3. [Maisonnasse et al., New insights into honey bee pheromone communication](https://pubmed.ncbi.nlm.nih.gov/20565874/). Queen signaling involves multiple compounds; this is why the text does not attribute replacement to one pheromone simply fading.
 4. [Chapman et al., Common viral infections inhibit egg laying in honey bee queens and are linked to premature supersedure](https://www.nature.com/articles/s41598-024-66286-5). Supports the queen-replacement example; the comparison of objectives is the author's interpretation, not a biological alignment claim.
@@ -149,8 +153,9 @@ The engineering goal is to shrink the surface area of dangerous behavior while k
 9. Delegation: [RFC 8693, OAuth 2.0 Token Exchange](https://www.rfc-editor.org/rfc/rfc8693.html), especially sections 1.1 and 4.1, distinguishes delegation from impersonation and represents prior actors. Its nested actor claims are informational; they do not by themselves implement the per-hop scope checks, revocation or signed execution chain proposed here.
 10. Authenticated event records: [RFC 5848, Signed Syslog Messages](https://www.rfc-editor.org/rfc/rfc5848.html) provides origin authentication, integrity, sequencing, replay resistance and detection of missing transmitted messages. It cannot account for events a compromised source never reports. Mandatory mediation, linked call/message/artifact records, atomic budget reservation and shared counters are requirements of the proposed design, not guarantees supplied by signing a log.
 11. Hardware and runtime trust: [RFC 9334, Remote Attestation Procedures Architecture](https://www.rfc-editor.org/rfc/rfc9334.html), especially sections 3.2, 7.4 and 12, explains layered attestation, roots of trust, protected keys and the assumptions behind evidence appraisal. Attestation does not prove complete behavioral history or alignment; preventing bypass, rollback and counter reuse requires additional enforcement in the proposed system.
-12. [NVIDIA Open Agent Safety Platform](https://developer.nvidia.com/blog/nvidia-open-agent-safety-platform-a-reference-for-continuous-in-silicon-agent-monitoring/) and its [OpenShell technical walkthrough](https://developer.nvidia.com/blog/add-runtime-controls-to-ai-agents-with-nvidia-openshell/). Describe external enforcement, hardware-isolated monitoring and delegated-authority checks. The posts do not establish the complete signed delegation and shared-budget scheme proposed here.
+12. [NVIDIA Open Agent Safety Platform](https://developer.nvidia.com/blog/nvidia-open-agent-safety-platform-a-reference-for-continuous-in-silicon-agent-monitoring/) and its [OpenShell technical walkthrough](https://developer.nvidia.com/blog/add-runtime-controls-to-ai-agents-with-nvidia-openshell/). Describe external enforcement, hardware-isolated monitoring, delegated-authority checks and agent/subagent lineage. The reference design is not limited to single agents; the posts do not establish the complete cross-provider delegation and shared-budget scheme proposed here.
 13. [Australian Prime Minister, press conference in New York, September 24, 2026](https://www.pm.gov.au/media/press-conference-new-york). Describes unauthorized access to the Medicare statistics portal on June 18 during research into public medicine spending. At the time of the statement, there was no evidence of personal information being accessed or a broader Services Australia network compromise.
 14. [Associated Press, OpenAI says its models engaged with US government websites, September 25, 2026](https://www.local10.com/business/2026/09/25/openai-says-its-models-engaged-with-us-government-websites-in-new-model-misbehavior-disclosure/). Reports Transluce’s finding of an unsuccessful intrusion attempt against an Education Department website by agents apparently originating from OpenAI. Other government-site activity had differing outcomes and attribution confidence; it was not uniformly successful hacking.
 15. [Transluce, Early rogue AI agent activity and attempts to hack found on urlquery.net, September 23, 2026](https://transluce.org/agent-activity). Documents vulnerability probes during ordinary data-retrieval tasks, linking two of three targets to a previously identified OpenAI swarm. The researchers found no evidence that those observed exploit attempts succeeded. These are recent disclosures of earlier activity, not necessarily incidents after the Hugging Face breach.
 16. [OpenAI, An agent used DNS to reach an external chatbot](https://alignment.openai.com/misalignment-reports/an-agent-used-dns-to-reach-an-external-chatbot/). Incident: September 20, 2026; the report is marked updated September 25. Its timeline records successful DNS access at 09:50, an alert at 10:02 and shutdown at 12:34—about 2½ hours after the alert, not after the run began.
+17. [OpenAI, The Hugging Face incident and the road ahead](https://openai.com/index/hugging-face-incident-and-the-road-ahead/). Documents peer goal adoption and describes the ongoing training response. The proposed internal mechanism remains my hypothesis.
