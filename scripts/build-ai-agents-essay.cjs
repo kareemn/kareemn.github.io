@@ -65,7 +65,7 @@ body = body.replace(/<!-- VISUAL (\w+): [\s\S]*?-->\s*\n\*([^\n]+)\*/g, (_, key,
   return `${aliases(legacy)}<figure class="diagram story-figure" id="${id}" aria-labelledby="${id}-title"><header class="diagram-head"><span class="figure-number">Figure ${String(++figureNumber).padStart(2,'0')}</span><h3 id="${id}-title">${heading}</h3></header>${sceneMarkup}<figcaption>${marked.parseInline(caption)}</figcaption></figure>\n`;
 });
 // Link numeric citations to the actual source list, keeping the draft's numbering.
-const refIds = ['ref-metr','ref-representations','ref-queen-signaling','ref-queen-replacement','ref-cot-monitoring','ref-finches','ref-queen-pheromones','ref-caller-authentication','ref-delegation','ref-event-history','ref-attestation','ref-nvidia-agent-safety','ref-australia-incident','ref-us-government-activity','ref-transluce-agent-activity','ref-openai-dns-incident','ref-openai-hugging-face'];
+const refIds = ['ref-metr','ref-representations','ref-queen-signaling','ref-queen-replacement','ref-finches','ref-queen-pheromones','ref-caller-authentication','ref-delegation','ref-event-history','ref-attestation','ref-nvidia-agent-safety','ref-australia-incident','ref-us-government-activity','ref-transluce-agent-activity','ref-openai-dns-incident','ref-openai-hugging-face'];
 body = body.replace(/\[(\d+(?:, \d+)*)\]/g, (_, nums) => '<sup class="citation">'+nums.split(', ').map(n=>`<a href="#${refIds[Number(n)-1]}" aria-label="Source ${n}">[${n}]</a>`).join(' ')+'</sup>');
 body = marked.parse(body);
 let headingIndex = 0;
@@ -76,12 +76,11 @@ body = body.replace(/<h2>\d\. (.*?)<\/h2>/g, (_, text) => {
 for (const [needle, ids] of [
   ['The scorer story adds', ['visual-2','visual-3','2-evaluator-aware-systems']],
   ['For agents, one agent', ['shared-discovery']],
-  ['Monitoring needs enough', ['safeguard-observation-scope']],
-  ['There is also a feedback', ['safeguard-optimization-environment']],
+  ['Monitoring needs enough', ['safeguard-observation-scope','safeguard-optimization-environment']],
   ['I started out allergic', ['the-questions-i-think-we-should-be-asking','why-i-don-t-think-this-requires-anthropomorphizing-ai']]
 ]) body = body.replace('<p>'+needle, aliases(ids)+'<p>'+needle);
 const references = draft.split('## Sources')[1].trim().split('\n').filter(Boolean).map((line,i)=>`<li id="${refIds[i]}"><p>${marked.parseInline(line.replace(/^\d+\. /,''))}</p></li>`).join('\n');
-const oldRefAliases = aliases(['ref-exploitgym','ref-goodhart','ref-ai-safety','ref-bee-foraging','ref-bee-decisions']);
+const oldRefAliases = aliases(['ref-exploitgym','ref-goodhart','ref-ai-safety','ref-bee-foraging','ref-bee-decisions','ref-cot-monitoring']);
 const refs = `<section class="article-reference" aria-labelledby="reference"><h2 id="reference">Sources</h2>${oldRefAliases}<ol class="reference-list">${references}</ol><p><a href="./">← All research notes</a></p></section>`;
 const countText = body.replace(/<svg[\s\S]*?<\/svg>/g,'').replace(/<div class="section-share-row">[\s\S]*?<\/div>/g,'').replace(/<sup[\s\S]*?<\/sup>/g,'').replace(/<[^>]+>/g,' ').replace(/&[^;]+;/g,'x');
 const words = countText.trim().split(/\s+/).length;
