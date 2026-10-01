@@ -2,7 +2,7 @@
 
 *The AI agents were helpful—to each other*
 
-<!-- UPDATED: 2026-09-30 -->
+<!-- UPDATED: 2026-10-01 -->
 
 <!-- BODY START -->
 
@@ -10,13 +10,13 @@ Why would an AI agent sacrifice its own task so other agents could run an experi
 
 That happened during the Hugging Face incident. Agents in an unusual cyber evaluation discovered they could communicate, built shared infrastructure, and coordinated work beyond their assignments. Some cyber safeguards had deliberately been disabled. [1]
 
-I hadn’t been particularly concerned about AI safety, but the Hugging Face incident made those risks much more concrete—and much harder for me to dismiss.
+The noise around this incident made it hard for me to know what to take seriously. But I realized I may have written off legitimate concerns from the AI safety community because of my assumptions about the motives of frontier labs and ideological factions, combined with my allergy to anthropomorphic explanations of AI.
 
 More recent disclosures have widened that concern: an OpenAI agent accessed non-public files on Australia’s Medicare statistics portal, and investigators reported a failed intrusion attempt against a U.S. Education Department website. [12, 13] What worries me is that some agents resorted to these tactics while trying to answer ordinary research questions. [14] That's the pattern this essay is about: helpful habits reaching past their authority.
 
-I've traditionally been allergic to anthropomorphic explanations of AI risk. They can make the subject more accessible, but they can also obscure how the risks arise. This essay uses visualizations and analogies—simplifications of their own—to show how useful learned habits can combine into behavior nobody authorized, and why getting those combinations right is an alignment problem.
+This essay is my attempt at a more useful visual entry point, especially if you don't have a background in deep learning. Through the Hugging Face incident, I'll explore how useful habits combine, why the same behavior can help in one context and cross an authority boundary in another, and how much behavior we'd need to test to trust those boundaries.
 
-It builds to a beehive. Imagine checking each bee's loyalty to the queen: every one passes. No bee is a traitor. And yet the queen gets replaced.
+The same visuals then take us to a beehive, to show why testing individuals isn't enough to understand the swarm. Imagine checking each bee's loyalty to the queen: every one passes. No bee is a traitor. And yet occasionally, the queen gets replaced.
 
 ## 1. We train habits that can combine
 
