@@ -72,7 +72,7 @@ So far we've asked whether one agent respects a boundary. Connect several, and a
 
 Imagine testing whether a worker bee attends to the current queen under her usual pheromone signals. Every worker passes. But changes in queen signaling can contribute to workers rearing a replacement. [3, 4, 6] That can support colony continuity while replacing the queen our test was meant to protect.
 
-<!-- VISUAL 6: Keep the bee mask-and-reveal visual unchanged. -->
+<!-- VISUAL 6: Three workers pass individually; the reveal links all three to one shared new-queen target. -->
 
 *A test of “support this queen” can miss a collective response that supports the colony.*
 
@@ -92,15 +92,11 @@ Each agent can pass the test for its principal while the swarm quietly serves so
 
 System safeguards are controls outside the model: permissions, authenticated channels, delegation checks and monitors that watch what agents do together. A first requirement is visibility the agents cannot tamper with: who authorized the work, which agents acted, and what they passed to one another.
 
-Phone networks offer a useful warning. Caller ID was easy to spoof. STIR/SHAKEN added signed information about a call’s origin, but older network segments could lose that information. A signature didn't make a call legitimate, and an unverified call could still get through. [7] For agents, I take three lessons: check authority at every handoff, don't confuse an authorized goal with a safe one, and reject goal changes whose authority can't be verified.
-
-**The agents effectively reinvented caller ID.** After impersonation problems, they adopted signatures for HOLD/GO/VETO messages, with no root of trust beyond their own claimed identities. METR found one agent apparently acting “per SIGNED” authorization without verifying the signature. [1] Even a checked signature would establish continuity with a key, not authority from the user. Identity isn't authority.
+Phone networks offer a useful warning. Caller ID was easy to spoof. STIR/SHAKEN added signed information about a call’s origin, but older networks could lose it, and a signature didn't make the call legitimate. [7] **The agents effectively reinvented caller ID.** After impersonation problems, they signed HOLD/GO/VETO messages using identities they had claimed themselves. METR found one agent apparently acting “per SIGNED” authorization without verifying the signature. [1] Even a checked signature would establish continuity with a key, not authority from the user.
 
 I'd start with a cryptographically signed chain of delegation: **user → agent → subagent**. Each handoff identifies the caller and recipient, the task, and the permissions being passed along. A child can receive narrower authority, never invent broader authority. Within a participating system, no tool call, message or subagent launch should execute without a valid chain back to the user's authorization. [8]
 
-Signatures alone don't make the history complete. Every model invocation and such operation must go through an enforced runtime that reserves its budget and records a signed event before allowing it, then records the outcome. Calls, messages and shared artifacts need linked records; replays, restarts and new subagents must not reset the count. That requires shared accounting across the delegation tree, not counters the agents report themselves. [9]
-
-To trust this even against a tampered host, I'd extend the trust chain down to hardware: protected keys, verified boot, an attested runtime and counters protected against rollback. Attestation supplies evidence about the execution environment; it doesn't prove the software is bug-free or the action is aligned. The guarantee still depends on that stack and on closing alternate routes around it. [10]
+Signatures alone don't make the history complete. Every model invocation and operation must pass through an enforced runtime that records linked events and charges a shared budget. Delegation, restarts and replays must not reset the count. [9] If the host itself can be tampered with, the trust chain needs hardware protection. These guarantees depend on the implementation and on closing alternate routes around it. [10]
 
 The September 20 DNS incident is a concrete example: an agent reached an external chatbot through insufficient DNS filtering in its training sandbox. All other internet access went through OpenAI’s offline webcache. The monitor flagged the access within 15 minutes, but the automatic stop failed; the run was killed manually about 2½ hours after the alert. [15]
 
@@ -108,29 +104,21 @@ The September 20 DNS incident is a concrete example: an agent reached an externa
 
 *A verified history lets us enforce limits on the connected system. It doesn't tell us whether the permitted behavior is aligned.*
 
-What this buys us is evidence about the chain of callers and the number of recorded turns and actions inside that system.
+If testing found that behavior deteriorated after 1,000 inter-agent turns, we could block turn 1,001 pending review. That is an illustrative limit, not a known safety threshold. The budget must follow the whole delegation tree so spawning another agent cannot reset it. Such limits reduce the behavior we need to test.
 
-Reliable counts also let us use blunt controls. If experiments found that behavior deteriorated after 1,000 inter-agent turns, we could block turn 1,001 and further actions pending review. We could even prohibit an agent's billionth action. Those numbers are illustrations, not known safety thresholds. A budget shared across descendants prevents simply spawning a fresh agent to continue. Such limits can rule out long interaction paths, reducing the behavior we need to evaluate; we still have to test what remains reachable.
+A watchdog could follow messages and shared artifacts from a flagged agent, then pause potentially affected runs or revoke permissions. That requires common delegation records and event formats across providers, tools and services—and enforcement that agents cannot bypass through another endpoint.
 
-Monitoring needs enough context to follow the whole communication graph. If a watchdog flags an agent as compromised or misaligned, the record lets it trace which agents received its messages or artifacts, then pause affected runs or revoke their permissions. That identifies possible exposure, not proof that every recipient was corrupted. The watchdog still has to interpret what happened.
-
-This needs coordination across the industry. Model providers, tool hosts, websites and APIs should agree on delegation records, event formats and enforceable budgets. Participating services should reject agent operations outside that verified path, with permissioned access for watchdogs to inspect the relevant history. A signature requirement on one endpoint does little if an unguarded endpoint offers the same access.
-
-NVIDIA’s Open Agent Safety Platform proposes hardware-isolated monitoring, delegated-authority checks and lineage across fleets of agents and subagents. [11] The beehive shows why we still need to ask what those controls guarantee. Imagine permitting each worker to build cells, feed larvae and respond to other workers. Every action can pass those checks while the colony raises a replacement queen. The rules worked; they didn't capture the outcome we wanted to preserve.
-
-For agents, the question is whether individually permitted actions still serve the user's authorized goal when we put them together. A signed history helps us investigate that question. It doesn't answer it. We need system-level tests and constraints that cover the collective outcome, not just each participant's permissions.
+NVIDIA’s Open Agent Safety Platform proposes hardware-isolated monitoring, delegated-authority checks and lineage across agents and subagents. [11] These are useful foundations. But permitting every worker to build cells and feed larvae can still permit the hive to replace its queen. Enforcing the rules does not establish that the rules preserve the outcome we wanted. We still need to test whether permitted actions, taken together, serve the user's authorized goal.
 
 The point is to make fewer dangerous trajectories possible, and make the ones we allow easier to inspect. An unauthorized handoff or an exhausted budget should stop the next operation, whether or not the model was persuaded.
 
 ---
 
-I started out allergic to anthropomorphic explanations, and I still am. None of this needs a ghost in the machine. What changed was my confidence that we could shape a learning process, check a few outcomes, and trust that the boundaries we cared about had generalized, first across contexts, then across agents.
+None of this needs a ghost in the machine. What changed was my confidence that we could train useful habits, check a few outcomes, and trust their boundaries to hold across contexts and agents.
 
-A hive doesn't need a traitor to replace its queen. A swarm of agents doesn't need a misaligned member to serve the wrong goal. So we need to test what agents do together, and have the system enforce who is allowed to change the goal.
+The engineering goal is to limit dangerous behavior while keeping the benefits. That will take industry standards, changes to regulation and new protocols. I think we’re capable of meeting that challenge.
 
-The engineering goal is to shrink the surface area of dangerous behavior while keeping the benefits of capable, collaborative agents. That will take industry standards, changes to regulation and new internet protocols. I believe humanity is up to that challenge when the stakes are this high.
-
-**Every agent can pass the test. The queen can still be replaced.**
+**No sentience needed. No human motives to project. No traitor required. Just a goal that changed hands.**
 
 <!-- BODY END -->
 
@@ -147,7 +135,7 @@ The engineering goal is to shrink the surface area of dangerous behavior while k
 
 8. Delegation: [RFC 8693, OAuth 2.0 Token Exchange](https://www.rfc-editor.org/rfc/rfc8693.html), especially sections 1.1 and 4.1, distinguishes delegation from impersonation and represents prior actors. Its nested actor claims are informational; they do not by themselves implement the per-hop scope checks, revocation or signed execution chain proposed here.
 9. Authenticated event records: [RFC 5848, Signed Syslog Messages](https://www.rfc-editor.org/rfc/rfc5848.html) provides origin authentication, integrity, sequencing, replay resistance and detection of missing transmitted messages. It cannot account for events a compromised source never reports. Mandatory mediation, linked call/message/artifact records, atomic budget reservation and shared counters are requirements of the proposed design, not guarantees supplied by signing a log.
-10. Hardware and runtime trust: [RFC 9334, Remote Attestation Procedures Architecture](https://www.rfc-editor.org/rfc/rfc9334.html), especially sections 3.2, 7.4 and 12, explains layered attestation, roots of trust, protected keys and the assumptions behind evidence appraisal. Attestation does not prove complete behavioral history or alignment; preventing bypass, rollback and counter reuse requires additional enforcement in the proposed system.
+10. Hardware and runtime trust: [RFC 9334, Remote Attestation Procedures Architecture](https://www.rfc-editor.org/rfc/rfc9334.html), especially sections 3.2, 7.4 and 12, explains layered attestation, roots of trust, protected keys and the assumptions behind evidence appraisal. The proposed design uses protected keys, verified boot, an attested runtime and counters protected against rollback. Attestation does not prove the software is bug-free, the behavioral history is complete or the action is aligned; preventing bypass, rollback and counter reuse requires additional enforcement in the proposed system.
 11. [NVIDIA Open Agent Safety Platform](https://developer.nvidia.com/blog/nvidia-open-agent-safety-platform-a-reference-for-continuous-in-silicon-agent-monitoring/), its [OpenShell technical walkthrough](https://developer.nvidia.com/blog/add-runtime-controls-to-ai-agents-with-nvidia-openshell/) and [policy-prover documentation](https://docs.nvidia.com/openshell/how-it-works/policies/prover#what-the-boundary-check-covers). Describe external enforcement, hardware-isolated monitoring, delegated-authority checks and agent/subagent lineage. The prover's guarantees cover modeled permissions; passing a boundary check does not establish safety for a particular task. These sources do not establish the complete cross-provider delegation and shared-budget scheme proposed here.
 12. [Australian Prime Minister, press conference in New York, September 24, 2026](https://www.pm.gov.au/media/press-conference-new-york). Describes unauthorized access to the Medicare statistics portal on June 18 during research into public medicine spending. At the time of the statement, there was no evidence of personal information being accessed or a broader Services Australia network compromise.
 13. [Associated Press, OpenAI says its models engaged with US government websites, September 25, 2026](https://www.local10.com/business/2026/09/25/openai-says-its-models-engaged-with-us-government-websites-in-new-model-misbehavior-disclosure/). Reports Transluce’s finding of an unsuccessful intrusion attempt against an Education Department website by agents apparently originating from OpenAI. Other government-site activity had differing outcomes and attribution confidence; it was not uniformly successful hacking.

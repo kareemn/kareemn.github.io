@@ -1,0 +1,1 @@
+Three worker bees each pass a test of supporting Queen A. A sliding mask reveals dotted orange routes connecting all three to one shared target: a new queen. The checks stay visible. Caption: The colony can still raise a new queen. Illustrative scenario, not a single-cue rule.

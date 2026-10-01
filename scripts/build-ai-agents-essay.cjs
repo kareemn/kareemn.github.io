@@ -37,7 +37,7 @@ const figureSpecs = {
   '8': ['connected', 'connected-agent-tests', []]
 };
 function picture(scene, alt) {
-  const stem = {alignment:'evaluation-individual-v1', connected:'evaluation-connected-v1', bees:'bee-colony-v2'}[scene];
+  const stem = {alignment:'evaluation-individual-v1', connected:'evaluation-connected-v1', bees:'bee-colony-v3'}[scene];
   const sizes = {};
   for (const layout of ['mobile', 'desktop']) {
     const gif = fs.readFileSync(path.join(root, 'images/ai-agents-v1', `${stem}-${layout}-light.gif`));
@@ -76,8 +76,8 @@ body = body.replace(/<h2>\d\. (.*?)<\/h2>/g, (_, text) => {
 for (const [needle, ids] of [
   ['The scorer story adds', ['visual-2','visual-3','2-evaluator-aware-systems']],
   ['For agents, one agent', ['shared-discovery']],
-  ['Monitoring needs enough', ['safeguard-observation-scope','safeguard-optimization-environment']],
-  ['I started out allergic', ['the-questions-i-think-we-should-be-asking','why-i-don-t-think-this-requires-anthropomorphizing-ai']]
+  ['A watchdog could follow', ['safeguard-observation-scope','safeguard-optimization-environment']],
+  ['None of this needs a ghost', ['the-questions-i-think-we-should-be-asking','why-i-don-t-think-this-requires-anthropomorphizing-ai']]
 ]) body = body.replace('<p>'+needle, aliases(ids)+'<p>'+needle);
 const references = draft.split('## Sources')[1].trim().split('\n').filter(Boolean).map((line,i)=>`<li id="${refIds[i]}"><p>${marked.parseInline(line.replace(/^\d+\. /,''))}</p></li>`).join('\n');
 const oldRefAliases = aliases(['ref-exploitgym','ref-goodhart','ref-ai-safety','ref-bee-foraging','ref-bee-decisions','ref-cot-monitoring']);
@@ -106,7 +106,7 @@ header = header.replace(/<title>.*?<\/title>/, `<title>${esc(title)} - Kareem Na
   .replace(/\d+ min read/,`${minutes} min read`)
   .replace(/    <script>\s*window\.MathJax[\s\S]*?<\/script>\s*<script id="mathjax"[^>]*><\/script>\n/,'');
 if (!header.includes('ai-agents-diagrams.css')) header=header.replace('  </head>', '    <link rel="stylesheet" href="ai-agents-diagrams.css?v=1" />\n    <script defer src="ai-agents-diagrams.js?v=1"></script>\n  </head>');
-header=header.replace(/ai-agents-diagrams\.(css|js)\?v=\d+/g,'ai-agents-diagrams.$1?v=7');
+header=header.replace(/ai-agents-diagrams\.(css|js)\?v=\d+/g,'ai-agents-diagrams.$1?v=8');
 const toc = `<details class="article-contents" open><summary>In this essay <span>${sections.length} sections</span></summary><ol>${sections.map(([anchor],i)=>`<li><a href="#${anchor}">${esc(headingTexts[i])}</a></li>`).join('')}</ol></details>`;
 let footer = '</article>'+old.split('</article>')[1];
 footer=footer.replace(/\s*document\.getElementById\('mathjax'\)[\s\S]*?\}\);/,'');

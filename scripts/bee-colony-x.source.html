@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A bee's test can miss the hive's response — X animation source</title>
+<style>
+  html,body { margin:0; background:#181818; }
+  svg { display:block; width:1080px; height:1350px; font-family:Arial,Helvetica,sans-serif; }
+  text { fill:#fff; text-anchor:middle; font-size:40px; }
+  .title { font-size:64px; font-weight:700; text-anchor:start; }
+  .caption { font-size:48px; font-weight:700; }
+  .footer { font-size:30px; fill:#b8b8b8; }
+  .blue { fill:none; stroke:#a6c5de; stroke-width:10; stroke-linecap:round; }
+  .route { fill:none; stroke:#c0a28b; stroke-width:7; stroke-dasharray:2 16; stroke-linecap:round; }
+  .contour { fill:none; stroke:#a0a0a0; stroke-opacity:.28; stroke-width:3; }
+  .worker { fill:none; stroke:#b8b8b8; stroke-width:3; stroke-dasharray:9 10; }
+  .marker { fill:#181818; stroke:#fff; stroke-width:3; }
+</style>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1350" role="img" aria-label="Three workers each pass a test of supporting Queen A. The reveal connects all three to one shared new-queen target. The colony can still raise a new queen.">
+  <defs>
+    <clipPath id="panel"><rect x="60" y="335" width="960" height="675"/></clipPath>
+    <mask id="test-mask" maskUnits="userSpaceOnUse" x="60" y="335" width="960" height="675">
+      <rect x="60" y="335" width="960" height="675" fill="white"/>
+      <circle cx="220" cy="493" r="56" fill="black"/>
+      <circle cx="540" cy="493" r="56" fill="black"/>
+      <circle cx="860" cy="493" r="56" fill="black"/>
+    </mask>
+  </defs>
+  <rect width="1080" height="1350" fill="#181818"/>
+  <text class="title" x="60" y="125">Test each bee:</text>
+  <text class="title" x="60" y="201">support Queen A?</text>
+  <text x="540" y="294">follows the queen's signal</text>
+  <path d="M540 311 V398 L580 459" fill="none" stroke="#a6c5de" stroke-width="3"/>
+  <g id="workers"></g>
+  <g id="collective">
+    <!-- Each local response continues toward the SAME collective target. -->
+    <path class="route" d="M310 568 C358 599 361 685 355 725 C349 770 265 775 270 813 S416 854 519 894"/>
+    <path class="route" d="M630 568 C678 599 682 686 723 727 S830 787 766 826 S610 856 549 883"/>
+    <path class="route" d="M950 568 C997 599 994 713 979 766 S774 866 571 905"/>
+    <text x="540" y="763">weak signal →</text>
+    <text x="540" y="814">rear a new queen</text>
+    <circle class="marker" cx="540" cy="914" r="32"/>
+    <text x="540" y="928" data-marker="N">N</text>
+    <text x="540" y="988">new queen</text>
+  </g>
+  <g clip-path="url(#panel)">
+    <g id="sliding-mask"><rect x="60" y="335" width="960" height="675" rx="22" fill="#252525" mask="url(#test-mask)"/></g>
+  </g>
+  <!-- The worker outlines and passing checks remain visible in every state. -->
+  <g id="always-visible"></g>
+  <text id="caption-first" class="caption" x="540" y="1097">Every worker passes.</text>
+  <text id="caption-second" class="caption" x="540" y="1157"></text>
+  <text class="footer" x="540" y="1265">Illustrative scenario, not a single-cue rule · kareem.me</text>
+</svg>
+<script>
+  const workers=document.getElementById('workers');
+  const foreground=document.getElementById('always-visible');
+  for(const cx of [220,540,860]) {
+    workers.insertAdjacentHTML('beforeend',`<g transform="translate(${cx} 493)">
+      <defs><clipPath id="bee-${cx}"><circle r="133"/></clipPath></defs>
+      <g clip-path="url(#bee-${cx})">
+        <path class="contour" d="M-140 -61 C-74 -140 -15 89 41 -20 S118 -19 142 -50 M-136 39 C-88 -102 -25 82 32 12 S98 -119 142 57 M-128 87 C-95 -15 -41 85 -3 26 S88 95 133 22 M-117 -99 C-58 -24 -61 149 41 89 S117 -44 139 -76"/>
+        <circle r="57" fill="#181818"/>
+        <path class="blue" d="M-130 18 C-91 -64 -48 56 0 0 S91 -73 126 22 C140 42 112 56 90 75 S52 101 40 131"/>
+        <path class="route" d="M-114 74 C-66 111 -40 65 0 86 S50 113 90 75"/>
+      </g>
+      <circle class="marker" r="32"/>
+      <text y="14" data-marker="Q">Q</text>
+    </g>`);
+    foreground.insertAdjacentHTML('beforeend',`<circle class="worker" cx="${cx}" cy="493" r="136"/><text x="${cx}" y="684">✓ passes</text>`);
+  }
+  // Deterministic frame control: 75 + 24 + 105 + 24 frames = 7.6 s at 30 fps.
+  // Both transition endpoints are included, so frame 227 exactly matches 0.
+  window.renderFrame = index => {
+    const ease=t=>t*t*(3-2*t);
+    let progress=0;
+    if(index>=75 && index<99)progress=ease((index-75)/23);
+    else if(index>=99 && index<204)progress=1;
+    else if(index>=204)progress=1-ease(Math.min(1,(index-204)/23));
+    document.getElementById('sliding-mask').setAttribute('transform',`translate(0 ${-675*progress})`);
+    const revealCaption=progress>=.5;
+    document.getElementById('caption-first').textContent=revealCaption?'The colony can still':'Every worker passes.';
+    document.getElementById('caption-second').textContent=revealCaption?'raise a new queen.':'';
+    document.documentElement.dataset.frame=index;
+    return progress;
+  };
+  window.renderFrame(0);
+</script>
+</html>

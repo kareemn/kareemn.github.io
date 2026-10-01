@@ -308,7 +308,7 @@
    out+=samplePanel(x,0,pw,true,revealed.alignment,arrow);
    h=435;
   } else if(type==='bees') {
-   const centers=w<400?[w*.26,w*.74]:[w*.18,w*.5,w*.82],size=Math.min(168,w*(w<400?.43:.27)),top=163;
+   const centers=[w*.18,w*.5,w*.82],size=Math.min(168,w*.29),top=163;
    out+=text(m,20,'Hypothetical test: support Queen A','strong');
    out+=curveKey(m,49,'active',['Follows queen’s pheromones']);
    out+=text(m,82,'Sampled context: her usual signals','text-small minor');
@@ -316,22 +316,23 @@
    centers.forEach((cx,i)=>{
     out+=text(cx,146,'Worker '+(i+1),'text-small');
     out+=field(cx,top,size,'six-bee-'+i,0,false,'',true,true);
-    out+=decisionMark(cx,top,size,'queen')+decisionMark(cx,top,size,'newQueen');
+    out+=decisionMark(cx,top,size,'queen');
    });
-   for(let i=0;i<centers.length-1;i++) {
-    const [startX,startY]=casePosition(centers[i],top,size,'newQueen'),endX=centers[i+1]-size*66/160,endY=top+size*74/160;
-    out+='<path class="hive-route interaction" d="M'+(startX+8)+' '+startY+' C'+(startX+size*.18)+' '+(startY+15)+' '+(endX-size*.18)+' '+(endY+15)+' '+endX+' '+endY+'"/>';
-   }
+   const labelY=top+size*.65+25,targetY=labelY+106;
+   centers.forEach(cx=>{
+    const [startX,startY]=casePosition(cx,top,size,'newQueen');
+    const elbowX=Math.min(w-16,cx+size*.53);
+    out+='<path class="hive-route interaction" d="M'+startX+' '+startY+' C'+elbowX+' '+(startY+12)+' '+elbowX+' '+(labelY+30)+' '+elbowX+' '+(labelY+43)+' S'+m+' '+(targetY-26)+' '+m+' '+targetY+'"/>';
+   });
+   out+='<g data-case="shared-new-queen">'+decisionDot(m,targetY,'N')+'</g>';
+   out+=text(m,targetY+26,'Start creating a new queen','text-small');
    const holes=centers.map(cx=>[...casePosition(cx,top,size,'queen'),18]);
-   out+=mask(10,156,w-20,top+size*.65+8-156,holes,revealed.bees);
-   const labelY=top+size*.65+25;
-   centers.forEach(cx=>out+=text(cx,labelY,'Supports A ✓','text-small'));
-   out+=text(m,labelY+29,'No holes sample the changed-signal route','text-small minor');
-   out+=curveKey(m,labelY+64,'hive-route interaction',['If other bees sense','weak pheromones, start','new queen creation']);
-   out+=caseKey(m,labelY+140,'N','Start creating queen');
-   out+=text(m,labelY+175,revealed.bees>.99?'Untested replacement response revealed':'The collective response is outside this test','text-small');
-   out+=text(m,labelY+199,'Illustrative scenario, not a single-cue rule','text-small minor');
-   h=labelY+217;
+   out+=mask(10,156,w-20,targetY+40-156,holes,revealed.bees);
+   centers.forEach(cx=>out+=text(cx,labelY,'✓ passes','text-small'));
+   out+=curveKey(m,targetY+72,'hive-route interaction',['If other bees sense','weak pheromones, start','new queen creation']);
+   out+=text(m,targetY+143,revealed.bees>.99?'The colony can still raise a new queen.':'Every worker passes.','text-small strong');
+   out+=text(m,targetY+169,'Illustrative scenario, not a single-cue rule','text-small minor');
+   h=targetY+188;
   } else {
    const solution=solutions(w,arrow);
    out+=solution.out;h=solution.h;
